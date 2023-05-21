@@ -13,15 +13,20 @@ class OrganizacionTest {
 
 	@BeforeEach
 	void setUp() {
+		
+		// Dummy
 		ubicacion1 = mock(Ubicacion.class);
+		
 		organizacion1 = new Organizacion(TipoDeOrganizacion.SALUD, 5, ubicacion1);
 	}
 
 	@Test
 	void verificacionDeInicializacionDeUnaOrganizacion() {
 		
+		// Setup
 		int cantidadDeTrabajadoresEsperados = 5;
 		
+		// Exercise - Verify
 		assertEquals(TipoDeOrganizacion.SALUD, organizacion1.getTipoDeOrganizacion());
 		assertEquals(cantidadDeTrabajadoresEsperados, organizacion1.getCantidadDeTrabajadores());
 		assertTrue(ubicacion1.equals(organizacion1.getUbicacion()));

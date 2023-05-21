@@ -1,8 +1,8 @@
 package ar.edu.unq.po2;
 
 	/**
-	 * 
 	 * @author Beltrame, Franco
+	 * @see TipoDeOrganizacion, Ubicacion
 	 *
 	 */
 
