@@ -8,8 +8,8 @@ package ar.edu.unq.po2;
 public class EstadoUsuarioExpertoExterno implements IEstadoUsuario {
 
 	@Override
-	public void emitirOpinionDe(Muestra muestra, TipoDeOpinion opinion) {
-		
+	public void gestionarOpinionPara(Muestra muestra, Opinion opinion) {
+		opinion.getUsuarioDueño().emitirOpinionDeSiendoUsuarioExperto(muestra, opinion);
 	}
 
 }

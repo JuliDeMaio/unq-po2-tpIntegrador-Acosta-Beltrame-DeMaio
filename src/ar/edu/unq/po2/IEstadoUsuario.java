@@ -7,5 +7,5 @@ package ar.edu.unq.po2;
 	 */
 public interface IEstadoUsuario {
 
-	public void emitirOpinionDe(Muestra muestra, TipoDeOpinion opinion);
+	public void gestionarOpinionPara(Muestra muestra, Opinion opinion);
 }
