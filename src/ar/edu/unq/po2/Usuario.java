@@ -8,9 +8,9 @@ import ar.edu.unq.po2.usuarioExceptions.UsuarioException;
 	/**
 	 * @author Acosta, Federico
 	 * 		   De Maio, Julian
+	 * 		   Beltrame, Fracon
 	 * 
-	 * @see IEstadoUsuario, VerificadorDeEmisionDeOpinion, 
-	 * 	    UsuarioException
+	 * @see EstadoUsuario, UsuarioException
 	 **/
 
 public class Usuario {
@@ -62,13 +62,11 @@ public class Usuario {
 		return this.getOpinionesRegistradas().size();
 	}
 
-	public void emitirOpinionDe(Muestra muestra, TipoDeOpinion tipoDeOpinion) {
+	public void emitirOpinionDe(Muestra muestra, TipoDeOpinion tipoDeOpinion) throws UsuarioException {
+		
 		Opinion opinionAEmitir = new Opinion(this, tipoDeOpinion);
-		try {
-			this.getState().realizarVerificacionesPara(muestra, opinionAEmitir);
-		} catch (UsuarioException e) {
-				System.out.println(e.getMessage());
-		}
+		
+		this.getState().realizarVerificacionesPara(muestra, opinionAEmitir);
 		this.emitirOpinionVerificadaDe(muestra, opinionAEmitir);
 	}
 	
