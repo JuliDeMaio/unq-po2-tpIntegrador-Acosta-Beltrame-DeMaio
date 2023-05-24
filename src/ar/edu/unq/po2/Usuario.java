@@ -53,6 +53,10 @@ public class Usuario {
 	public void guardarMuestra(Muestra muestra) {
 		this.getMuestrasRegistradas().add(muestra);
 	}
+	
+	public void guardarOpinion(Opinion opinion) {
+		this.getOpinionesRegistradas().add(opinion);
+	}
 
 	public int cantidadMuestras() {
 		return this.getMuestrasRegistradas().size();
@@ -73,9 +77,5 @@ public class Usuario {
 	public void emitirOpinionVerificadaDe(Muestra muestra, Opinion opinion) {
 		this.guardarOpinion(opinion);
 		muestra.publicarOpinion(opinion);
-	}
-
-	public void guardarOpinion(Opinion opinion) {
-		this.getOpinionesRegistradas().add(opinion);
 	}
 }
