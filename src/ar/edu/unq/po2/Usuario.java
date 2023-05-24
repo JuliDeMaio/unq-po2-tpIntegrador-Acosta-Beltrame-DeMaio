@@ -17,9 +17,9 @@ public class Usuario {
 
 	private List<Opinion> opinionesRegistradas;
 	private List<Muestra> muestrasRegistradas;
-	private IEstadoUsuario estadoActual;
+	private EstadoUsuario estadoActual;
 	
-	public Usuario(IEstadoUsuario estadoDeUsuario) {
+	public Usuario(EstadoUsuario estadoDeUsuario) {
 		super();
 		this.setOpinionesRegistradas(new ArrayList<Opinion>());
 		this.setMuestrasRegistradas(new ArrayList<Muestra>());
@@ -34,7 +34,7 @@ public class Usuario {
 		return muestrasRegistradas;
 	}
 
-	public IEstadoUsuario getState() {
+	public EstadoUsuario getState() {
 		return estadoActual;
 	}
 
@@ -46,10 +46,17 @@ public class Usuario {
 		this.muestrasRegistradas = muestrasRegistradas;
 	}
 
-	private void setState(IEstadoUsuario estadoDeUsuario) {
+	private void setState(EstadoUsuario estadoDeUsuario) {
 		this.estadoActual = estadoDeUsuario;
 	}
 	
+	public void guardarMuestra(Muestra muestra) {
+		this.getMuestrasRegistradas().add(muestra);
+	}
+
+	public int cantidadMuestras() {
+		return this.getMuestrasRegistradas().size();
+	}
 
 	public int cantidadOpiniones() {
 		return this.getOpinionesRegistradas().size();
@@ -57,33 +64,20 @@ public class Usuario {
 
 	public void emitirOpinionDe(Muestra muestra, TipoDeOpinion tipoDeOpinion) {
 		Opinion opinionAEmitir = new Opinion(this, tipoDeOpinion);
-		this.getState().gestionarOpinionPara(muestra, opinionAEmitir);
-	}
-	
-	public void emitirOpinionDeSiendoUsuarioBasico(Muestra muestra, Opinion opinion) {
 		try {
-			new VerificadorDeEmisionDeOpinion().realizarVerificacionesParaUsuarioBasico(muestra, opinion);
-			this.emitirOpinionVerificadaDe(muestra, opinion);
+			this.getState().realizarVerificacionesPara(muestra, opinionAEmitir);
 		} catch (UsuarioException e) {
 				System.out.println(e.getMessage());
 		}
+		this.emitirOpinionVerificadaDe(muestra, opinionAEmitir);
 	}
 	
-	public void emitirOpinionDeSiendoUsuarioExperto(Muestra muestra, Opinion opinion) {
-		try {
-			new VerificadorDeEmisionDeOpinion().realizarVerificacionesParaUsuarioExperto(muestra, opinion);
-			this.emitirOpinionVerificadaDe(muestra, opinion);
-		} catch (UsuarioException e) {
-				System.out.println(e.getMessage());
-		}
-	}
-		
-	private void emitirOpinionVerificadaDe(Muestra muestra, Opinion opinion) {
-		muestra.publicarOpinion(opinion);
+	public void emitirOpinionVerificadaDe(Muestra muestra, Opinion opinion) {
 		this.guardarOpinion(opinion);
+		muestra.publicarOpinion(opinion);
 	}
 
-	private void guardarOpinion(Opinion opinion) {
-		getOpinionesRegistradas().add(opinion);
+	public void guardarOpinion(Opinion opinion) {
+		this.getOpinionesRegistradas().add(opinion);
 	}
 }

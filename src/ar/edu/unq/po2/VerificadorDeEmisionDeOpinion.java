@@ -46,6 +46,8 @@ public class VerificadorDeEmisionDeOpinion {
 
 	public void realizarVerificacionesParaUsuarioExperto(Muestra muestra, Opinion opinion) throws UsuarioException {
 		realizarVerificacionDeQueNoEsMuestraVerificada(muestra);
+		realizarVerificacionDeQueNoEsElDueñoDeLaMuestra(muestra, opinion);
+		realizarVerificacionDeQueEsOpinionUnica(muestra, opinion);
 	}
 
 

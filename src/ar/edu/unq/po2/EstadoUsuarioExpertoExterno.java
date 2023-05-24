@@ -1,15 +1,19 @@
 package ar.edu.unq.po2;
 
-	/**
+import ar.edu.unq.po2.usuarioExceptions.UsuarioException;
+
+/**
 	 * @author Acosta, Federico
 	 * @see Usuario, EstadoUsuarioBasico, EstadoUsuarioExpertoInterno, IEstadoUsuario
 	 * 
 	 */
-public class EstadoUsuarioExpertoExterno implements IEstadoUsuario {
+public class EstadoUsuarioExpertoExterno extends EstadoUsuario {
 
 	@Override
-	public void gestionarOpinionPara(Muestra muestra, Opinion opinion) {
-		opinion.getUsuarioDueño().emitirOpinionDeSiendoUsuarioExperto(muestra, opinion);
+	public void realizarVerificacionesPara(Muestra muestra, Opinion opinion) throws UsuarioException {
+		realizarVerificacionDeQueNoEsElDueñoDeLaMuestra(muestra, opinion);
+		realizarVerificacionDeQueEsOpinionUnica(muestra, opinion);
+		realizarVerificacionDeQueNoEsMuestraVerificada(muestra);
+		
 	}
-
 }
