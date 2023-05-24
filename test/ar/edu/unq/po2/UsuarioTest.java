@@ -3,14 +3,18 @@ package ar.edu.unq.po2;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+import org.junit.Rule;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.rules.ExpectedException;
 import org.mockito.Mockito;
 
+import ar.edu.unq.po2.usuarioExceptions.UsuarioException;
 import ar.edu.unq.po2.usuarioExceptions.UsuarioNoEsOpinionUnicaException;
 
 class UsuarioTest {
-	
+
 	private Usuario julianBasico;
 	private Usuario federicoExpertoInterno;
 	private Usuario francoExpertoExterno;
@@ -24,7 +28,9 @@ class UsuarioTest {
 	private EstadoUsuario estadoUsuarioExpertoInterno;
 	private EstadoUsuario estadoUsuarioExpertoExterno;
 
-
+	@Rule
+	public final ExpectedException thrown = ExpectedException.none();
+	
 	@BeforeEach
 	void setUp() {
 		
@@ -87,20 +93,31 @@ class UsuarioTest {
 	}
 	
 	@Test
-	void testUnUsuarioBasicoNoPuedeOpinarDosVeces() {
+	void testUnUsuarioDelegaLaVerificacionDeLaEmisionDeLaOpinion() throws UsuarioException {
 		
-		// Setup
-		if (muestra.opinoElUsuario(opinion.getUsuarioDueño())) {
-			throw new UsuarioNoEsOpinionUnicaException();
-		}
+		//Exercise
+		julianBasico.emitirOpinionDe(muestra1, TipoDeOpinion.PHTIACHINCHE);
 		
-		// Exercise
-		julianBasico.emitirOpinionDeSiendoUsuarioBasico(muestra1, opinion1);
-		julianBasico.emitirOpinionDeSiendoUsuarioBasico(muestra1, opinion1);
-				
-		// Verify
-		verify(this.julianBasico.getState(), times(0)).gestionarOpinionPara(Mockito.any(Muestra.class), Mockito.any(Opinion.class));
-		verify(this.julianBasico.getState(), Mockito.
+		//Verify
+		verify(julianBasico.getState(), times(1)).realizarVerificacionesPara(Mockito.any(Muestra.class), (Mockito.any(Opinion.class)));
 	}
 
+	@Test
+    public void testUnUsuarioDelegaLaVerificacionDeLaEmisionDeLaOpinionQueLanzaUnaExcepcion() { 
+        
+		//Setup
+		when(muestra1.esDueñoDeLaMuestra(julianBasico)).thenReturn(true);
+		when(estadoUsuarioBasico.realizarVerificacionesPara(muestra1, opinion1)).thenReturn(null);
+				/*
+				thenReturn(
+				if (muestra1.esDueñoDeLaMuestra(julianBasico)) {
+					throw new UsuarioNoEsOpinionUnicaException();
+			});
+		*/
+		//Excercise-Verify
+		Assertions.assertThrows(UsuarioNoEsOpinionUnicaException.class, () -> {
+			julianBasico.emitirOpinionDe(muestra1, TipoDeOpinion.IMAGENPOCOCLARA);
+        });
+    }
 }
+
