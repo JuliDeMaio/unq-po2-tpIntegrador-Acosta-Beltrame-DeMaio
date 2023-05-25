@@ -11,9 +11,6 @@ public class EstadoUsuarioExpertoInterno extends EstadoUsuario {
 
 	@Override
 	public void realizarVerificacionesPara(Muestra muestra, Opinion opinion) throws UsuarioException {
-		realizarVerificacionDeQueNoEsElDueñoDeLaMuestra(muestra, opinion);
-		realizarVerificacionDeQueEsOpinionUnica(muestra, opinion);
-		realizarVerificacionDeQueNoEsMuestraVerificada(muestra);
 		
 	}
 }

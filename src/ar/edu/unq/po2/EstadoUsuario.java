@@ -11,7 +11,7 @@ import ar.edu.unq.po2.usuarioExceptions.UsuarioNoEsOpinionUnicaException;
 	 * 
 	 */
 public abstract class EstadoUsuario {
-
+	
 	public abstract void realizarVerificacionesPara(Muestra muestra, Opinion opinion) throws UsuarioException;
 
 
