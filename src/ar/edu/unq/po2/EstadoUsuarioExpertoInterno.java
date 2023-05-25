@@ -1,16 +1,10 @@
 package ar.edu.unq.po2;
 
-import ar.edu.unq.po2.usuarioExceptions.UsuarioException;
-
 /**
 	 * @author Acosta, Federico
 	 * @see Usuario, EstadoUsuarioBasico, EstadoUsuarioExpertoExterno, IEstadoUsuario
 	 * 
 	 */
-public class EstadoUsuarioExpertoInterno extends EstadoUsuario {
+public class EstadoUsuarioExpertoInterno extends EstadoUsuarioExperto {
 
-	@Override
-	public void realizarVerificacionesPara(Muestra muestra, Opinion opinion) throws UsuarioException {
-		
-	}
 }

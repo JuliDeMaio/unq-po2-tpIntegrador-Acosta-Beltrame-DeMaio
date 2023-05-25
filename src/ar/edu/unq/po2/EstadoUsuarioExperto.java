@@ -2,7 +2,7 @@ package ar.edu.unq.po2;
 
 import ar.edu.unq.po2.usuarioExceptions.UsuarioException;
 
-public class EstadoUsuarioExperto extends EstadoUsuario {
+public abstract class EstadoUsuarioExperto extends EstadoUsuario {
 
 	@Override
 	public void realizarVerificacionesPara(Muestra muestra, Opinion opinion) throws UsuarioException {
