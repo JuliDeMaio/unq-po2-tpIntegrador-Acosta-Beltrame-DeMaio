@@ -1,4 +1,4 @@
-package ar.edu.unq.po2;
+package ar.edu.unq.po2.estadosDeUsuario;
 
 /**
 	 * @author Acosta, Federico
@@ -6,5 +6,15 @@ package ar.edu.unq.po2;
 	 * 
 	 */
 public class EstadoUsuarioExpertoExterno extends EstadoUsuarioExperto {
+
+	@Override
+	public boolean esEstadoExpertoInterno() {
+		return false;
+	}
+
+	@Override
+	public boolean esEstadoExpertoExterno() {
+		return true;
+	}
 
 }

@@ -3,6 +3,7 @@ package ar.edu.unq.po2;
 import java.util.ArrayList;
 import java.util.List;
 
+import ar.edu.unq.po2.estadosDeUsuario.EstadoUsuario;
 import ar.edu.unq.po2.usuarioExceptions.UsuarioException;
 
 	/**
@@ -46,7 +47,7 @@ public class Usuario {
 		this.muestrasRegistradas = muestrasRegistradas;
 	}
 
-	private void setState(EstadoUsuario estadoDeUsuario) {
+	public void setState(EstadoUsuario estadoDeUsuario) {
 		this.estadoActual = estadoDeUsuario;
 	}
 	
@@ -77,5 +78,33 @@ public class Usuario {
 	public void emitirOpinionVerificadaDe(Muestra muestra, Opinion opinion) {
 		this.guardarOpinion(opinion);
 		muestra.publicarOpinion(opinion);
+	}
+
+	public int cantidadDeMuestrasEmitidasEnUltimos30Dias() {
+		return this.getMuestrasRegistradas()
+				   .stream()
+				   .filter(o -> o.seEmitioEnLosUltimos30Dias())
+				   .toList()
+				   .size();
+	}
+
+	public int cantidadDeOpinionesEmitidasEnUltimos30Dias() {
+		return this.getOpinionesRegistradas()
+				   .stream()
+				   .filter(m -> m.seEmitioEnLosUltimos30Dias())
+				   .toList()
+				   .size();
+	}
+
+	public boolean esUsuarioBasico() {
+		return this.getState().esEstadoBasico();
+	}
+
+	public boolean esUsuarioExpertoInterno() {
+		return this.getState().esEstadoExpertoInterno();
+	}
+
+	public boolean esUsuarioExpertoExterno() {
+		return this.getState().esEstadoExpertoExterno();
 	}
 }

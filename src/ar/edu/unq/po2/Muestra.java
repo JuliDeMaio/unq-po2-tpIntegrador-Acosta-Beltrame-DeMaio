@@ -1,6 +1,8 @@
 package ar.edu.unq.po2;
 
-	/**
+import java.time.LocalDate;
+
+/**
 	 * @author Acosta, Federico
 	 * @see Usuario, Opinion, TipoDeOpinion, Ubicacion
 	 * 
@@ -40,5 +42,15 @@ public class Muestra {
 			 this.getOpiniones.add(opinion)
 			 */
 			
+		}
+
+		public LocalDate getFechaDeEmision() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		public boolean seEmitioEnLosUltimos30Dias() {
+			// TODO Auto-generated method stub
+			return null;
 		}
 }

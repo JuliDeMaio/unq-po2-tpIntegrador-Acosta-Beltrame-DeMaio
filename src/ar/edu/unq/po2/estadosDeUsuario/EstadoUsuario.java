@@ -1,5 +1,7 @@
-package ar.edu.unq.po2;
+package ar.edu.unq.po2.estadosDeUsuario;
 
+import ar.edu.unq.po2.Muestra;
+import ar.edu.unq.po2.Opinion;
 import ar.edu.unq.po2.usuarioExceptions.UsuarioEsDueñoDeLaMuestraException;
 import ar.edu.unq.po2.usuarioExceptions.UsuarioEsMuestraVerificadaException;
 import ar.edu.unq.po2.usuarioExceptions.UsuarioException;
@@ -32,4 +34,12 @@ public abstract class EstadoUsuario {
 			throw new UsuarioEsMuestraVerificadaException();
 		}
 	}
+
+	public abstract boolean esEstadoBasico();
+
+
+	public abstract boolean esEstadoExpertoInterno();
+
+
+	public abstract boolean esEstadoExpertoExterno();
 }

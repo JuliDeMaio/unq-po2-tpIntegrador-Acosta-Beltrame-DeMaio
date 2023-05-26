@@ -1,4 +1,4 @@
-package ar.edu.unq.po2;
+package ar.edu.unq.po2.EstadoDeUsuarioTests;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -6,6 +6,10 @@ import static org.mockito.Mockito.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import ar.edu.unq.po2.Muestra;
+import ar.edu.unq.po2.Opinion;
+import ar.edu.unq.po2.Usuario;
+import ar.edu.unq.po2.estadosDeUsuario.EstadoUsuarioExpertoInterno;
 import ar.edu.unq.po2.usuarioExceptions.UsuarioEsDueñoDeLaMuestraException;
 import ar.edu.unq.po2.usuarioExceptions.UsuarioEsMuestraVerificadaException;
 import ar.edu.unq.po2.usuarioExceptions.UsuarioNoEsOpinionUnicaException;
@@ -77,6 +81,24 @@ class EstadoUsuarioExpertoInternoTest {
 		assertThrows(UsuarioEsMuestraVerificadaException.class, () -> {
 			estadoUsuarioExpertoInterno.realizarVerificacionesPara(muestra1, opinion1);
         });
+	}
+	
+	@Test
+	void testUnEstadoConoceSiEsEstadoBasico() {
+		// Verify
+		assertFalse(estadoUsuarioExpertoInterno.esEstadoBasico());
+	}
+	
+	@Test
+	void testUnEstadoConoceSiEsEstadoExpertoInterno() {
+		// Verify
+		assertTrue(estadoUsuarioExpertoInterno.esEstadoExpertoInterno());
+	}
+	
+	@Test
+	void testUnEstadoConoceSiEsEstadoExpertoExterno() {
+		// Verify
+		assertFalse(estadoUsuarioExpertoInterno.esEstadoExpertoExterno());
 	}
 
 }

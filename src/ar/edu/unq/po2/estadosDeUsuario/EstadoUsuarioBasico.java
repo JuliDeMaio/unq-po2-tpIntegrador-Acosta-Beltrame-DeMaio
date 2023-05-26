@@ -1,5 +1,7 @@
-package ar.edu.unq.po2;
+package ar.edu.unq.po2.estadosDeUsuario;
 
+import ar.edu.unq.po2.Muestra;
+import ar.edu.unq.po2.Opinion;
 import ar.edu.unq.po2.usuarioExceptions.*;
 
 /**
@@ -23,5 +25,20 @@ public class EstadoUsuarioBasico extends EstadoUsuario {
 		if  (muestra.opinoAlMenosUnExperto()) {
 			throw new UsuarioYaVotoUnExpertoException();
 		}
+	}
+
+	@Override
+	public boolean esEstadoBasico() {
+		return true;
+	}
+
+	@Override
+	public boolean esEstadoExpertoInterno() {
+		return false;
+	}
+
+	@Override
+	public boolean esEstadoExpertoExterno() {
+		return false;
 	}
 }
