@@ -21,9 +21,6 @@ class GestorDeCategoriaDeUsuariosTest {
 	private Usuario usuario4;
 	private Usuario usuario5;
 	
-	private EstadoUsuarioExpertoInterno estadoUsuarioExpertoInterno;
-	private EstadoUsuarioBasico estadoUsuarioBasico;
-	
 	@BeforeEach
 	void setUp() throws Exception {
 		// SUT
@@ -35,9 +32,6 @@ class GestorDeCategoriaDeUsuariosTest {
 		usuario3 = mock(Usuario.class);
 		usuario4 = mock(Usuario.class);
 		usuario5 = mock(Usuario.class);
-		
-		estadoUsuarioExpertoInterno = mock(EstadoUsuarioExpertoInterno.class);
-		estadoUsuarioBasico = mock(EstadoUsuarioBasico.class);
 	}
 
 	@Test
@@ -57,7 +51,7 @@ class GestorDeCategoriaDeUsuariosTest {
 		
 		// Verify
 		assertEquals(cantidadDeUsuariosEsperada, gestorDeCategoria.cantidadDeUsuariosRegistrados());
-		assertTrue(gestorDeCategoria.getUsuariosRegistrados().includes(usuario1));
+		assertTrue(gestorDeCategoria.getUsuariosRegistrados().contains(usuario1));
 	}
 	
 	@Test
@@ -70,7 +64,7 @@ class GestorDeCategoriaDeUsuariosTest {
 		
 		// Verify
 		assertTrue(gestorDeCategoria.getUsuariosRegistrados().isEmpty());
-		assertFalse(gestorDeCategoria.getUsuariosRegistrados().includes(usuario1));
+		assertFalse(gestorDeCategoria.getUsuariosRegistrados().contains(usuario1));
 	}
 	
 	@Test
