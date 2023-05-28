@@ -32,6 +32,8 @@ class UsuarioTest {
 	private EstadoUsuario estadoUsuarioBasico;
 	private EstadoUsuario estadoUsuarioExpertoInterno;
 	
+	private AppWeb appWeb;
+	
 	@BeforeEach
 	void setUp() {
 		
@@ -47,6 +49,8 @@ class UsuarioTest {
 		opinion3 = mock(Opinion.class);
 		opinion4 = mock(Opinion.class);
 		opinion5 = mock(Opinion.class);
+		
+		appWeb = AppWeb.getInstance();
 		
 		// Mock
 		estadoUsuarioBasico = mock(EstadoUsuarioBasico.class);
@@ -107,6 +111,17 @@ class UsuarioTest {
 				
 		// Verify
 		assertEquals(cantidadMuestrasEsperadas, julianBasico.cantidadMuestras());
+	}
+	
+	@Test
+	void testUnUsuarioPublicaUnaMuestraYEstaRecibeElMensajeParaGuardarla() {
+		
+		// Exercise
+		julianBasico.publicarMuestra(muestra1);
+		
+		// Verify
+		assertTrue(appWeb.getMuestras().contains(muestra1));
+		assertEquals(appWeb.getMuestras().size(), 1);
 	}
 	
 	@Test

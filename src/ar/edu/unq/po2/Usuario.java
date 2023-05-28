@@ -9,7 +9,7 @@ import ar.edu.unq.po2.usuarioExceptions.UsuarioException;
 	/**
 	 * @author Acosta, Federico
 	 * 		   De Maio, Julian
-	 * 		   Beltrame, Fracon
+	 * 		   Beltrame, Franco
 	 * 
 	 * @see EstadoUsuario, UsuarioException
 	 **/
@@ -73,6 +73,11 @@ public class Usuario {
 		
 		this.getState().realizarVerificacionesPara(muestra, opinionAEmitir);
 		this.emitirOpinionVerificadaDe(muestra, opinionAEmitir);
+	}
+	
+	public void publicarMuestra(Muestra muestra) {
+		AppWeb.getInstance().guardarMuestra(muestra);
+		this.guardarMuestra(muestra);
 	}
 	
 	public void emitirOpinionVerificadaDe(Muestra muestra, Opinion opinion) {
