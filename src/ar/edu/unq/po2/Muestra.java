@@ -53,4 +53,9 @@ public class Muestra {
 			// TODO Auto-generated method stub
 			return null;
 		}
+
+		public Ubicacion getUbicacion() {
+			// TODO Auto-generated method stub
+			return null;
+		}
 }

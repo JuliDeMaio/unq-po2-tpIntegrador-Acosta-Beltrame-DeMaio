@@ -1,5 +1,6 @@
 package ar.edu.unq.po2;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,7 +70,7 @@ public class Usuario {
 
 	public void emitirOpinionDe(Muestra muestra, TipoDeOpinion tipoDeOpinion) throws UsuarioException {
 		
-		Opinion opinionAEmitir = new Opinion(this, tipoDeOpinion);
+		Opinion opinionAEmitir = new Opinion(tipoDeOpinion, this, LocalDate.now());
 		
 		this.getState().realizarVerificacionesPara(muestra, opinionAEmitir);
 		this.emitirOpinionVerificadaDe(muestra, opinionAEmitir);
