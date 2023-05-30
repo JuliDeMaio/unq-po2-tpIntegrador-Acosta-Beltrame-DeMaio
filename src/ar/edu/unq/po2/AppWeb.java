@@ -3,12 +3,13 @@ package ar.edu.unq.po2;
 import java.util.HashSet;
 import java.util.Set;
 
-public final class AppWeb {
+import ar.edu.unq.po2.filtros.Filtro;
+
+public class AppWeb {
 	
-	private static AppWeb instance;
 	private Set<Muestra> muestras;
 
-	private AppWeb() {
+	public AppWeb() {
 	    this.setMuestras(new HashSet<Muestra>());
 	}
 	
@@ -19,19 +20,22 @@ public final class AppWeb {
 	private void setMuestras(Set<Muestra> muestras) {
 		this.muestras = muestras;
 	}
-	
-	public static AppWeb getInstance() {
-	    if (instance == null) {
-	        instance = new AppWeb();
-	    }
-	    return instance;
-	}
 
 	public void guardarMuestra(Muestra muestra) {
 		this.getMuestras().add(muestra);
 	}
+	
+	public void eliminarMuestra(Muestra muestra) {
+		this.getMuestras().remove(muestra);
+	}
 
-	public void reiniciarApp() {
-		this.getMuestras().clear();
+	public Set<Muestra> filtrarMuestras(Set<Muestra> muestras, Filtro filtro) {
+		return (filtro.filtrarMuestras(muestras));
+	}
+
+	public Set<Muestra> muestrasDeZonaDeCobertura(Set<Muestra> muestras, ZonaDeCobertura zonaDeCobertura) {
+		return Set.copyOf(muestras.stream()
+								  .filter(m -> m.seTomoDentroDeZonaDeCobertura(zonaDeCobertura))
+								  .toList());
 	}
 }

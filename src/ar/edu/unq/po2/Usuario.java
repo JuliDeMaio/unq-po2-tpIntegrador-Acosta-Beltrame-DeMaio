@@ -76,11 +76,6 @@ public class Usuario {
 		this.emitirOpinionVerificadaDe(muestra, opinionAEmitir);
 	}
 	
-	public void publicarMuestra(Muestra muestra) {
-		AppWeb.getInstance().guardarMuestra(muestra);
-		this.guardarMuestra(muestra);
-	}
-	
 	public void emitirOpinionVerificadaDe(Muestra muestra, Opinion opinion) {
 		this.guardarOpinion(opinion);
 		muestra.publicarOpinion(opinion);

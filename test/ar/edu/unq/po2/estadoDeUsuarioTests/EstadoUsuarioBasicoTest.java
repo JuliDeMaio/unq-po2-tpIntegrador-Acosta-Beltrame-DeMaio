@@ -1,4 +1,4 @@
-package ar.edu.unq.po2.EstadoDeUsuarioTests;
+package ar.edu.unq.po2.estadoDeUsuarioTests;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;

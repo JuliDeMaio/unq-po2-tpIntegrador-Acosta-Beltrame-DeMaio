@@ -58,4 +58,19 @@ public class Muestra {
 			// TODO Auto-generated method stub
 			return null;
 		}
+
+		public Object getResultadoActual() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		public boolean seTomoDentroDeZonaDeCobertura(ZonaDeCobertura zonaDeCobertura1) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		public Object getState() {
+			// TODO Auto-generated method stub
+			return null;
+		}
 }
