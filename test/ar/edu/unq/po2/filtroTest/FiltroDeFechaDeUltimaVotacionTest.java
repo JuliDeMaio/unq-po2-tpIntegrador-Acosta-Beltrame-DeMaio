@@ -36,6 +36,15 @@ class FiltroDeFechaDeUltimaVotacionTest {
 	}
 
 	@Test
+	void testInicializacionDeUnFiltroDeFechaDeUltimaVotacion() {
+		// Setup
+		LocalDate filtroEspecificadoEsperado = LocalDate.of(1986, Month.JUNE, 29);
+		
+		// Verify
+		assertEquals(filtroEspecificadoEsperado, filtroDeFechaDeUltimaVotacion1.getFiltroEspecificado());
+	}
+
+	@Test
 	void testUnFiltroFiltraUnSetDeMuestrasVaciaYDevuelveUnSetDeMuestrasVacia() {
 		
 		// Setup

@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import ar.edu.unq.po2.Muestra;
 import ar.edu.unq.po2.ResultadoMuestra;
+import ar.edu.unq.po2.estadosDeMuestra.EstadoMuestraVerificada;
 import ar.edu.unq.po2.filtros.FiltroDeTipoDeInsecto;
 
 class FiltroDeTipoDeInsectoTest {
@@ -34,6 +35,15 @@ class FiltroDeTipoDeInsectoTest {
 		muestra4 = mock(Muestra.class);
 	}
 
+	@Test
+	void testInicializacionDeUnFiltroDeTipoDeInsecto() {
+		// Setup
+		 ResultadoMuestra filtroEspecificadoEsperado = (ResultadoMuestra.PHTIACHINCHE);
+		
+		// Verify
+		assertEquals(filtroEspecificadoEsperado, filtroDeTipoDeInsecto1.getFiltroEspecificado());
+	}	
+	
 	@Test
 	void testUnFiltroFiltraUnSetDeMuestrasVaciaYDevuelveUnSetDeMuestrasVacia() {
 		

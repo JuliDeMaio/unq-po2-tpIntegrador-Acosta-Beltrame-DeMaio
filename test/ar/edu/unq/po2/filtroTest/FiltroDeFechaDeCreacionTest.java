@@ -35,7 +35,17 @@ class FiltroDeFechaDeCreacionTest {
 		muestra3 = mock(Muestra.class);
 		muestra4 = mock(Muestra.class);
 	}
+	
+	@Test
+	void testInicializacionDeUnFiltroDeFechaDeCreacion() {
+		// Setup
+		LocalDate filtroEspecificadoEsperado = LocalDate.of(2000, Month.NOVEMBER, 22);
+		
+		// Verify
+		assertEquals(filtroEspecificadoEsperado, filtroDeFechaDeCreacion1.getFiltroEspecificado());
+	}
 
+	
 	@Test
 	void testUnFiltroFiltraUnSetDeMuestrasVaciaYDevuelveUnSetDeMuestrasVacia() {
 		
