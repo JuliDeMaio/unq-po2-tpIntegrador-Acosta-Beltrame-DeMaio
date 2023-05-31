@@ -73,4 +73,9 @@ public class Muestra {
 			// TODO Auto-generated method stub
 			return null;
 		}
+
+		public LocalDate obtenerFechaDeUltimaVotacion() {
+			// TODO Auto-generated method stub
+			return null;
+		}
 }
