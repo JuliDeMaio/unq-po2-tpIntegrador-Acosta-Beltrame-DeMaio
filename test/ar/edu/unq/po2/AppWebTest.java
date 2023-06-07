@@ -7,7 +7,6 @@ import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import ar.edu.unq.po2.filtros.FiltroDeTipoDeInsecto;
 
 class AppWebTest {
@@ -17,6 +16,10 @@ class AppWebTest {
 	private Muestra muestra1;
 	private Muestra muestra2;
 	private Muestra muestra3;
+	
+	private Usuario usuario1;
+	private Usuario usuario2;
+	private Usuario usuario3;
 	
 	private FiltroDeTipoDeInsecto filtroPorInsecto1;
 	
@@ -36,6 +39,10 @@ class AppWebTest {
 		filtroPorInsecto1 = mock(FiltroDeTipoDeInsecto.class);
 		
 		zonaDeCobertura1 = mock(ZonaDeCobertura.class);
+		
+		usuario1 = mock(Usuario.class);
+		usuario2 = mock(Usuario.class);
+		usuario3 = mock(Usuario.class);
 	}
 	
 	@Test
@@ -43,6 +50,7 @@ class AppWebTest {
 		
 		// Verify
 		assertTrue(appWeb.getMuestras().isEmpty());
+		assertTrue(appWeb.getUsuariosRegistrados().isEmpty());
 	}
 
 	@Test
@@ -107,5 +115,61 @@ class AppWebTest {
 		assertEquals(cantidadDeMuestrasEsperada, listaDeMuestrasResultante.size());
 		assertTrue(listaDeMuestrasResultante.contains(muestra1));
 		assertTrue(listaDeMuestrasResultante.contains(muestra2));	
+	}
+	
+	@Test
+	void testVerificacionCuandoUnaAppWebAgregaUnUsuario() {
+		// Setup
+		int cantidadDeUsuariosEsperada = 1;
+		
+		// Exercise
+		appWeb.agregarUsuario(usuario1);
+		
+		// Verify
+		assertEquals(cantidadDeUsuariosEsperada, appWeb.cantidadDeUsuariosRegistrados());
+		assertTrue(appWeb.getUsuariosRegistrados().contains(usuario1));
+	}
+	
+	@Test
+	void testVerificacionCuandoUnaAppWebEliminaUnUsuario() {
+		// Setup
+		appWeb.agregarUsuario(usuario1);
+		
+		// Exercise
+		appWeb.eliminarUsuario(usuario1);
+		
+		// Verify
+		assertTrue(appWeb.getUsuariosRegistrados().isEmpty());
+		assertFalse(appWeb.getUsuariosRegistrados().contains(usuario1));
+	}
+
+	@Test
+	void testUnaAppWebActualizaLaCategoriaDeUnUsuarioYElUsuarioRecibeLaDelegacion() {
+		
+		// Setup
+		appWeb.agregarUsuario(usuario1);
+		
+		// Exercise
+		appWeb.actualizarCategoriaDeUsuario(usuario1);
+		
+		// Verify
+		verify(usuario1, times(1)).actualizarCategoria();
+	}
+	
+	@Test
+	void testUnaAppWebActualizaLasCategoriasDeVariosUsuarioYLosUsuariosRecibenLaDelegacion() {
+		
+		// Setup
+		appWeb.agregarUsuario(usuario1);
+		appWeb.agregarUsuario(usuario2);
+		appWeb.agregarUsuario(usuario3);
+		
+		// Exercise
+		appWeb.actualizarCategoriasDeUsuarios();
+		
+		// Verify
+		verify(usuario1, times(1)).actualizarCategoria();
+		verify(usuario2, times(1)).actualizarCategoria();
+		verify(usuario3, times(1)).actualizarCategoria();
 	}
 }

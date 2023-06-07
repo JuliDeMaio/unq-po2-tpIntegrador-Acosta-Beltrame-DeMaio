@@ -2,6 +2,7 @@ package ar.edu.unq.po2.estadosDeUsuario;
 
 import ar.edu.unq.po2.Muestra;
 import ar.edu.unq.po2.Opinion;
+import ar.edu.unq.po2.Usuario;
 import ar.edu.unq.po2.usuarioExceptions.*;
 
 /**
@@ -28,6 +29,13 @@ public class EstadoUsuarioBasico extends EstadoUsuario {
 	}
 
 	@Override
+	public void actualizarCategoria(Usuario usuario) {
+		if(usuario.cumpleConLosRequisitosDeUsuarioExperto()) {
+			usuario.setState(new EstadoUsuarioExpertoInterno());
+		}
+	}
+	
+	@Override
 	public boolean esEstadoBasico() {
 		return true;
 	}
@@ -41,4 +49,5 @@ public class EstadoUsuarioBasico extends EstadoUsuario {
 	public boolean esEstadoExpertoExterno() {
 		return false;
 	}
+
 }

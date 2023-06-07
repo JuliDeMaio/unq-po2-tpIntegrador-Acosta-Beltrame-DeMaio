@@ -75,7 +75,7 @@ public class Muestra {
 		}
 
 		public LocalDate obtenerFechaDeUltimaVotacion() {
-			// TODO Auto-generated method stub
+			// Hacer con Streams de Min, obtener la fecha mas reciente y no hacer SortedCollection.
 			return null;
 		}
 }

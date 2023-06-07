@@ -22,12 +22,34 @@ class UsuarioTest {
 	private Muestra muestra3;
 	private Muestra muestra4;
 	private Muestra muestra5;
+	private Muestra muestra6;
+	private Muestra muestra7;
+	private Muestra muestra8;
+	private Muestra muestra9;
+	private Muestra muestra10;
+	private Muestra muestra11;
 	
 	private Opinion opinion1;
 	private Opinion opinion2;
 	private Opinion opinion3;
 	private Opinion opinion4;
 	private Opinion opinion5;
+	private Opinion opinion6;
+	private Opinion opinion7;
+	private Opinion opinion8;
+	private Opinion opinion9;
+	private Opinion opinion10;
+	private Opinion opinion11;
+	private Opinion opinion12;
+	private Opinion opinion13;
+	private Opinion opinion14;
+	private Opinion opinion15;
+	private Opinion opinion16;
+	private Opinion opinion17;
+	private Opinion opinion18;
+	private Opinion opinion19;
+	private Opinion opinion20;
+	private Opinion opinion21;
 	
 	private EstadoUsuario estadoUsuarioBasico;
 	private EstadoUsuario estadoUsuarioExpertoInterno;
@@ -41,12 +63,34 @@ class UsuarioTest {
 		muestra3 = mock(Muestra.class);
 		muestra4 = mock(Muestra.class);
 		muestra5 = mock(Muestra.class);
+		muestra6 = mock(Muestra.class);
+		muestra7 = mock(Muestra.class);
+		muestra8 = mock(Muestra.class);
+		muestra9 = mock(Muestra.class);
+		muestra10 = mock(Muestra.class);
+		muestra11 = mock(Muestra.class);
 		
 		opinion1 = mock(Opinion.class);
 		opinion2 = mock(Opinion.class);
 		opinion3 = mock(Opinion.class);
 		opinion4 = mock(Opinion.class);
 		opinion5 = mock(Opinion.class);
+		opinion6 = mock(Opinion.class);
+		opinion7 = mock(Opinion.class);
+		opinion8 = mock(Opinion.class);
+		opinion9 = mock(Opinion.class);
+		opinion10 = mock(Opinion.class);
+		opinion11 = mock(Opinion.class);
+		opinion12 = mock(Opinion.class);
+		opinion13 = mock(Opinion.class);
+		opinion14 = mock(Opinion.class);
+		opinion15 = mock(Opinion.class);
+		opinion16 = mock(Opinion.class);
+		opinion17 = mock(Opinion.class);
+		opinion18 = mock(Opinion.class);
+		opinion19 = mock(Opinion.class);
+		opinion20 = mock(Opinion.class);
+		opinion21 = mock(Opinion.class);
 		
 		// Mock
 		estadoUsuarioBasico = mock(EstadoUsuarioBasico.class);
@@ -202,7 +246,94 @@ class UsuarioTest {
 		assertFalse(julianBasico.esUsuarioExpertoExterno());
 	}
 	
+	@Test
+	void testUnUsuarioDelegaLaVerificacionDeUnCategoria() {
+		
+		// Exercise
+		julianBasico.actualizarCategoria();
+		
+		// Verify
+		verify(estadoUsuarioBasico, times(1)).actualizarCategoria(julianBasico);
+	}
+	
+	@Test
+	void testUnUsuarioSabeQueCumpleConLosRequisitosParaSerUsuarioExperto() {
+		// Setup
+		when(opinion1.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		when(opinion2.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		when(opinion3.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		when(opinion4.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		when(opinion5.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		when(opinion6.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		when(opinion7.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		when(opinion8.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		when(opinion9.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		when(opinion10.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		when(opinion11.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		when(opinion12.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		when(opinion13.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		when(opinion14.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		when(opinion15.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		when(opinion16.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		when(opinion17.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		when(opinion18.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		when(opinion19.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		when(opinion20.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		when(opinion21.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		
+		julianBasico.guardarOpinion(opinion1);
+		julianBasico.guardarOpinion(opinion2);
+		julianBasico.guardarOpinion(opinion3);
+		julianBasico.guardarOpinion(opinion4);
+		julianBasico.guardarOpinion(opinion5);
+		julianBasico.guardarOpinion(opinion6);
+		julianBasico.guardarOpinion(opinion7);
+		julianBasico.guardarOpinion(opinion8);
+		julianBasico.guardarOpinion(opinion9);
+		julianBasico.guardarOpinion(opinion10);
+		julianBasico.guardarOpinion(opinion11);
+		julianBasico.guardarOpinion(opinion12);
+		julianBasico.guardarOpinion(opinion13);
+		julianBasico.guardarOpinion(opinion14);
+		julianBasico.guardarOpinion(opinion15);
+		julianBasico.guardarOpinion(opinion16);
+		julianBasico.guardarOpinion(opinion17);
+		julianBasico.guardarOpinion(opinion18);
+		julianBasico.guardarOpinion(opinion19);
+		julianBasico.guardarOpinion(opinion20);
+		julianBasico.guardarOpinion(opinion21);
+		
+		julianBasico.guardarMuestra(muestra1);
+		julianBasico.guardarMuestra(muestra2);
+		julianBasico.guardarMuestra(muestra3);
+		julianBasico.guardarMuestra(muestra4);
+		julianBasico.guardarMuestra(muestra5);
+		julianBasico.guardarMuestra(muestra6);
+		julianBasico.guardarMuestra(muestra7);
+		julianBasico.guardarMuestra(muestra8);
+		julianBasico.guardarMuestra(muestra9);
+		julianBasico.guardarMuestra(muestra10);
+		julianBasico.guardarMuestra(muestra11);
+		
+		when(muestra1.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		when(muestra2.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		when(muestra3.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		when(muestra4.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		when(muestra5.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		when(muestra6.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		when(muestra7.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		when(muestra8.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		when(muestra9.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		when(muestra10.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		when(muestra11.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		
+		// Verify
+		assertTrue(julianBasico.cumpleConLosRequisitosDeUsuarioExperto());
+	}
+	
+	@Test
+	void testUnUsuarioSabeQueNoCumpleConLosRequisitosParaSerUsuarioExperto() {
+		// Verify
+		assertFalse(julianBasico.cumpleConLosRequisitosDeUsuarioExperto());
+	}
 }
-
-
-

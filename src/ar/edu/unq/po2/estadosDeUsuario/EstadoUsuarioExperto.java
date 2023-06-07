@@ -17,5 +17,4 @@ public abstract class EstadoUsuarioExperto extends EstadoUsuario {
 	public boolean esEstadoBasico() {
 		return false;
 	}
-	
 }

@@ -108,4 +108,14 @@ public class Usuario {
 	public boolean esUsuarioExpertoExterno() {
 		return this.getState().esEstadoExpertoExterno();
 	}
+
+	public void actualizarCategoria() {
+		this.getState().actualizarCategoria(this);
+	}
+	
+	public boolean cumpleConLosRequisitosDeUsuarioExperto() {
+		return((this.cantidadDeMuestrasEmitidasEnUltimos30Dias() > 10) 
+			   &&
+			   (this.cantidadDeOpinionesEmitidasEnUltimos30Dias() > 20));
+	}
 }
