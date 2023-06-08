@@ -84,7 +84,6 @@ class EstadoUsuarioBasicoTest {
         });
 	}
 	
-	// LA DEBERIA CONOCER USUARIO BASICO????
 	@Test
 	void testEstadoUsuarioBasicoRealizaLaVerificacionYArrojaUsuarioEsMuestraVerificadaException() {
 		// Setup
@@ -115,4 +114,23 @@ class EstadoUsuarioBasicoTest {
 		assertFalse(estadoUsuarioBasico.esEstadoExpertoExterno());
 	}
 	
+	@Test
+	void testUnEstadoActualizaLaCategoriaDeUnUsuarioQueCumpleLosRequisitosParaSerUsuarioExpertoInterno() {
+		// Setup
+		when(usuario1.cumpleConLosRequisitosDeUsuarioExperto()).thenReturn(true);
+		// Exercise
+		estadoUsuarioBasico.actualizarCategoria(usuario1);
+		// Verify
+		verify(usuario1, times(1)).setState(any());
+	}
+	
+	@Test
+	void testUnEstadoNoActualizaLaCategoriaDeUnUsuarioQueNoCumpleLosRequisitosParaSerUsuarioExpertoInterno() {
+		// Setup
+		when(usuario1.cumpleConLosRequisitosDeUsuarioExperto()).thenReturn(false);
+		// Exercise
+		estadoUsuarioBasico.actualizarCategoria(usuario1);
+		// Verify
+		verify(usuario1, never()).setState(any());
+	}
 }

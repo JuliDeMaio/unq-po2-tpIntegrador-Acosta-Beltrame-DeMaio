@@ -10,8 +10,8 @@ class OrganizacionTest {
 	
 	private Organizacion organizacion1;
 	private Ubicacion ubicacion1;
-	private FuncionalidadExterna funcionalidadExternaSubida;
-	private FuncionalidadExterna funcionalidadExternaValidada;
+	private IFuncionalidadExterna funcionalidadExternaSubida;
+	private IFuncionalidadExterna funcionalidadExternaValidada;
 	private ZonaDeCobertura zonaDeCobertura1;
 	private Muestra muestra1;
 	
@@ -23,9 +23,11 @@ class OrganizacionTest {
 		zonaDeCobertura1 = mock(ZonaDeCobertura.class);
 		muestra1 = mock(Muestra.class);
 		
+		funcionalidadExternaSubida = mock(IFuncionalidadExterna.class);
+		funcionalidadExternaValidada = mock(IFuncionalidadExterna.class);
+		
+		// SUT
 		organizacion1 = new Organizacion(TipoDeOrganizacion.SALUD, 5, ubicacion1, funcionalidadExternaSubida, funcionalidadExternaValidada);
-		funcionalidadExternaSubida = mock(FuncionalidadExterna.class);
-		funcionalidadExternaValidada = mock(FuncionalidadExterna.class);
 	}
 
 	@Test

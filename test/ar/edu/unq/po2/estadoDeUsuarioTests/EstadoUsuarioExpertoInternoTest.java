@@ -1,6 +1,7 @@
 package ar.edu.unq.po2.estadoDeUsuarioTests;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -101,4 +102,24 @@ class EstadoUsuarioExpertoInternoTest {
 		assertFalse(estadoUsuarioExpertoInterno.esEstadoExpertoExterno());
 	}
 
+	@Test
+	void testUnEstadoActualizaLaCategoriaDeUnUsuarioQueNoCumpleLosRequisitosParaSeguirSiendoUsuarioExpertoInterno() {
+		// Setup
+		when(usuario1.cumpleConLosRequisitosDeUsuarioExperto()).thenReturn(false);
+		// Exercise
+		estadoUsuarioExpertoInterno.actualizarCategoria(usuario1);
+		// Verify
+		verify(usuario1, times(1)).setState(any());
+	}
+	
+	@Test
+	void testUnEstadoNoActualizaLaCategoriaDeUnUsuarioQueCumpleLosRequisitosParaSeguirSiendoUsuarioExpertoInterno() {
+		// Setup
+		when(usuario1.cumpleConLosRequisitosDeUsuarioExperto()).thenReturn(true);
+		// Exercise
+		estadoUsuarioExpertoInterno.actualizarCategoria(usuario1);
+		// Verify
+		verify(usuario1, never()).setState(any());
+	}
+	
 }

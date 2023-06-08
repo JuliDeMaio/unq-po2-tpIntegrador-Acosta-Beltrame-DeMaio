@@ -16,8 +16,8 @@ class ZonaDeCoberturaTest {
 	private ZonaDeCobertura zonaDeCobertura4;
 
 	
-	private ZonaDeCoberturaListener listener1;
-	private ZonaDeCoberturaListener listener2;
+	private IZonaDeCoberturaListener listener1;
+	private IZonaDeCoberturaListener listener2;
 	
 	private Ubicacion ubicacion1;
 	private Ubicacion ubicacion2;

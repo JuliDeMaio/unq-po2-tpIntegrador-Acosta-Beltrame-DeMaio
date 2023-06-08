@@ -3,18 +3,18 @@ package ar.edu.unq.po2;
 import java.util.HashSet;
 import java.util.Set;
 
-public class ZonaDeCobertura implements Subject{
+public class ZonaDeCobertura implements ISubject{
 	
 	private String nombre;
 	private double radioKm;
-	private Set<ZonaDeCoberturaListener> listeners;
+	private Set<IZonaDeCoberturaListener> listeners;
 	private Ubicacion epicentro;
 
 	public ZonaDeCobertura(String nombre, double radioKm, Ubicacion epicentro) {
 		super();
 		this.setNombre(nombre);
 		this.setRadioKm(radioKm);
-		this.setListeners(new HashSet<ZonaDeCoberturaListener>());
+		this.setListeners(new HashSet<IZonaDeCoberturaListener>());
 		this.setEpicentro(epicentro);
 	}
 
@@ -26,7 +26,7 @@ public class ZonaDeCobertura implements Subject{
 		return radioKm;
 	}
 
-	public Set<ZonaDeCoberturaListener> getListeners() {
+	public Set<IZonaDeCoberturaListener> getListeners() {
 		return listeners;
 	}
 
@@ -42,7 +42,7 @@ public class ZonaDeCobertura implements Subject{
 		this.radioKm = radioKm;
 	}
 	
-	private void setListeners(Set<ZonaDeCoberturaListener> listeners) {
+	private void setListeners(Set<IZonaDeCoberturaListener> listeners) {
 		this.listeners = listeners;
 	}
 	
@@ -58,12 +58,12 @@ public class ZonaDeCobertura implements Subject{
 	}
 
 	@Override
-	public void addObserver(ZonaDeCoberturaListener listener) {
+	public void addObserver(IZonaDeCoberturaListener listener) {
 		this.getListeners().add(listener);
 	}
 
 	@Override
-	public void removeObserver(ZonaDeCoberturaListener listener) {
+	public void removeObserver(IZonaDeCoberturaListener listener) {
 		this.getListeners().remove(listener);
 	}
 

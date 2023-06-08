@@ -6,16 +6,16 @@ package ar.edu.unq.po2;
 	 *
 	 */
 
-public class Organizacion implements ZonaDeCoberturaListener{
+public class Organizacion implements IZonaDeCoberturaListener{
 	
 	private TipoDeOrganizacion tipoDeOrganizacion;
 	private int cantidadDeTrabajadores;
 	private Ubicacion ubicacion;
-	private FuncionalidadExterna funcionalidadExternaSubida;
-	private FuncionalidadExterna funcionalidadExternaValidada;
+	private IFuncionalidadExterna funcionalidadExternaSubida;
+	private IFuncionalidadExterna funcionalidadExternaValidada;
 	
 	public Organizacion(TipoDeOrganizacion tipoDeOrganizacion, int cantidadDeTrabajadores, Ubicacion ubicacion, 
-						FuncionalidadExterna funcionalidadSubida, FuncionalidadExterna funcionalidadValidada) {
+						IFuncionalidadExterna funcionalidadSubida, IFuncionalidadExterna funcionalidadValidada) {
 		super();
 		this.setTipoDeOrganizacion(tipoDeOrganizacion);
 		this.setCantidadDeTrabajadores(cantidadDeTrabajadores);
@@ -36,11 +36,11 @@ public class Organizacion implements ZonaDeCoberturaListener{
 		return ubicacion;
 	}
 
-	public FuncionalidadExterna getFuncionalidadExternaSubida() {
+	public IFuncionalidadExterna getFuncionalidadExternaSubida() {
 		return funcionalidadExternaSubida;
 	}
 	
-	public FuncionalidadExterna getFuncionalidadExternaValidada() {
+	public IFuncionalidadExterna getFuncionalidadExternaValidada() {
 		return funcionalidadExternaValidada;
 	}
 	
@@ -56,11 +56,11 @@ public class Organizacion implements ZonaDeCoberturaListener{
 		this.ubicacion = ubicacion;
 	}
 
-	private void setFuncionalidadExternaSubida(FuncionalidadExterna funcionalidadExternaSubida) {
+	private void setFuncionalidadExternaSubida(IFuncionalidadExterna funcionalidadExternaSubida) {
 		this.funcionalidadExternaSubida = funcionalidadExternaSubida;
 	}
 
-	private void setFuncionalidadExternaValidada(FuncionalidadExterna funcionalidadExternaValidada) {
+	private void setFuncionalidadExternaValidada(IFuncionalidadExterna funcionalidadExternaValidada) {
 		this.funcionalidadExternaValidada = funcionalidadExternaValidada;
 	}
 

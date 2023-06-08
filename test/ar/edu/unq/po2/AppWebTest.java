@@ -56,7 +56,7 @@ class AppWebTest {
 	@Test
 	void testSeSubeUnaMuestraALaAppWebYQuedaRegistrada() {
 		// Setup
-		TipoDeVinchucaAlSubirMuestra resultadoDeMuestraEsperado = TipoDeVinchucaAlSubirMuestra.VINCHUCASORDIDA;
+		TipoDeOpinion resultadoDeMuestraEsperado = TipoDeOpinion.VINCHUCASORDIDA;
 		when(muestra1.getResultadoActual()).thenReturn(resultadoDeMuestraEsperado);
 		
 		// Exercise

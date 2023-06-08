@@ -257,6 +257,7 @@ class UsuarioTest {
 	}
 	
 	@Test
+	// Este test prueba el caso en el que el usuario cumple todos los requisitos de muestras y opiniones.
 	void testUnUsuarioSabeQueCumpleConLosRequisitosParaSerUsuarioExperto() {
 		// Setup
 		when(opinion1.seEmitioEnLosUltimos30Dias()).thenReturn(true);
@@ -336,4 +337,89 @@ class UsuarioTest {
 		// Verify
 		assertFalse(julianBasico.cumpleConLosRequisitosDeUsuarioExperto());
 	}
+	
+	@Test
+	// Este test prueba el caso en el que el usuario cumple el requisito de muestras en los ultimos 30 dias pero no así el de las opiniones.
+	void testUnUsuarioSabeQueNoCumpleConLosRequisitosParaSerUsuarioExperto2() {
+		// Setup
+		julianBasico.guardarMuestra(muestra1);
+		julianBasico.guardarMuestra(muestra2);
+		julianBasico.guardarMuestra(muestra3);
+		julianBasico.guardarMuestra(muestra4);
+		julianBasico.guardarMuestra(muestra5);
+		julianBasico.guardarMuestra(muestra6);
+		julianBasico.guardarMuestra(muestra7);
+		julianBasico.guardarMuestra(muestra8);
+		julianBasico.guardarMuestra(muestra9);
+		julianBasico.guardarMuestra(muestra10);
+		julianBasico.guardarMuestra(muestra11);
+		
+		when(muestra1.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		when(muestra2.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		when(muestra3.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		when(muestra4.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		when(muestra5.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		when(muestra6.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		when(muestra7.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		when(muestra8.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		when(muestra9.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		when(muestra10.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		when(muestra11.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		
+		// Verify
+		assertFalse(julianBasico.cumpleConLosRequisitosDeUsuarioExperto());
+	}
+	
+	@Test
+	// Este test prueba el caso en el que el usuario cumple el requisito de opiniones en los ultimos 30 dias pero no así el de las muestras.
+	void testUnUsuarioSabeQueNoCumpleConLosRequisitosParaSerUsuarioExperto3() {
+		// SetUp
+		when(opinion1.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		when(opinion2.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		when(opinion3.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		when(opinion4.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		when(opinion5.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		when(opinion6.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		when(opinion7.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		when(opinion8.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		when(opinion9.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		when(opinion10.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		when(opinion11.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		when(opinion12.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		when(opinion13.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		when(opinion14.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		when(opinion15.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		when(opinion16.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		when(opinion17.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		when(opinion18.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		when(opinion19.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		when(opinion20.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		when(opinion21.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		
+		julianBasico.guardarOpinion(opinion1);
+		julianBasico.guardarOpinion(opinion2);
+		julianBasico.guardarOpinion(opinion3);
+		julianBasico.guardarOpinion(opinion4);
+		julianBasico.guardarOpinion(opinion5);
+		julianBasico.guardarOpinion(opinion6);
+		julianBasico.guardarOpinion(opinion7);
+		julianBasico.guardarOpinion(opinion8);
+		julianBasico.guardarOpinion(opinion9);
+		julianBasico.guardarOpinion(opinion10);
+		julianBasico.guardarOpinion(opinion11);
+		julianBasico.guardarOpinion(opinion12);
+		julianBasico.guardarOpinion(opinion13);
+		julianBasico.guardarOpinion(opinion14);
+		julianBasico.guardarOpinion(opinion15);
+		julianBasico.guardarOpinion(opinion16);
+		julianBasico.guardarOpinion(opinion17);
+		julianBasico.guardarOpinion(opinion18);
+		julianBasico.guardarOpinion(opinion19);
+		julianBasico.guardarOpinion(opinion20);
+		julianBasico.guardarOpinion(opinion21);
+		
+		// Verify
+		assertFalse(julianBasico.cumpleConLosRequisitosDeUsuarioExperto());
+	}
+	
 }
