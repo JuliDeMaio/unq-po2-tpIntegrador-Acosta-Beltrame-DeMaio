@@ -1,6 +1,10 @@
 package ar.edu.unq.po2;
 
 import java.time.LocalDate;
+import java.util.List;
+
+import ar.edu.unq.po2.estadosDeMuestra.EstadoMuestraOpinadaPorUnExperto;
+import ar.edu.unq.po2.estadosDeMuestra.IEstadoMuestra;
 
 /**
 	 * @author Acosta, Federico
@@ -76,6 +80,36 @@ public class Muestra {
 
 		public LocalDate obtenerFechaDeUltimaVotacion() {
 			// Hacer con Streams de Min, obtener la fecha mas reciente y no hacer SortedCollection.
+			return null;
+		}
+
+		public void actualizarResultadoActual(TipoDeOpinion opinionMasFrecuente) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		public TipoDeOpinion obtenerTipoDeOpinionMayoritariaDeExpertos() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		public void setState(IEstadoMuestra estadoMuestra) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		public void solicitarVerificacionDeResultadoActual() {
+			// TODO Auto-generated method stub
+			
+		}
+
+		public TipoDeOpinion obtenerTipoDeOpinionMayoritaria() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		public List<Opinion> getOpinionesDeExperto() {
+			// TODO Auto-generated method stub
 			return null;
 		}
 }

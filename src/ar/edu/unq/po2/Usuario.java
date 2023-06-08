@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import ar.edu.unq.po2.estadosDeMuestra.EstadoMuestraOpinadaPorBasicos;
+import ar.edu.unq.po2.estadosDeMuestra.IEstadoMuestra;
 import ar.edu.unq.po2.estadosDeUsuario.EstadoUsuario;
 import ar.edu.unq.po2.usuarioExceptions.UsuarioException;
 
@@ -117,5 +119,9 @@ public class Usuario {
 		return((this.cantidadDeMuestrasEmitidasEnUltimos30Dias() > 10) 
 			   &&
 			   (this.cantidadDeOpinionesEmitidasEnUltimos30Dias() > 20));
+	}
+
+	public void gestionarEstadoMuestraPara(IEstadoMuestra estadoMuestra, Muestra muestra) {
+		this.getState().gestionarEstadoMuestraPara(estadoMuestra, muestra);
 	}
 }

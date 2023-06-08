@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import ar.edu.unq.po2.estadosDeMuestra.EstadoMuestraOpinadaPorBasicos;
 import ar.edu.unq.po2.estadosDeUsuario.EstadoUsuario;
 import ar.edu.unq.po2.estadosDeUsuario.EstadoUsuarioBasico;
 import ar.edu.unq.po2.estadosDeUsuario.EstadoUsuarioExpertoInterno;
@@ -54,6 +55,8 @@ class UsuarioTest {
 	private EstadoUsuario estadoUsuarioBasico;
 	private EstadoUsuario estadoUsuarioExpertoInterno;
 	
+	private EstadoMuestraOpinadaPorBasicos estadoMuestraOpinadaPorBasicos;
+	
 	@BeforeEach
 	void setUp() {
 		
@@ -95,6 +98,8 @@ class UsuarioTest {
 		// Mock
 		estadoUsuarioBasico = mock(EstadoUsuarioBasico.class);
 		estadoUsuarioExpertoInterno = mock(EstadoUsuarioExpertoInterno.class);
+		
+		estadoMuestraOpinadaPorBasicos = mock(EstadoMuestraOpinadaPorBasicos.class);
 		
 		// SUT
 		julianBasico = new Usuario(estadoUsuarioBasico);
@@ -421,5 +426,14 @@ class UsuarioTest {
 		// Verify
 		assertFalse(julianBasico.cumpleConLosRequisitosDeUsuarioExperto());
 	}
+	
+	@Test
+	void testUnUsuarioRecibeLaDelegacionDelEstadoDeUnaMuestraYEsteLaDelegaASuEstadoDeCategoria() {
+		// Exercise
+		julianBasico.gestionarEstadoMuestraPara(estadoMuestraOpinadaPorBasicos, muestra1);
+		// Verify
+		verify(estadoUsuarioBasico, times(1)).gestionarEstadoMuestraPara(estadoMuestraOpinadaPorBasicos, muestra1);
+	}	
+
 	
 }
