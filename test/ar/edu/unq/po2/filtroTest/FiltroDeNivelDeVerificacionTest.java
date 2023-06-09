@@ -3,8 +3,6 @@ package ar.edu.unq.po2.filtroTest;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-import java.time.LocalDate;
-import java.time.Month;
 import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;

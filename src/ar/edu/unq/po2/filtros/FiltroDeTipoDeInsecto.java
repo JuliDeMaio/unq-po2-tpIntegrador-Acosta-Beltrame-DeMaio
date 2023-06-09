@@ -1,7 +1,7 @@
 package ar.edu.unq.po2.filtros;
 
 import ar.edu.unq.po2.Muestra;
-import ar.edu.unq.po2.ResultadoMuestra;
+import ar.edu.unq.po2.enums.ITipoDeInsecto;
 
 	/**
 	 * 
@@ -14,18 +14,18 @@ import ar.edu.unq.po2.ResultadoMuestra;
 
 public class FiltroDeTipoDeInsecto extends Filtro {
 	
-	private ResultadoMuestra filtroEspecificado;
+	private ITipoDeInsecto filtroEspecificado;
 	
-	public FiltroDeTipoDeInsecto(ResultadoMuestra tipoDeInsecto) {
+	public FiltroDeTipoDeInsecto(ITipoDeInsecto tipoDeInsecto) {
 		super();
 		this.setFiltroEspecificado(tipoDeInsecto);
 	}
 
-	public ResultadoMuestra getFiltroEspecificado() {
+	public ITipoDeInsecto getFiltroEspecificado() {
 		return filtroEspecificado;
 	}
 
-	public void setFiltroEspecificado(ResultadoMuestra filtroEspecificado) {
+	public void setFiltroEspecificado(ITipoDeInsecto filtroEspecificado) {
 		this.filtroEspecificado = filtroEspecificado;
 	}
 

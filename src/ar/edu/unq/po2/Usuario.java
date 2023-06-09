@@ -4,9 +4,11 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import ar.edu.unq.po2.estadosDeMuestra.EstadoMuestraOpinadaPorBasicos;
+import ar.edu.unq.po2.enums.ITipoDeOpinion;
 import ar.edu.unq.po2.estadosDeMuestra.IEstadoMuestra;
 import ar.edu.unq.po2.estadosDeUsuario.EstadoUsuario;
+import ar.edu.unq.po2.muestraExceptions.MuestraEstaVerificadaException;
+import ar.edu.unq.po2.muestraExceptions.MuestraEstaVotadaPorExpertosException;
 import ar.edu.unq.po2.usuarioExceptions.UsuarioException;
 
 	/**
@@ -70,7 +72,7 @@ public class Usuario {
 		return this.getOpinionesRegistradas().size();
 	}
 
-	public void emitirOpinionDe(Muestra muestra, TipoDeOpinion tipoDeOpinion) throws UsuarioException {
+	public void emitirOpinionDe(Muestra muestra, ITipoDeOpinion tipoDeOpinion) throws UsuarioException {
 		
 		Opinion opinionAEmitir = new Opinion(tipoDeOpinion, this, LocalDate.now());
 		
@@ -121,7 +123,7 @@ public class Usuario {
 			   (this.cantidadDeOpinionesEmitidasEnUltimos30Dias() > 20));
 	}
 
-	public void gestionarEstadoMuestraPara(IEstadoMuestra estadoMuestra, Muestra muestra) {
+	public void gestionarEstadoMuestraPara(IEstadoMuestra estadoMuestra, Muestra muestra) throws MuestraEstaVotadaPorExpertosException, MuestraEstaVerificadaException {
 		this.getState().gestionarEstadoMuestraPara(estadoMuestra, muestra);
 	}
 }

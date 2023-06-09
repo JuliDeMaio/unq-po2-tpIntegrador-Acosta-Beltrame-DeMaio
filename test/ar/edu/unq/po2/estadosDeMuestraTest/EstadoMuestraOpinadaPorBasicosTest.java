@@ -7,9 +7,11 @@ import org.junit.jupiter.api.Test;
 
 import ar.edu.unq.po2.Muestra;
 import ar.edu.unq.po2.Opinion;
-import ar.edu.unq.po2.TipoDeOpinion;
 import ar.edu.unq.po2.Usuario;
+import ar.edu.unq.po2.enums.Chinche;
 import ar.edu.unq.po2.estadosDeMuestra.EstadoMuestraOpinadaPorBasicos;
+import ar.edu.unq.po2.muestraExceptions.MuestraEstaVerificadaException;
+import ar.edu.unq.po2.muestraExceptions.MuestraEstaVotadaPorExpertosException;
 
 class EstadoMuestraOpinadaPorBasicosTest {
 	
@@ -31,7 +33,7 @@ class EstadoMuestraOpinadaPorBasicosTest {
 	}
 
 	@Test
-	void testUnEstadoMuestraOpinadaPorBasicosDelegaLaVerificacionAUnUsuarioYEsteLaRecibe() {
+	void testUnEstadoMuestraOpinadaPorBasicosDelegaLaVerificacionAUnUsuarioYEsteLaRecibe() throws MuestraEstaVotadaPorExpertosException, MuestraEstaVerificadaException {
 		// Setup
 		when(opinion1.getUsuarioDueño()).thenReturn(usuario1);
 		// Exercise
@@ -43,11 +45,11 @@ class EstadoMuestraOpinadaPorBasicosTest {
 	@Test
 	void testUnEstadoMuestraOpinadaPorBasicosRealizaLaVerificacionParaUnUsuarioBasico() {
 		// Setup
-		when(muestra1.obtenerTipoDeOpinionMayoritaria()).thenReturn(TipoDeOpinion.CHINCHEFOLIADA);
+		when(muestra1.obtenerTipoDeOpinionMayoritaria()).thenReturn(Chinche.CHINCHEFOLIADA);
 		// Exercise
 		estadoMuestraOpinadaPorBasicos.realizarVerificacionParaUsuarioBasico(muestra1);
 		// Verify
-		verify(muestra1, times(1)).actualizarResultadoActual(TipoDeOpinion.CHINCHEFOLIADA);
+		verify(muestra1, times(1)).actualizarResultadoActual(Chinche.CHINCHEFOLIADA);
 		verify(muestra1, times(1)).obtenerTipoDeOpinionMayoritaria();
 	}
 	
@@ -63,12 +65,12 @@ class EstadoMuestraOpinadaPorBasicosTest {
 	@Test
 	void testUnEstadoMuestraOpinadaPorBasicosRealizaLaVerificacionDelResultadoActualDeLaMuestra() {
 		// Setup
-		when(muestra1.obtenerTipoDeOpinionMayoritaria()).thenReturn(TipoDeOpinion.CHINCHEFOLIADA);
+		when(muestra1.obtenerTipoDeOpinionMayoritaria()).thenReturn(Chinche.CHINCHEFOLIADA);
 		// Exercise
 		estadoMuestraOpinadaPorBasicos.verificarResultadoActualDeMuestra(muestra1);
 		// Verify
 		verify(muestra1, times(1)).obtenerTipoDeOpinionMayoritaria();
-		verify(muestra1, times(1)).actualizarResultadoActual(TipoDeOpinion.CHINCHEFOLIADA);
+		verify(muestra1, times(1)).actualizarResultadoActual(Chinche.CHINCHEFOLIADA);
 	}
 
 }

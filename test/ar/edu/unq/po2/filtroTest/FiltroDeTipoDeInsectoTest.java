@@ -9,8 +9,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import ar.edu.unq.po2.Muestra;
-import ar.edu.unq.po2.ResultadoMuestra;
-import ar.edu.unq.po2.estadosDeMuestra.EstadoMuestraVerificada;
+import ar.edu.unq.po2.enums.Chinche;
+import ar.edu.unq.po2.enums.ITipoDeInsecto;
+import ar.edu.unq.po2.enums.Vinchuca;
 import ar.edu.unq.po2.filtros.FiltroDeTipoDeInsecto;
 
 class FiltroDeTipoDeInsectoTest {
@@ -26,7 +27,7 @@ class FiltroDeTipoDeInsectoTest {
 	void setUp() throws Exception {
 		
 		// SUT
-		filtroDeTipoDeInsecto1 = new FiltroDeTipoDeInsecto(ResultadoMuestra.PHTIACHINCHE);
+		filtroDeTipoDeInsecto1 = new FiltroDeTipoDeInsecto(Chinche.PHTIACHINCHE);
 		
 		// DOC
 		muestra1 = mock(Muestra.class);
@@ -38,7 +39,7 @@ class FiltroDeTipoDeInsectoTest {
 	@Test
 	void testInicializacionDeUnFiltroDeTipoDeInsecto() {
 		// Setup
-		 ResultadoMuestra filtroEspecificadoEsperado = (ResultadoMuestra.PHTIACHINCHE);
+		ITipoDeInsecto filtroEspecificadoEsperado = (Chinche.PHTIACHINCHE);
 		
 		// Verify
 		assertEquals(filtroEspecificadoEsperado, filtroDeTipoDeInsecto1.getFiltroEspecificado());
@@ -62,10 +63,10 @@ class FiltroDeTipoDeInsectoTest {
 		// Setup
 		int cantidadDeMuestrasEsperada = 2;
 		Set<Muestra> muestrasAFiltrar = Set.of(muestra1, muestra2, muestra3, muestra4);
-		when(muestra1.getResultadoActual()).thenReturn(ResultadoMuestra.PHTIACHINCHE);
-		when(muestra2.getResultadoActual()).thenReturn(ResultadoMuestra.PHTIACHINCHE);
-		when(muestra3.getResultadoActual()).thenReturn(ResultadoMuestra.NODEFINIDA);
-		when(muestra4.getResultadoActual()).thenReturn(ResultadoMuestra.CHINCHEFOLIADA);
+		when(muestra1.getResultadoActual()).thenReturn(Chinche.PHTIACHINCHE);
+		when(muestra2.getResultadoActual()).thenReturn(Chinche.PHTIACHINCHE);
+		when(muestra3.getResultadoActual()).thenReturn(Vinchuca.VINCHUCAINFESTANS);
+		when(muestra4.getResultadoActual()).thenReturn(Chinche.CHINCHEFOLIADA);
 		
 		// Exercise
 		Set<Muestra> setDeMuestrasResultante = filtroDeTipoDeInsecto1.filtrarMuestras(muestrasAFiltrar);
@@ -81,10 +82,10 @@ class FiltroDeTipoDeInsectoTest {
 		// Setup
 		int cantidadDeMuestrasEsperada = 4;
 		Set<Muestra> muestrasAFiltrar = Set.of(muestra1, muestra2, muestra3, muestra4);
-		when(muestra1.getResultadoActual()).thenReturn(ResultadoMuestra.PHTIACHINCHE);
-		when(muestra2.getResultadoActual()).thenReturn(ResultadoMuestra.PHTIACHINCHE);
-		when(muestra3.getResultadoActual()).thenReturn(ResultadoMuestra.PHTIACHINCHE);
-		when(muestra4.getResultadoActual()).thenReturn(ResultadoMuestra.PHTIACHINCHE);
+		when(muestra1.getResultadoActual()).thenReturn(Chinche.PHTIACHINCHE);
+		when(muestra2.getResultadoActual()).thenReturn(Chinche.PHTIACHINCHE);
+		when(muestra3.getResultadoActual()).thenReturn(Chinche.PHTIACHINCHE);
+		when(muestra4.getResultadoActual()).thenReturn(Chinche.PHTIACHINCHE);
 		
 		// Exercise
 		Set<Muestra> setDeMuestrasResultante = filtroDeTipoDeInsecto1.filtrarMuestras(muestrasAFiltrar);
@@ -102,10 +103,10 @@ class FiltroDeTipoDeInsectoTest {
 		// Setup
 		Set<Muestra> muestrasAFiltrar = Set.of(muestra1, muestra2, muestra3, muestra4);
 		
-		when(muestra1.getResultadoActual()).thenReturn(ResultadoMuestra.VINCHUCAGUASAYANA);
-		when(muestra2.getResultadoActual()).thenReturn(ResultadoMuestra.IMAGENPOCOCLARA);
-		when(muestra3.getResultadoActual()).thenReturn(ResultadoMuestra.NODEFINIDA);
-		when(muestra4.getResultadoActual()).thenReturn(ResultadoMuestra.CHINCHEFOLIADA);
+		when(muestra1.getResultadoActual()).thenReturn(Vinchuca.VINCHUCAGUASAYANA);
+		when(muestra2.getResultadoActual()).thenReturn(Vinchuca.VINCHUCASORDIDA);
+		when(muestra3.getResultadoActual()).thenReturn(Vinchuca.VINCHUCASORDIDA);
+		when(muestra4.getResultadoActual()).thenReturn(Chinche.CHINCHEFOLIADA);
 		
 		// Exercise
 		Set<Muestra> setDeMuestrasResultante = filtroDeTipoDeInsecto1.filtrarMuestras(muestrasAFiltrar);

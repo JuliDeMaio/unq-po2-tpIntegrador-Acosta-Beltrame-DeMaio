@@ -7,6 +7,8 @@ import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import ar.edu.unq.po2.enums.Vinchuca;
 import ar.edu.unq.po2.filtros.FiltroDeTipoDeInsecto;
 
 class AppWebTest {
@@ -55,9 +57,8 @@ class AppWebTest {
 
 	@Test
 	void testSeSubeUnaMuestraALaAppWebYQuedaRegistrada() {
-		// Setup
-		TipoDeOpinion resultadoDeMuestraEsperado = TipoDeOpinion.VINCHUCASORDIDA;
-		when(muestra1.getResultadoActual()).thenReturn(resultadoDeMuestraEsperado);
+		// Setup;
+		when(muestra1.getResultadoActual()).thenReturn(Vinchuca.VINCHUCASORDIDA);
 		
 		// Exercise
 		appWeb.guardarMuestra(muestra1);
@@ -65,7 +66,7 @@ class AppWebTest {
 		// Verify
 		assertEquals(appWeb.getMuestras().size(), 1);
 		assertTrue(appWeb.getMuestras().contains(muestra1));
-		assertEquals(resultadoDeMuestraEsperado, muestra1.getResultadoActual());
+		assertEquals(Vinchuca.VINCHUCASORDIDA, muestra1.getResultadoActual());
 	}
 	
 	@Test

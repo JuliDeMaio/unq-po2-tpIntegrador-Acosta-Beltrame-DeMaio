@@ -3,6 +3,9 @@ package ar.edu.unq.po2;
 import java.time.LocalDate;
 import java.util.List;
 
+import ar.edu.unq.po2.enums.IResultadoMuestra;
+import ar.edu.unq.po2.enums.ITipoDeInsecto;
+import ar.edu.unq.po2.enums.ITipoDeOpinion;
 import ar.edu.unq.po2.estadosDeMuestra.EstadoMuestraOpinadaPorUnExperto;
 import ar.edu.unq.po2.estadosDeMuestra.IEstadoMuestra;
 
@@ -63,7 +66,7 @@ public class Muestra {
 			return null;
 		}
 
-		public Object getResultadoActual() {
+		public IResultadoMuestra getResultadoActual() {
 			// TODO Auto-generated method stub
 			return null;
 		}
@@ -83,12 +86,12 @@ public class Muestra {
 			return null;
 		}
 
-		public void actualizarResultadoActual(TipoDeOpinion opinionMasFrecuente) {
-			// TODO Auto-generated method stub
+		public void actualizarResultadoActual(IResultadoMuestra resultadoMuestra) {
+			// obtenerOpinio || NoDefinida
 			
 		}
 
-		public TipoDeOpinion obtenerTipoDeOpinionMayoritariaDeExpertos() {
+		public ITipoDeOpinion obtenerTipoDeOpinionMayoritariaDeExpertos() {
 			// TODO Auto-generated method stub
 			return null;
 		}
@@ -103,7 +106,7 @@ public class Muestra {
 			
 		}
 
-		public TipoDeOpinion obtenerTipoDeOpinionMayoritaria() {
+		public ITipoDeOpinion obtenerTipoDeOpinionMayoritaria() {
 			// TODO Auto-generated method stub
 			return null;
 		}
@@ -112,4 +115,14 @@ public class Muestra {
 			// TODO Auto-generated method stub
 			return null;
 		}
-}
+
+		public boolean existeOpinionEnExpertos(ITipoDeOpinion tipoDeOpinion) {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		public boolean hay2OpinionesQueCoinciden() {
+			// TODO Auto-generated method stub
+			return false;
+		}
+} 

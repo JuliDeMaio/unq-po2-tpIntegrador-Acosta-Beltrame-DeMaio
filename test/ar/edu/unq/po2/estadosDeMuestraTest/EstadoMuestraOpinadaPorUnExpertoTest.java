@@ -8,9 +8,12 @@ import org.junit.jupiter.api.Test;
 
 import ar.edu.unq.po2.Muestra;
 import ar.edu.unq.po2.Opinion;
-import ar.edu.unq.po2.TipoDeOpinion;
 import ar.edu.unq.po2.Usuario;
+import ar.edu.unq.po2.enums.Chinche;
+import ar.edu.unq.po2.enums.Vinchuca;
 import ar.edu.unq.po2.estadosDeMuestra.EstadoMuestraOpinadaPorUnExperto;
+import ar.edu.unq.po2.muestraExceptions.MuestraEstaVerificadaException;
+import ar.edu.unq.po2.muestraExceptions.MuestraEstaVotadaPorExpertosException;
 
 class EstadoMuestraOpinadaPorUnExpertoTest {
 
@@ -32,7 +35,7 @@ class EstadoMuestraOpinadaPorUnExpertoTest {
 	}
 
 	@Test
-	void testUnEstadoMuestraOpinadaPorUnExpertoDelegaLaVerificacionAUnUsuarioYEsteLaRecibe() {
+	void testUnEstadoMuestraOpinadaPorUnExpertoDelegaLaVerificacionAUnUsuarioYEsteLaRecibe() throws MuestraEstaVotadaPorExpertosException, MuestraEstaVerificadaException {
 		// Setup
 		when(opinion1.getUsuarioDueño()).thenReturn(usuario1);
 		// Exercise
@@ -44,7 +47,7 @@ class EstadoMuestraOpinadaPorUnExpertoTest {
 	@Test
 	void testUnEstadoMuestraOpinadaPorUnExpertoRealizaLaVerificacionParaUnUsuarioBasico() {
 		// Setup
-		when(muestra1.obtenerTipoDeOpinionMayoritaria()).thenReturn(TipoDeOpinion.CHINCHEFOLIADA);
+		when(muestra1.obtenerTipoDeOpinionMayoritaria()).thenReturn(Chinche.CHINCHEFOLIADA);
 		// Exercise
 		estadoMuestraOpinadaPorUnExperto.realizarVerificacionParaUsuarioBasico(muestra1);
 		// Verify
@@ -63,12 +66,12 @@ class EstadoMuestraOpinadaPorUnExpertoTest {
 	@Test
 	void testUnEstadoMuestraOpinadaPorUnExpertoRealizaLaVerificacionDelResultadoActualDeLaMuestra() {
 		// Setup
-		when(opinion1.getTipoDeOpinion()).thenReturn(TipoDeOpinion.VINCHUCAINFESTANS);
+		when(opinion1.getTipoDeOpinion()).thenReturn(Vinchuca.VINCHUCAINFESTANS);
 		when(muestra1.getOpinionesDeExperto()).thenReturn(Arrays.asList(opinion1));
 		// Exercise
 		estadoMuestraOpinadaPorUnExperto.verificarResultadoActualDeMuestra(muestra1);
 		// Verify
-		verify(muestra1, times(1)).actualizarResultadoActual(TipoDeOpinion.VINCHUCAINFESTANS);
+		verify(muestra1, times(1)).actualizarResultadoActual(Vinchuca.VINCHUCAINFESTANS);
 	}
 
 }

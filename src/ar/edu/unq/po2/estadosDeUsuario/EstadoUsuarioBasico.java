@@ -4,6 +4,8 @@ import ar.edu.unq.po2.Muestra;
 import ar.edu.unq.po2.Opinion;
 import ar.edu.unq.po2.Usuario;
 import ar.edu.unq.po2.estadosDeMuestra.IEstadoMuestra;
+import ar.edu.unq.po2.muestraExceptions.MuestraEstaVerificadaException;
+import ar.edu.unq.po2.muestraExceptions.MuestraEstaVotadaPorExpertosException;
 import ar.edu.unq.po2.usuarioExceptions.*;
 
 /**
@@ -52,7 +54,7 @@ public class EstadoUsuarioBasico extends EstadoUsuario {
 	}
 
 	@Override
-	public void gestionarEstadoMuestraPara(IEstadoMuestra estadoMuestra, Muestra muestra) {
+	public void gestionarEstadoMuestraPara(IEstadoMuestra estadoMuestra, Muestra muestra) throws MuestraEstaVotadaPorExpertosException, MuestraEstaVerificadaException {
 		estadoMuestra.realizarVerificacionParaUsuarioBasico(muestra);
 	}
 }

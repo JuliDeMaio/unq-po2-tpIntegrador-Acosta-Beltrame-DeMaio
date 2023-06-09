@@ -2,6 +2,8 @@ package ar.edu.unq.po2;
 
 import java.time.LocalDate;
 
+import ar.edu.unq.po2.enums.ITipoDeOpinion;
+
 /**
 	 * @author Acosta, Federico
 	 * 		   Beltrame, Franco
@@ -10,18 +12,18 @@ import java.time.LocalDate;
 	 */
 public class Opinion {
 	
-	private TipoDeOpinion tipoDeOpinion;
+	private ITipoDeOpinion tipoDeOpinion;
 	private Usuario usuarioDueño;
 	private LocalDate fechaDeEmision;
 
-	public Opinion(TipoDeOpinion tipoDeOpinion, Usuario usuarioDueño, LocalDate fechaDeEmision) {
+	public Opinion(ITipoDeOpinion tipoDeOpinion, Usuario usuarioDueño, LocalDate fechaDeEmision) {
 		super();
 		this.setTipoDeOpinion(tipoDeOpinion);
 		this.setUsuarioDueño(usuarioDueño);
 		this.setFechaDeEmision(fechaDeEmision);
 	}
 
-	public TipoDeOpinion getTipoDeOpinion() {
+	public ITipoDeOpinion getTipoDeOpinion() {
 		return tipoDeOpinion;
 	}
 
@@ -33,7 +35,7 @@ public class Opinion {
 		return fechaDeEmision;
 	}
 
-	private void setTipoDeOpinion(TipoDeOpinion tipoDeOpinion) {
+	private void setTipoDeOpinion(ITipoDeOpinion tipoDeOpinion) {
 		this.tipoDeOpinion = tipoDeOpinion;
 	}
 

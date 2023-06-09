@@ -9,6 +9,10 @@ import java.time.Month;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import ar.edu.unq.po2.enums.Chinche;
+import ar.edu.unq.po2.enums.ITipoDeOpinion;
+import ar.edu.unq.po2.enums.TipoDeOpinion;
+
 class OpinionTest {
 	
 	private Opinion opinion1;
@@ -28,7 +32,7 @@ class OpinionTest {
 		fecha2 = LocalDate.now();
 		
 		// SUT
-		opinion1 = new Opinion(TipoDeOpinion.CHINCHEFOLIADA, usuario1, fecha1);
+		opinion1 = new Opinion(Chinche.CHINCHEFOLIADA, usuario1, fecha1);
 		opinion2 = new Opinion(TipoDeOpinion.IMAGENPOCOCLARA, usuario1, fecha2);
 	}
 
@@ -36,7 +40,7 @@ class OpinionTest {
 	void testInicializacionDeUnaOpinion() {
 		
 		// Setup
-		TipoDeOpinion tipoDeOpinionEsperada = TipoDeOpinion.CHINCHEFOLIADA;
+		ITipoDeOpinion tipoDeOpinionEsperada = Chinche.CHINCHEFOLIADA;
 		Usuario usuarioEsperado = usuario1;
 		LocalDate fechaEsperada = fecha1;
 		

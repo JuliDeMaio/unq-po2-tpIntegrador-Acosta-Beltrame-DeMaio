@@ -7,10 +7,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import ar.edu.unq.po2.enums.Chinche;
+import ar.edu.unq.po2.enums.TipoDeOpinion;
 import ar.edu.unq.po2.estadosDeMuestra.EstadoMuestraOpinadaPorBasicos;
 import ar.edu.unq.po2.estadosDeUsuario.EstadoUsuario;
 import ar.edu.unq.po2.estadosDeUsuario.EstadoUsuarioBasico;
 import ar.edu.unq.po2.estadosDeUsuario.EstadoUsuarioExpertoInterno;
+import ar.edu.unq.po2.muestraExceptions.MuestraEstaVerificadaException;
+import ar.edu.unq.po2.muestraExceptions.MuestraEstaVotadaPorExpertosException;
 import ar.edu.unq.po2.usuarioExceptions.UsuarioException;
 import ar.edu.unq.po2.usuarioExceptions.UsuarioNoEsOpinionUnicaException;
 
@@ -162,7 +166,7 @@ class UsuarioTest {
 	void testUnUsuarioDelegaLaVerificacionDeLaEmisionDeLaOpinion() throws UsuarioException {
 		
 		// Exercise
-		julianBasico.emitirOpinionDe(muestra1, TipoDeOpinion.PHTIACHINCHE);
+		julianBasico.emitirOpinionDe(muestra1, Chinche.PHTIACHINCHE);
 		
 		// Verify
 		verify(julianBasico.getState(), times(1)).realizarVerificacionesPara(Mockito.any(Muestra.class), (Mockito.any(Opinion.class)));
@@ -428,7 +432,7 @@ class UsuarioTest {
 	}
 	
 	@Test
-	void testUnUsuarioRecibeLaDelegacionDelEstadoDeUnaMuestraYEsteLaDelegaASuEstadoDeCategoria() {
+	void testUnUsuarioRecibeLaDelegacionDelEstadoDeUnaMuestraYEsteLaDelegaASuEstadoDeCategoria() throws MuestraEstaVotadaPorExpertosException, MuestraEstaVerificadaException {
 		// Exercise
 		julianBasico.gestionarEstadoMuestraPara(estadoMuestraOpinadaPorBasicos, muestra1);
 		// Verify
