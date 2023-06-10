@@ -31,8 +31,6 @@ class MuestraTest {
 	@Test
 	void testInicializacionDeUnaMuestraSubidaPorUnUsuarioBasico() {
 		// Setup
-		
-		
 		String fotoEsperada = "Vinchuca.jpg";
 		IResultadoMuestra resultadoEsperado = Vinchuca.VINCHUCAINFESTANS;
 		Usuario usuarioEsperado = usuario;

@@ -1,6 +1,8 @@
 package ar.edu.unq.po2;
 
 import java.time.LocalDate;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -8,9 +10,12 @@ import java.util.stream.Collectors;
 
 import ar.edu.unq.po2.enums.IResultadoMuestra;
 import ar.edu.unq.po2.enums.ITipoDeOpinion;
+import ar.edu.unq.po2.enums.NivelDeVerificacion;
 import ar.edu.unq.po2.enums.ResultadoMuestra;
 import ar.edu.unq.po2.estadosDeMuestra.EstadoMuestraOpinadaPorBasicos;
 import ar.edu.unq.po2.estadosDeMuestra.IEstadoMuestra;
+import ar.edu.unq.po2.muestraExceptions.MuestraEstaVerificadaException;
+import ar.edu.unq.po2.muestraExceptions.MuestraEstaVotadaPorExpertosException;
 
 /**
 	 * @author Acosta, Federico
@@ -27,7 +32,7 @@ public class Muestra {
 	private Ubicacion ubicacion;
 	private LocalDate fechaDeEmision;
 	
-	public Muestra(String foto, Usuario usuarioDueño, Opinion opinionDeInicio, Ubicacion ubicacion) {
+	public Muestra(String foto, Usuario usuarioDueño, Opinion opinionDeInicio, Ubicacion ubicacion) throws MuestraEstaVerificadaException, MuestraEstaVotadaPorExpertosException {
 		super();
 		this.setFoto(foto);
 		this.setState(new EstadoMuestraOpinadaPorBasicos());
@@ -95,13 +100,9 @@ public class Muestra {
 		this.fechaDeEmision = fechaDeEmision;
 	}
 
-	public void recibirOpinion(Opinion opinion) {
+	public void recibirOpinion(Opinion opinion) throws MuestraEstaVerificadaException, MuestraEstaVotadaPorExpertosException {
 		this.getOpiniones().add(opinion);
 		solicitarVerificacionDeMuestra(opinion);
-	}
-	
-	public boolean esVerificada() {
-		return this.getState().esMuestraVerificada();
 	}
 	
 	public boolean opinoAlMenosUnExperto() {
@@ -139,13 +140,28 @@ public class Muestra {
 				   .get()).getFechaDeEmision();
 	}
 	
-	public ITipoDeOpinion obtenerTipoDeOpinionMayoritaria() {
-		// TODO Auto-generated method stub
-		return null;
+	public IResultadoMuestra obtenerTipoDeOpinionMayoritaria() {
+		List<IResultadoMuestra> listaTiposDeOpiniones = getOpiniones().stream()
+                .map(o -> o.getTipoDeOpinion())
+                .collect(Collectors.toList());
+		
+		IResultadoMuestra opinionMasFrecuente = listaTiposDeOpiniones.stream()
+                .max(Comparator.comparingInt(to -> Collections.frequency(listaTiposDeOpiniones, to)))
+                .orElse(ResultadoMuestra.NODEFINIDA);
+		
+		return opinionMasFrecuente;
 	}
 	
-	public ITipoDeOpinion obtenerTipoDeOpinionMayoritariaDeExpertos() {
-		return this.obtenerTipoDeOpinionMayoritaria(this.obtenerOpinionesDeExpertos());
+	public IResultadoMuestra obtenerTipoDeOpinionMayoritariaDeExpertos() {
+		List<IResultadoMuestra> listaTiposDeOpiniones = obtenerOpinionesDeExpertos().stream()
+                .map(o -> o.getTipoDeOpinion())
+                .collect(Collectors.toList());
+		
+		IResultadoMuestra opinionMasFrecuente = listaTiposDeOpiniones.stream()
+                .max(Comparator.comparingInt(to -> Collections.frequency(listaTiposDeOpiniones, to)))
+                .orElse(ResultadoMuestra.NODEFINIDA);
+		
+		return opinionMasFrecuente;
 	}
 	
 	public List<Opinion> obtenerOpinionesDeExpertos() {
@@ -164,11 +180,11 @@ public class Muestra {
 				   .values().stream().anyMatch(g->g.size() > 1);
 	}
 	
-	public void solicitarVerificacionDeMuestra(Opinion opinionDeInicio) {
+	public void solicitarVerificacionDeMuestra(Opinion opinionDeInicio) throws MuestraEstaVerificadaException, MuestraEstaVotadaPorExpertosException {
 		solicitarVerificacionDeEstadoActual(opinionDeInicio);
 	}
 	
-	public void solicitarVerificacionDeEstadoActual(Opinion opinion) {
+	public void solicitarVerificacionDeEstadoActual(Opinion opinion) throws MuestraEstaVerificadaException, MuestraEstaVotadaPorExpertosException {
 		this.getState().verificarMuestra(this, opinion);
 	}
 	
@@ -178,5 +194,9 @@ public class Muestra {
 	
 	public void actualizarResultadoActual(IResultadoMuestra resultadoMuestra) {
 		this.setResultadoActual(resultadoMuestra);
+	}
+
+	public NivelDeVerificacion obtenerNivelDeVerificacion() {
+		return this.getState().obtenerNivelDeVerificacion();
 	}
 } 

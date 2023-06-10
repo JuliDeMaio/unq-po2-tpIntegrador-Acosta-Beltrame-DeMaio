@@ -21,6 +21,6 @@ public class EstadoUsuarioExpertoExterno extends EstadoUsuarioExperto {
 
 	@Override
 	public void actualizarCategoria(Usuario usuario) {
-		System.out.println("El usuario es Experto Externo, esto no deberia ocurrir.");
+		System.out.println("El usuario es Experto Externo, no es posible cambiar la categoria");
 	}
 }

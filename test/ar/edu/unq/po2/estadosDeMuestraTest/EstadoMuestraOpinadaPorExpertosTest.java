@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import ar.edu.unq.po2.Muestra;
 import ar.edu.unq.po2.Opinion;
 import ar.edu.unq.po2.Usuario;
+import ar.edu.unq.po2.enums.NivelDeVerificacion;
 import ar.edu.unq.po2.enums.ResultadoMuestra;
 import ar.edu.unq.po2.estadosDeMuestra.EstadoMuestraOpinadaPorExpertos;
 import ar.edu.unq.po2.muestraExceptions.MuestraEstaVerificadaException;
@@ -93,4 +94,12 @@ class EstadoMuestraOpinadaPorExpertosTest {
 		verify(muestra1, times(1)).actualizarResultadoActual(ResultadoMuestra.NODEFINIDA);
 	}
 
+	@Test
+	void testUnEstadoMuestraOpinadaPorBasicosSabeQueNoEstaVerificada() {
+		// Setup
+		NivelDeVerificacion nivelDeVerificacionEsperado = NivelDeVerificacion.VOTADA;
+		
+		// Verify
+		assertEquals(nivelDeVerificacionEsperado, estadoMuestraOpinadaPorExpertos.obtenerNivelDeVerificacion());
+	}
 }

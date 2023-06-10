@@ -16,7 +16,6 @@ import ar.edu.unq.po2.estadosDeUsuario.EstadoUsuarioExpertoInterno;
 import ar.edu.unq.po2.muestraExceptions.MuestraEstaVerificadaException;
 import ar.edu.unq.po2.muestraExceptions.MuestraEstaVotadaPorExpertosException;
 import ar.edu.unq.po2.usuarioExceptions.UsuarioException;
-import ar.edu.unq.po2.usuarioExceptions.UsuarioNoEsOpinionUnicaException;
 
 class UsuarioTest {
 
@@ -163,7 +162,7 @@ class UsuarioTest {
 	}
 	
 	@Test
-	void testUnUsuarioDelegaLaVerificacionDeLaEmisionDeLaOpinion() throws UsuarioException {
+	void testUnUsuarioDelegaLaVerificacionDeLaEmisionDeLaOpinion() throws UsuarioException, MuestraEstaVerificadaException, MuestraEstaVotadaPorExpertosException {
 		
 		// Exercise
 		julianBasico.emitirOpinionDe(muestra1, Chinche.PHTIACHINCHE);
@@ -173,17 +172,13 @@ class UsuarioTest {
 	}
 
 	@Test
-    void testUnUsuarioDelegaLaVerificacionDeLaEmisionDeLaOpinionQueLanzaUnaExcepcion() throws UsuarioException { 
+    void testUnUsuarioDelegaLaVerificacionDeLaEmisionDeLaOpinionQueLanzaUnaExcepcion() throws UsuarioException, MuestraEstaVerificadaException, MuestraEstaVotadaPorExpertosException { 
 		
+		// Exercise
+		julianBasico.emitirOpinionDe(muestra1, TipoDeOpinion.IMAGENPOCOCLARA);
 		
-		// Setup
-		Mockito.doThrow(UsuarioNoEsOpinionUnicaException.class).when(estadoUsuarioBasico)
-			.realizarVerificacionesPara(Mockito.any(Muestra.class), Mockito.any(Opinion.class));
-		
-		// Exercise-Verify
-		assertThrows(UsuarioNoEsOpinionUnicaException.class, () -> {
-			julianBasico.emitirOpinionDe(muestra1, TipoDeOpinion.IMAGENPOCOCLARA);
-        });
+		// Verify
+		verify(estadoUsuarioBasico, times(1)).realizarVerificacionesPara(Mockito.any(Muestra.class), any(Opinion.class));
     }
 	
 	@Test
@@ -438,4 +433,13 @@ class UsuarioTest {
 		// Verify
 		verify(estadoUsuarioBasico, times(1)).gestionarEstadoMuestraPara(estadoMuestraOpinadaPorBasicos, muestra1);
 	}	
+	
+	@Test
+	void testUnUsuarioBasicoConoceSiEsUsuarioExperto() {
+		// Setup
+		when(estadoUsuarioBasico.esEstadoExperto()).thenReturn(false);
+		
+		// Verify
+		assertFalse(julianBasico.esUsuarioExperto());
+	}
 }

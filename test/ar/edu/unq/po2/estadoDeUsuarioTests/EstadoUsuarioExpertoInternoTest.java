@@ -1,7 +1,6 @@
 package ar.edu.unq.po2.estadoDeUsuarioTests;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -10,7 +9,11 @@ import org.junit.jupiter.api.Test;
 import ar.edu.unq.po2.Muestra;
 import ar.edu.unq.po2.Opinion;
 import ar.edu.unq.po2.Usuario;
+import ar.edu.unq.po2.enums.NivelDeVerificacion;
+import ar.edu.unq.po2.estadosDeMuestra.EstadoMuestraOpinadaPorUnExperto;
 import ar.edu.unq.po2.estadosDeUsuario.EstadoUsuarioExpertoInterno;
+import ar.edu.unq.po2.muestraExceptions.MuestraEstaVerificadaException;
+import ar.edu.unq.po2.muestraExceptions.MuestraEstaVotadaPorExpertosException;
 import ar.edu.unq.po2.usuarioExceptions.UsuarioEsDueñoDeLaMuestraException;
 import ar.edu.unq.po2.usuarioExceptions.UsuarioEsMuestraVerificadaException;
 import ar.edu.unq.po2.usuarioExceptions.UsuarioNoEsOpinionUnicaException;
@@ -21,6 +24,7 @@ class EstadoUsuarioExpertoInternoTest {
 	private Muestra muestra1;
 	private Opinion opinion1;
 	private Usuario usuario1;
+	private EstadoMuestraOpinadaPorUnExperto estadoMuestraOpinadaPorUnExperto;
 	
 	@BeforeEach
 	void setUp() throws Exception {
@@ -31,6 +35,7 @@ class EstadoUsuarioExpertoInternoTest {
 		muestra1 = mock(Muestra.class);
 		opinion1 = mock(Opinion.class);
 		usuario1 = mock(Usuario.class);
+		estadoMuestraOpinadaPorUnExperto = mock(EstadoMuestraOpinadaPorUnExperto.class);
 	}
 
 	@Test
@@ -44,6 +49,11 @@ class EstadoUsuarioExpertoInternoTest {
 	
 	@Test
 	void testEstadoDeUsuarioExpertoInternoRealizaLaVerificacionYNoArrojaExcepciones() {
+		// Setup
+		when(muestra1.esDueñoDeLaMuestra(usuario1)).thenReturn(false);
+		when(opinion1.getUsuarioDueño()).thenReturn(usuario1);
+		when(muestra1.obtenerNivelDeVerificacion()).thenReturn(NivelDeVerificacion.VOTADA);
+				
 		// Verify
 		assertDoesNotThrow(() -> estadoUsuarioExpertoInterno.realizarVerificacionesPara(muestra1, opinion1));	
 	}
@@ -51,37 +61,46 @@ class EstadoUsuarioExpertoInternoTest {
 	@Test
 	void testEstadoUsuarioExpertoInternoRealizaLaVerificacionYArrojaUsuarioEsDueñoDeLaMuestraException() {
 		// Setup
+		String errorEsperado = "Usted es el creador de la muestra, no puede opinar sobre ella.";
 		when(muestra1.esDueñoDeLaMuestra(usuario1)).thenReturn(true);
 		when(opinion1.getUsuarioDueño()).thenReturn(usuario1);
 		
-		// Verify
-		assertThrows(UsuarioEsDueñoDeLaMuestraException.class, () -> {
+		// Exercise-Verify
+		Exception error = assertThrows(UsuarioEsDueñoDeLaMuestraException.class, () -> {
 			estadoUsuarioExpertoInterno.realizarVerificacionesPara(muestra1, opinion1);
         });
+		
+		assertEquals(error.getMessage(), errorEsperado);
 	}
 	
 	@Test
 	void testEstadoUsuarioExpertoInternoRealizaLaVerificacionYArrojaUsuarioNoEsOpinionUnicaException() {
 		// Setup
+		String errorEsperado = "Usted ya ha emitido una opinión sobre esta muestra.";
 		when(muestra1.opinoElUsuario(usuario1)).thenReturn(true);
 		when(opinion1.getUsuarioDueño()).thenReturn(usuario1);
 		
-		// Verify
-		assertThrows(UsuarioNoEsOpinionUnicaException.class, () -> {
+		// Exercise-Verify
+		Exception error = assertThrows(UsuarioNoEsOpinionUnicaException.class, () -> {
 			estadoUsuarioExpertoInterno.realizarVerificacionesPara(muestra1, opinion1);
         });
+		
+		assertEquals(error.getMessage(), errorEsperado);
 	}
 
 	@Test
 	void testEstadoUsuarioExpertoInternoRealizaLaVerificacionYArrojaUsuarioEsMuestraVerificadaException() {
 		// Setup
-		when(muestra1.esVerificada()).thenReturn(true);
+		String errorEsperado = "La muestra ya está verificada, nadie puede opinar sobre la misma.";
+		when(muestra1.obtenerNivelDeVerificacion()).thenReturn(NivelDeVerificacion.VERIFICADA);
 		when(opinion1.getUsuarioDueño()).thenReturn(usuario1);
 		
-		// Verify
-		assertThrows(UsuarioEsMuestraVerificadaException.class, () -> {
+		// Exercise-Verify
+		Exception error = assertThrows(UsuarioEsMuestraVerificadaException.class, () -> {
 			estadoUsuarioExpertoInterno.realizarVerificacionesPara(muestra1, opinion1);
         });
+		
+		assertEquals(error.getMessage(), errorEsperado);
 	}
 	
 	@Test
@@ -122,4 +141,17 @@ class EstadoUsuarioExpertoInternoTest {
 		verify(usuario1, never()).setState(any());
 	}
 	
+	@Test
+	void testUnUsuarioExpertoInternoRecibeLaDelegacionDeLaVerificacionDeLaMuestra() throws MuestraEstaVotadaPorExpertosException, MuestraEstaVerificadaException {
+		// Exercise
+		estadoUsuarioExpertoInterno.gestionarEstadoMuestraPara(estadoMuestraOpinadaPorUnExperto, muestra1);
+		
+		// Verify
+		verify(estadoMuestraOpinadaPorUnExperto, times(1)).realizarVerificacionParaUsuarioExperto(muestra1);
+	}
+	
+	@Test
+	void unEstadoDeUsuarioBasicoSabeQueNoEsUnEstadoExperto() {
+		assertTrue(estadoUsuarioExpertoInterno.esEstadoExperto());
+	}
 }

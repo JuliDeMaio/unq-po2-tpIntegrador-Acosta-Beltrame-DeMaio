@@ -1,5 +1,6 @@
 package ar.edu.unq.po2.estadosDeMuestraTest;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 import java.util.Arrays;
 
@@ -10,6 +11,7 @@ import ar.edu.unq.po2.Muestra;
 import ar.edu.unq.po2.Opinion;
 import ar.edu.unq.po2.Usuario;
 import ar.edu.unq.po2.enums.Chinche;
+import ar.edu.unq.po2.enums.NivelDeVerificacion;
 import ar.edu.unq.po2.enums.Vinchuca;
 import ar.edu.unq.po2.estadosDeMuestra.EstadoMuestraOpinadaPorUnExperto;
 import ar.edu.unq.po2.muestraExceptions.MuestraEstaVerificadaException;
@@ -73,5 +75,13 @@ class EstadoMuestraOpinadaPorUnExpertoTest {
 		// Verify
 		verify(muestra1, times(1)).actualizarResultadoActual(Vinchuca.VINCHUCAINFESTANS);
 	}
-
+	
+	@Test
+	void testUnEstadoMuestraOpinadaPorBasicosSabeQueNoEstaVerificada() {
+		// Setup
+		NivelDeVerificacion nivelDeVerificacionEsperado = NivelDeVerificacion.VOTADA;
+		
+		// Verify
+		assertEquals(nivelDeVerificacionEsperado, estadoMuestraOpinadaPorUnExperto.obtenerNivelDeVerificacion());
+	}
 }

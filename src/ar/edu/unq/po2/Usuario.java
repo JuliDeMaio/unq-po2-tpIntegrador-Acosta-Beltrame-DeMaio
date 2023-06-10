@@ -72,7 +72,7 @@ public class Usuario {
 		return this.getOpinionesRegistradas().size();
 	}
 
-	public void emitirOpinionDe(Muestra muestra, ITipoDeOpinion tipoDeOpinion) throws UsuarioException {
+	public void emitirOpinionDe(Muestra muestra, ITipoDeOpinion tipoDeOpinion) throws UsuarioException, MuestraEstaVerificadaException, MuestraEstaVotadaPorExpertosException {
 		
 		Opinion opinionAEmitir = new Opinion(tipoDeOpinion, this, LocalDate.now());
 		
@@ -80,7 +80,7 @@ public class Usuario {
 		this.emitirOpinionVerificadaDe(muestra, opinionAEmitir);
 	}
 	
-	public void emitirOpinionVerificadaDe(Muestra muestra, Opinion opinion) {
+	public void emitirOpinionVerificadaDe(Muestra muestra, Opinion opinion) throws MuestraEstaVerificadaException, MuestraEstaVotadaPorExpertosException {
 		this.guardarOpinion(opinion);
 		muestra.recibirOpinion(opinion);
 	}

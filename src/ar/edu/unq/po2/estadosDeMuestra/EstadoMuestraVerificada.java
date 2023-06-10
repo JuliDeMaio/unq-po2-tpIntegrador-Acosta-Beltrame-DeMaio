@@ -2,6 +2,7 @@ package ar.edu.unq.po2.estadosDeMuestra;
 
 import ar.edu.unq.po2.Muestra;
 import ar.edu.unq.po2.Opinion;
+import ar.edu.unq.po2.enums.NivelDeVerificacion;
 import ar.edu.unq.po2.muestraExceptions.MuestraEstaVerificadaException;
 
 public class EstadoMuestraVerificada implements IEstadoMuestra {
@@ -25,9 +26,9 @@ public class EstadoMuestraVerificada implements IEstadoMuestra {
 	public void realizarVerificacionParaUsuarioExperto(Muestra muestra) throws MuestraEstaVerificadaException {
 		throw new MuestraEstaVerificadaException();
 	}
-
+	
 	@Override
-	public boolean esMuestraVerificada() {
-		return true;
+	public NivelDeVerificacion obtenerNivelDeVerificacion() {
+		return NivelDeVerificacion.VERIFICADA;
 	}
 }

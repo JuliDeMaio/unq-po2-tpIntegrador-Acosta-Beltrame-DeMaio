@@ -1,5 +1,6 @@
 package ar.edu.unq.po2.estadosDeMuestraTest;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -9,6 +10,7 @@ import ar.edu.unq.po2.Muestra;
 import ar.edu.unq.po2.Opinion;
 import ar.edu.unq.po2.Usuario;
 import ar.edu.unq.po2.enums.Chinche;
+import ar.edu.unq.po2.enums.NivelDeVerificacion;
 import ar.edu.unq.po2.estadosDeMuestra.EstadoMuestraOpinadaPorBasicos;
 import ar.edu.unq.po2.muestraExceptions.MuestraEstaVerificadaException;
 import ar.edu.unq.po2.muestraExceptions.MuestraEstaVotadaPorExpertosException;
@@ -72,5 +74,13 @@ class EstadoMuestraOpinadaPorBasicosTest {
 		verify(muestra1, times(1)).obtenerTipoDeOpinionMayoritaria();
 		verify(muestra1, times(1)).actualizarResultadoActual(Chinche.CHINCHEFOLIADA);
 	}
-
+	
+	@Test
+	void testUnEstadoMuestraOpinadaPorBasicosSabeQueNoEstaVerificada() {
+		// Setup
+		NivelDeVerificacion nivelDeVerificacionEsperado = NivelDeVerificacion.VOTADA;
+		
+		// Verify
+		assertEquals(nivelDeVerificacionEsperado, estadoMuestraOpinadaPorBasicos.obtenerNivelDeVerificacion());
+	}
 }

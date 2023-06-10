@@ -1,6 +1,8 @@
 package ar.edu.unq.po2;
 
-	/**
+import ar.edu.unq.po2.enums.TipoDeOrganizacion;
+
+/**
 	 * @author Beltrame, Franco
 	 * @see TipoDeOrganizacion, Ubicacion
 	 *

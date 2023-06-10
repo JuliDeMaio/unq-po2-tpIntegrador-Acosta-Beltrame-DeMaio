@@ -3,6 +3,7 @@ package ar.edu.unq.po2.estadosDeMuestra;
 import ar.edu.unq.po2.Muestra;
 import ar.edu.unq.po2.Opinion;
 import ar.edu.unq.po2.enums.IResultadoMuestra;
+import ar.edu.unq.po2.enums.NivelDeVerificacion;
 import ar.edu.unq.po2.muestraExceptions.MuestraEstaVerificadaException;
 import ar.edu.unq.po2.muestraExceptions.MuestraEstaVotadaPorExpertosException;
 
@@ -35,7 +36,7 @@ public class EstadoMuestraOpinadaPorBasicos implements IEstadoMuestra {
 	}
 
 	@Override
-	public boolean esMuestraVerificada() {
-		return false;
+	public NivelDeVerificacion obtenerNivelDeVerificacion() {
+		return NivelDeVerificacion.VOTADA;
 	}
 }

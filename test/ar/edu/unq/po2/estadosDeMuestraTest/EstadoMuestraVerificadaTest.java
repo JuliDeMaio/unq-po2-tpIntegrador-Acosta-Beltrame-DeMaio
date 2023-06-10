@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import ar.edu.unq.po2.Muestra;
 import ar.edu.unq.po2.Opinion;
 import ar.edu.unq.po2.enums.Chinche;
+import ar.edu.unq.po2.enums.NivelDeVerificacion;
 import ar.edu.unq.po2.estadosDeMuestra.EstadoMuestraVerificada;
 import ar.edu.unq.po2.muestraExceptions.MuestraEstaVerificadaException;
 import ar.edu.unq.po2.muestraExceptions.MuestraEstaVotadaPorExpertosException;
@@ -81,5 +82,13 @@ class EstadoMuestraVerificadaTest {
 		verify(muestra1, times(1)).obtenerTipoDeOpinionMayoritariaDeExpertos();
 		verify(muestra1, times(1)).actualizarResultadoActual(Chinche.PHTIACHINCHE);
 	}
-
+	
+	@Test
+	void testUnEstadoMuestraOpinadaPorBasicosSabeQueNoEstaVerificada() {
+		// Setup
+		NivelDeVerificacion nivelDeVerificacionEsperado = NivelDeVerificacion.VERIFICADA;
+		
+		// Verify
+		assertEquals(nivelDeVerificacionEsperado, estadoMuestraVerificada.obtenerNivelDeVerificacion());
+	}
 }

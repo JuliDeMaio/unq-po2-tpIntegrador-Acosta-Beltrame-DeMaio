@@ -53,4 +53,8 @@ public class Opinion {
 		
 		return(!(this.getFechaDeEmision().isBefore(fechaActualRestada)));
 	}
+
+	public boolean fueEmitidaPorUnExperto() {
+		return this.getUsuarioDueño().esUsuarioExperto();
+	}
 }

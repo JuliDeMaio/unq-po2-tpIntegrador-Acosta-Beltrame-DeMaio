@@ -63,4 +63,13 @@ class OpinionTest {
 		// Verify
 		assertFalse(opinion1.seEmitioEnLosUltimos30Dias());
 	}
+	
+	@Test
+	void testUnaOpinionSabeSiFueEmitidaPorUnUsuarioExperto() {
+		// Setup
+		when(usuario1.esUsuarioExperto()).thenReturn(true);
+		
+		// Verify
+		assertTrue(opinion1.fueEmitidaPorUnExperto());
+	}
 }

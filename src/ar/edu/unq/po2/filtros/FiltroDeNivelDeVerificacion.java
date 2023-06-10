@@ -1,7 +1,7 @@
 package ar.edu.unq.po2.filtros;
 
 import ar.edu.unq.po2.Muestra;
-import ar.edu.unq.po2.estadosDeMuestra.IEstadoMuestra;
+import ar.edu.unq.po2.enums.NivelDeVerificacion;
 
 	/**
 	 * @author Acosta, Federico
@@ -13,23 +13,23 @@ import ar.edu.unq.po2.estadosDeMuestra.IEstadoMuestra;
 
 public class FiltroDeNivelDeVerificacion extends Filtro {
 
-	private IEstadoMuestra filtroEspecificado;
+	private NivelDeVerificacion filtroEspecificado;
 	
-	public FiltroDeNivelDeVerificacion(IEstadoMuestra nivelDeVerificacion) {
+	public FiltroDeNivelDeVerificacion(NivelDeVerificacion nivelDeVerificacion) {
 		super();
 		this.setFiltroEspecificado(nivelDeVerificacion);
 	}
 
-	public IEstadoMuestra getFiltroEspecificado() {
+	public NivelDeVerificacion getFiltroEspecificado() {
 		return filtroEspecificado;
 	}
 
-	public void setFiltroEspecificado(IEstadoMuestra filtroEspecificado) {
+	public void setFiltroEspecificado(NivelDeVerificacion filtroEspecificado) {
 		this.filtroEspecificado = filtroEspecificado;
 	}
 
 	@Override
 	public boolean pasaElFiltro(Muestra muestra) {
-		return muestra.getState().equals(filtroEspecificado);
+		return muestra.obtenerNivelDeVerificacion().equals(this.getFiltroEspecificado());
 	}
 }

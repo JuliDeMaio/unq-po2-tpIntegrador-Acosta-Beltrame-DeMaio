@@ -9,9 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import ar.edu.unq.po2.Muestra;
-import ar.edu.unq.po2.estadosDeMuestra.EstadoMuestraOpinadaPorBasicos;
-import ar.edu.unq.po2.estadosDeMuestra.EstadoMuestraOpinadaPorExpertos;
-import ar.edu.unq.po2.estadosDeMuestra.EstadoMuestraVerificada;
+import ar.edu.unq.po2.enums.NivelDeVerificacion;
 import ar.edu.unq.po2.filtros.FiltroDeNivelDeVerificacion;
 
 class FiltroDeNivelDeVerificacionTest {
@@ -22,10 +20,6 @@ class FiltroDeNivelDeVerificacionTest {
 	private Muestra muestra2;
 	private Muestra muestra3;
 	private Muestra muestra4;
-	
-	private EstadoMuestraVerificada estadoMuestraVerificada;
-	private EstadoMuestraOpinadaPorBasicos estadoMuestraOpinadaPorBasicos;
-	private EstadoMuestraOpinadaPorExpertos estadoMuestraOpinadaPorExpertos;
 
 	@BeforeEach
 	void setUp() throws Exception {
@@ -36,18 +30,14 @@ class FiltroDeNivelDeVerificacionTest {
 		muestra3 = mock(Muestra.class);
 		muestra4 = mock(Muestra.class);
 		
-		estadoMuestraVerificada = mock(EstadoMuestraVerificada.class);
-		estadoMuestraOpinadaPorBasicos = mock(EstadoMuestraOpinadaPorBasicos.class);
-		estadoMuestraOpinadaPorExpertos = mock(EstadoMuestraOpinadaPorExpertos.class);
-		
 		// SUT
-		filtroDeNivelDeVerificacion1 = new FiltroDeNivelDeVerificacion(estadoMuestraVerificada);
+		filtroDeNivelDeVerificacion1 = new FiltroDeNivelDeVerificacion(NivelDeVerificacion.VERIFICADA);
 	}
 
 	@Test
 	void testInicializacionDeUnFiltroDeNivelDeVerificacion() {
 		// Setup
-		EstadoMuestraVerificada filtroEspecificadoEsperado = estadoMuestraVerificada;
+		NivelDeVerificacion filtroEspecificadoEsperado = NivelDeVerificacion.VERIFICADA;
 		
 		// Verify
 		assertEquals(filtroEspecificadoEsperado, filtroDeNivelDeVerificacion1.getFiltroEspecificado());
@@ -71,10 +61,10 @@ class FiltroDeNivelDeVerificacionTest {
 		// Setup
 		int cantidadDeMuestrasEsperada = 2;
 		Set<Muestra> muestrasAFiltrar = Set.of(muestra1, muestra2, muestra3, muestra4);
-		when(muestra1.getState()).thenReturn(estadoMuestraVerificada);
-		when(muestra2.getState()).thenReturn(estadoMuestraVerificada);
-		when(muestra3.getState()).thenReturn(estadoMuestraOpinadaPorBasicos);
-		when(muestra4.getState()).thenReturn(estadoMuestraOpinadaPorExpertos);
+		when(muestra1.obtenerNivelDeVerificacion()).thenReturn(NivelDeVerificacion.VERIFICADA);
+		when(muestra2.obtenerNivelDeVerificacion()).thenReturn(NivelDeVerificacion.VERIFICADA);
+		when(muestra3.obtenerNivelDeVerificacion()).thenReturn(NivelDeVerificacion.VOTADA);
+		when(muestra4.obtenerNivelDeVerificacion()).thenReturn(NivelDeVerificacion.VOTADA);
 		
 		// Exercise
 		Set<Muestra> setDeMuestrasResultante = filtroDeNivelDeVerificacion1.filtrarMuestras(muestrasAFiltrar);
@@ -90,10 +80,10 @@ class FiltroDeNivelDeVerificacionTest {
 		// Setup
 		int cantidadDeMuestrasEsperada = 4;
 		Set<Muestra> muestrasAFiltrar = Set.of(muestra1, muestra2, muestra3, muestra4);
-		when(muestra1.getState()).thenReturn(estadoMuestraVerificada);
-		when(muestra2.getState()).thenReturn(estadoMuestraVerificada);
-		when(muestra3.getState()).thenReturn(estadoMuestraVerificada);
-		when(muestra4.getState()).thenReturn(estadoMuestraVerificada);
+		when(muestra1.obtenerNivelDeVerificacion()).thenReturn(NivelDeVerificacion.VERIFICADA);
+		when(muestra2.obtenerNivelDeVerificacion()).thenReturn(NivelDeVerificacion.VERIFICADA);
+		when(muestra3.obtenerNivelDeVerificacion()).thenReturn(NivelDeVerificacion.VERIFICADA);
+		when(muestra4.obtenerNivelDeVerificacion()).thenReturn(NivelDeVerificacion.VERIFICADA);
 		
 		// Exercise
 		Set<Muestra> setDeMuestrasResultante = filtroDeNivelDeVerificacion1.filtrarMuestras(muestrasAFiltrar);
@@ -110,10 +100,10 @@ class FiltroDeNivelDeVerificacionTest {
 	void testUnFiltroFiltraUnSetDeMuestrasYDevuelveElSetEsperadoDeMuestras3() {
 		// Setup
 		Set<Muestra> muestrasAFiltrar = Set.of(muestra1, muestra2, muestra3, muestra4);
-		when(muestra1.getState()).thenReturn(estadoMuestraOpinadaPorBasicos);
-		when(muestra2.getState()).thenReturn(estadoMuestraOpinadaPorBasicos);
-		when(muestra3.getState()).thenReturn(estadoMuestraOpinadaPorBasicos);
-		when(muestra4.getState()).thenReturn(estadoMuestraOpinadaPorExpertos);
+		when(muestra1.obtenerNivelDeVerificacion()).thenReturn(NivelDeVerificacion.VOTADA);
+		when(muestra2.obtenerNivelDeVerificacion()).thenReturn(NivelDeVerificacion.VOTADA);
+		when(muestra3.obtenerNivelDeVerificacion()).thenReturn(NivelDeVerificacion.VOTADA);
+		when(muestra4.obtenerNivelDeVerificacion()).thenReturn(NivelDeVerificacion.VOTADA);
 		
 		// Exercise
 		Set<Muestra> setDeMuestrasResultante = filtroDeNivelDeVerificacion1.filtrarMuestras(muestrasAFiltrar);

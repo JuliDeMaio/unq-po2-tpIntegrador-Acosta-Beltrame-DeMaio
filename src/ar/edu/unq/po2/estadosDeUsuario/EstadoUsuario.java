@@ -3,6 +3,7 @@ package ar.edu.unq.po2.estadosDeUsuario;
 import ar.edu.unq.po2.Muestra;
 import ar.edu.unq.po2.Opinion;
 import ar.edu.unq.po2.Usuario;
+import ar.edu.unq.po2.enums.NivelDeVerificacion;
 import ar.edu.unq.po2.estadosDeMuestra.IEstadoMuestra;
 import ar.edu.unq.po2.muestraExceptions.MuestraEstaVerificadaException;
 import ar.edu.unq.po2.muestraExceptions.MuestraEstaVotadaPorExpertosException;
@@ -34,7 +35,7 @@ public abstract class EstadoUsuario {
 	}
 	
 	protected void realizarVerificacionDeQueNoEsMuestraVerificada(Muestra muestra) throws UsuarioEsMuestraVerificadaException {
-		if (muestra.esVerificada()) {
+		if (muestra.obtenerNivelDeVerificacion().equals(NivelDeVerificacion.VERIFICADA)) {
 			throw new UsuarioEsMuestraVerificadaException();
 		}
 	}
