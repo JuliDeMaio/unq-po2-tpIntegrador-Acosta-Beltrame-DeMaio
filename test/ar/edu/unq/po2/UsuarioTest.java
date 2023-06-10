@@ -438,6 +438,4 @@ class UsuarioTest {
 		// Verify
 		verify(estadoUsuarioBasico, times(1)).gestionarEstadoMuestraPara(estadoMuestraOpinadaPorBasicos, muestra1);
 	}	
-
-	
 }

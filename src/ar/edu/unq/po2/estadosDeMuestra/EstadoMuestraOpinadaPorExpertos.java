@@ -32,4 +32,8 @@ public class EstadoMuestraOpinadaPorExpertos implements IEstadoMuestra {
 		muestra.actualizarResultadoActual(ResultadoMuestra.NODEFINIDA);
 		}
 
+	@Override
+	public boolean esMuestraVerificada() {
+		return false;
+	}
 }

@@ -67,7 +67,7 @@ class EstadoMuestraOpinadaPorUnExpertoTest {
 	void testUnEstadoMuestraOpinadaPorUnExpertoRealizaLaVerificacionDelResultadoActualDeLaMuestra() {
 		// Setup
 		when(opinion1.getTipoDeOpinion()).thenReturn(Vinchuca.VINCHUCAINFESTANS);
-		when(muestra1.getOpinionesDeExperto()).thenReturn(Arrays.asList(opinion1));
+		when(muestra1.obtenerOpinionesDeExpertos()).thenReturn(Arrays.asList(opinion1));
 		// Exercise
 		estadoMuestraOpinadaPorUnExperto.verificarResultadoActualDeMuestra(muestra1);
 		// Verify

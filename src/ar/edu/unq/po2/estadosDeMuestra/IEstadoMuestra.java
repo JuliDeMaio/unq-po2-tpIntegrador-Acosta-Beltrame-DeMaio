@@ -15,4 +15,5 @@ public interface IEstadoMuestra {
 
 	public void realizarVerificacionParaUsuarioExperto(Muestra muestra) throws MuestraEstaVerificadaException;
 
+	public boolean esMuestraVerificada();
 }

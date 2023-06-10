@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 
 import ar.edu.unq.po2.Muestra;
 import ar.edu.unq.po2.Opinion;
-import ar.edu.unq.po2.Usuario;
 import ar.edu.unq.po2.enums.Chinche;
 import ar.edu.unq.po2.estadosDeMuestra.EstadoMuestraVerificada;
 import ar.edu.unq.po2.muestraExceptions.MuestraEstaVerificadaException;

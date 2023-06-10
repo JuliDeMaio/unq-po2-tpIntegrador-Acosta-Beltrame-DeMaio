@@ -26,4 +26,8 @@ public class EstadoMuestraVerificada implements IEstadoMuestra {
 		throw new MuestraEstaVerificadaException();
 	}
 
+	@Override
+	public boolean esMuestraVerificada() {
+		return true;
+	}
 }

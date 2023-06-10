@@ -15,7 +15,7 @@ public class EstadoMuestraOpinadaPorUnExperto implements IEstadoMuestra {
 
 	@Override
 	public void verificarResultadoActualDeMuestra(Muestra muestra) {
-		Opinion opinion = muestra.getOpinionesDeExperto().get(0);
+		Opinion opinion = muestra.obtenerOpinionesDeExpertos().get(0);
 		muestra.actualizarResultadoActual(opinion.getTipoDeOpinion());
 	}
 
@@ -31,5 +31,8 @@ public class EstadoMuestraOpinadaPorUnExperto implements IEstadoMuestra {
 		muestra.solicitarVerificacionDeResultadoActual();
 	}
 
-	
+	@Override
+	public boolean esMuestraVerificada() {
+		return false;
+	}
 }

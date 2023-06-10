@@ -57,4 +57,9 @@ public class EstadoUsuarioBasico extends EstadoUsuario {
 	public void gestionarEstadoMuestraPara(IEstadoMuestra estadoMuestra, Muestra muestra) throws MuestraEstaVotadaPorExpertosException, MuestraEstaVerificadaException {
 		estadoMuestra.realizarVerificacionParaUsuarioBasico(muestra);
 	}
+
+	@Override
+	public boolean esEstadoExperto() {
+		return false;
+	}
 }

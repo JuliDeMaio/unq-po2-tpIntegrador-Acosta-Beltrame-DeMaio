@@ -41,6 +41,8 @@ public abstract class EstadoUsuario {
 
 	public abstract boolean esEstadoBasico();
 
+	public abstract boolean esEstadoExperto();
+	
 	public abstract boolean esEstadoExpertoInterno();
 	
 	public abstract boolean esEstadoExpertoExterno();
@@ -48,4 +50,5 @@ public abstract class EstadoUsuario {
 	public abstract void actualizarCategoria(Usuario usuario);
 
 	public abstract void gestionarEstadoMuestraPara(IEstadoMuestra estadoMuestra, Muestra muestra) throws MuestraEstaVotadaPorExpertosException, MuestraEstaVerificadaException;
+
 }

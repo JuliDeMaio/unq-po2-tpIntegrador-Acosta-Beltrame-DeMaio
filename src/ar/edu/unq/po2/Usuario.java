@@ -82,7 +82,7 @@ public class Usuario {
 	
 	public void emitirOpinionVerificadaDe(Muestra muestra, Opinion opinion) {
 		this.guardarOpinion(opinion);
-		muestra.publicarOpinion(opinion);
+		muestra.recibirOpinion(opinion);
 	}
 
 	public int cantidadDeMuestrasEmitidasEnUltimos30Dias() {
@@ -125,5 +125,9 @@ public class Usuario {
 
 	public void gestionarEstadoMuestraPara(IEstadoMuestra estadoMuestra, Muestra muestra) throws MuestraEstaVotadaPorExpertosException, MuestraEstaVerificadaException {
 		this.getState().gestionarEstadoMuestraPara(estadoMuestra, muestra);
+	}
+
+	public boolean esUsuarioExperto() {
+		return this.getState().esEstadoExperto();
 	}
 }

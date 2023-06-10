@@ -34,4 +34,8 @@ public class EstadoMuestraOpinadaPorBasicos implements IEstadoMuestra {
 		
 	}
 
+	@Override
+	public boolean esMuestraVerificada() {
+		return false;
+	}
 }

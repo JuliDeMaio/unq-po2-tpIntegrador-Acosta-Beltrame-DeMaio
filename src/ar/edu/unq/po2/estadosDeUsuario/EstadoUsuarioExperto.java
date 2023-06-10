@@ -24,4 +24,9 @@ public abstract class EstadoUsuarioExperto extends EstadoUsuario {
 	public void gestionarEstadoMuestraPara(IEstadoMuestra estadoMuestra, Muestra muestra) throws MuestraEstaVerificadaException {
 		estadoMuestra.realizarVerificacionParaUsuarioExperto(muestra);
 	}
+	
+	@Override
+	public boolean esEstadoExperto() {
+		return true;
+	}
 }
