@@ -44,7 +44,7 @@ public class EstadoMuestraOpinadaPorExpertos implements IEstadoMuestra {
 	 */
 	@Override
 	public void realizarVerificacionParaUsuarioExperto(Muestra muestra) {
-		if(muestra.hay2OpinionesQueCoinciden()) {
+		if(muestra.hay2OpinionesDeExpertosQueCoinciden()) {
 		muestra.setState(new EstadoMuestraVerificada());
 		muestra.solicitarVerificacionDeResultadoActual();
 		}

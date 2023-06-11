@@ -5,10 +5,12 @@ import static org.mockito.Mockito.*;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import ar.edu.unq.po2.enums.Chinche;
 import ar.edu.unq.po2.enums.IResultadoMuestra;
 import ar.edu.unq.po2.enums.ResultadoMuestra;
 import ar.edu.unq.po2.enums.TipoDeOpinion;
@@ -241,8 +243,141 @@ class MuestraTest {
 		assertEquals(tipoDeOpinionEsperado, muestra.obtenerTipoDeOpinionMayoritaria());
 	}
 	
+	@Test
+	void testUnaMuestraConoceLasOpinionesQueFueronEmitidasPorExpertos() {
+		// Setup
+		int cantidadDeOpinionesEsperadas = 2;
+	
+		when(opinion2.fueEmitidaPorUnExperto()).thenReturn(true);
+		when(opinion3.fueEmitidaPorUnExperto()).thenReturn(true);
+
+		muestra.guardarOpinion(opinion2);
+		muestra.guardarOpinion(opinion3);
+		
+		// Exercise
+		List<Opinion> opinionesEmitidasPorExpertos = muestra.obtenerOpinionesDeExpertos();
+		
+		//Verify
+		assertEquals(cantidadDeOpinionesEsperadas, opinionesEmitidasPorExpertos.size());
+		assertTrue(opinionesEmitidasPorExpertos.contains(opinion2));
+		assertTrue(opinionesEmitidasPorExpertos.contains(opinion3));
+		assertFalse(opinionesEmitidasPorExpertos.contains(opinion1));
+	}
+	
+	@Test
+	void testUnaMuestraConoceElTipoDeOpinionMayoritariaEntreSusOpinionesDeExpertosCuandoHay() {
+		// Setup
+		IResultadoMuestra tipoDeOpinionEsperado = Vinchuca.VINCHUCAGUASAYANA;
+		
+		when(opinion2.fueEmitidaPorUnExperto()).thenReturn(true);
+		when(opinion3.fueEmitidaPorUnExperto()).thenReturn(false);
+		when(opinion2.getTipoDeOpinion()).thenReturn(Vinchuca.VINCHUCAGUASAYANA);
+		when(opinion3.getTipoDeOpinion()).thenReturn(Vinchuca.VINCHUCAGUASAYANA);
+
+		muestra.guardarOpinion(opinion2);
+		muestra.guardarOpinion(opinion3);
+		
+		// Verify
+		assertEquals(tipoDeOpinionEsperado, muestra.obtenerTipoDeOpinionMayoritariaDeExpertos());
+	}
+	
+	@Test
+	void testUnaMuestraConoceElTipoDeOpinionMayoritariaEntreSusOpinionesDeExpertosCuandoHayEmpate() {
+		// Setup
+		IResultadoMuestra tipoDeOpinionEsperado = ResultadoMuestra.NODEFINIDA;
+		
+		when(opinion2.fueEmitidaPorUnExperto()).thenReturn(true);
+		when(opinion3.fueEmitidaPorUnExperto()).thenReturn(true);
+		when(opinion2.getTipoDeOpinion()).thenReturn(Vinchuca.VINCHUCAGUASAYANA);
+		when(opinion3.getTipoDeOpinion()).thenReturn(Chinche.CHINCHEFOLIADA);
+
+		muestra.guardarOpinion(opinion2);
+		muestra.guardarOpinion(opinion3);
+		
+		// Verify
+		assertEquals(tipoDeOpinionEsperado, muestra.obtenerTipoDeOpinionMayoritariaDeExpertos());
+	}
+	
+	@Test
+	void testUnaMuestraConoceSiExisteUnDeterminadoTipoDeOpinionEntreLasOpinionesDeExpertos() {
+		// Setup		
+		when(opinion2.fueEmitidaPorUnExperto()).thenReturn(true);
+		when(opinion3.fueEmitidaPorUnExperto()).thenReturn(true);
+		when(opinion2.getTipoDeOpinion()).thenReturn(Vinchuca.VINCHUCAGUASAYANA);
+		when(opinion3.getTipoDeOpinion()).thenReturn(Chinche.CHINCHEFOLIADA);
+		
+		muestra.guardarOpinion(opinion2);
+		muestra.guardarOpinion(opinion3);
+		
+		// Verify
+		assertTrue(muestra.existeOpinionEnExpertos(Chinche.CHINCHEFOLIADA));
+	}
+	
+	@Test
+	void testUnaMuestraConoceQueNoExisteUnDeterminadoTipoDeOpinionEntreLasOpinionesDeExpertos() {
+		// Setup		
+		when(opinion2.fueEmitidaPorUnExperto()).thenReturn(true);
+		when(opinion3.fueEmitidaPorUnExperto()).thenReturn(true);
+		when(opinion2.getTipoDeOpinion()).thenReturn(Vinchuca.VINCHUCAGUASAYANA);
+		when(opinion3.getTipoDeOpinion()).thenReturn(Chinche.CHINCHEFOLIADA);
+		
+		muestra.guardarOpinion(opinion2);
+		muestra.guardarOpinion(opinion3);
+		
+		// Verify
+		assertFalse(muestra.existeOpinionEnExpertos(Chinche.PHTIACHINCHE));
+	}
+	
+	@Test
+	void testUnaMuestraConoceSiHay2OpinionesDeExpertosQueCoinciden() {
+		// Setup
+		
+		when(opinion2.fueEmitidaPorUnExperto()).thenReturn(true);
+		when(opinion3.fueEmitidaPorUnExperto()).thenReturn(true);
+		when(opinion2.getTipoDeOpinion()).thenReturn(Vinchuca.VINCHUCAGUASAYANA);
+		when(opinion3.getTipoDeOpinion()).thenReturn(Vinchuca.VINCHUCAGUASAYANA);
+
+		muestra.guardarOpinion(opinion2);
+		muestra.guardarOpinion(opinion3);
+		
+		// Verify
+		assertTrue(muestra.hay2OpinionesDeExpertosQueCoinciden());
+	}
+	
+	@Test
+	void testUnaMuestraConoceQueNoHay2OpinionesDeExpertosQueCoinciden() {
+		// Setup
+		
+		when(opinion2.fueEmitidaPorUnExperto()).thenReturn(false);
+		when(opinion3.fueEmitidaPorUnExperto()).thenReturn(false);
+		when(opinion2.getTipoDeOpinion()).thenReturn(Vinchuca.VINCHUCAGUASAYANA);
+		when(opinion3.getTipoDeOpinion()).thenReturn(Vinchuca.VINCHUCAGUASAYANA);
+
+		muestra.guardarOpinion(opinion2);
+		muestra.guardarOpinion(opinion3);
+		
+		// Verify
+		assertFalse(muestra.hay2OpinionesDeExpertosQueCoinciden());
+	}
+	
+	@Test
+	void testUnaMuestraConoceQueNoHay2OpinionesDeExpertosQueCoinciden2() {
+		// Setup
+		
+		when(opinion2.fueEmitidaPorUnExperto()).thenReturn(true);
+		when(opinion3.fueEmitidaPorUnExperto()).thenReturn(false);
+		when(opinion2.getTipoDeOpinion()).thenReturn(Vinchuca.VINCHUCAGUASAYANA);
+		when(opinion3.getTipoDeOpinion()).thenReturn(Chinche.CHINCHEFOLIADA);
+
+		muestra.guardarOpinion(opinion2);
+		muestra.guardarOpinion(opinion3);
+		
+		// Verify
+		assertFalse(muestra.hay2OpinionesDeExpertosQueCoinciden());
+	}
 	
 }
+
 
 
 

@@ -13,6 +13,7 @@ import ar.edu.unq.po2.enums.IResultadoMuestra;
 import ar.edu.unq.po2.enums.ITipoDeOpinion;
 import ar.edu.unq.po2.enums.NivelDeVerificacion;
 import ar.edu.unq.po2.enums.ResultadoMuestra;
+import ar.edu.unq.po2.enums.TipoDeOpinion;
 import ar.edu.unq.po2.estadosDeMuestra.EstadoMuestraOpinadaPorBasicos;
 import ar.edu.unq.po2.estadosDeMuestra.IEstadoMuestra;
 import ar.edu.unq.po2.muestraExceptions.MuestraEstaVerificadaException;
@@ -161,11 +162,25 @@ public class Muestra {
 			    	.orElse(getOpiniones().isEmpty() ? null : getOpiniones().get(0).getFechaDeEmision());
 	}
 	
+	public List<Opinion> obtenerOpinionesDeExpertos() {
+		return (this.getOpiniones().stream().filter(o -> o.fueEmitidaPorUnExperto()).toList());
+	}
+	
 	public IResultadoMuestra obtenerTipoDeOpinionMayoritaria() {
-		List<IResultadoMuestra> listaTiposDeOpiniones = getOpiniones().stream() // Convierte las Opiniones a TiposDeOpinion
+		return obtenerTipoDeOpinionMayoritariaDe(obtenerTiposDeOpiniones(getOpiniones()));
+	}
+	
+	public IResultadoMuestra obtenerTipoDeOpinionMayoritariaDeExpertos() {
+		return obtenerTipoDeOpinionMayoritariaDe(obtenerTiposDeOpiniones(obtenerOpinionesDeExpertos()));
+	}
+	
+	public List<IResultadoMuestra> obtenerTiposDeOpiniones(List<Opinion> opiniones){
+		return opiniones.stream() // Convierte las Opiniones a TiposDeOpinion
                 .map(o -> o.getTipoDeOpinion())
                 .collect(Collectors.toList());
-		
+	}
+	
+	public IResultadoMuestra obtenerTipoDeOpinionMayoritariaDe(List<IResultadoMuestra> listaTiposDeOpiniones) {
 		Map<IResultadoMuestra, Long> ocurrenciasTiposDeOpinion = listaTiposDeOpiniones.stream() // Compara las ocurrencias y las introduce a un Map<TipoDeOpinion, Ocurrencia>.
                 .collect(Collectors.groupingBy(to -> to, Collectors.counting()));
 
@@ -192,31 +207,15 @@ public class Muestra {
 		return opinionMasFrecuente;
 	}
 	
-	public IResultadoMuestra obtenerTipoDeOpinionMayoritariaDeExpertos() {
-		List<IResultadoMuestra> listaTiposDeOpiniones = obtenerOpinionesDeExpertos().stream()
-                .map(o -> o.getTipoDeOpinion())
-                .collect(Collectors.toList());
-		
-		IResultadoMuestra opinionMasFrecuente = listaTiposDeOpiniones.stream()
-                .max(Comparator.comparingInt(to -> Collections.frequency(listaTiposDeOpiniones, to)))
-                .orElse(ResultadoMuestra.NODEFINIDA);
-		
-		return opinionMasFrecuente;
-	}
-	
-	public List<Opinion> obtenerOpinionesDeExpertos() {
-		return (this.getOpiniones().stream().filter(o -> o.fueEmitidaPorUnExperto()).toList());
-	}
-	
 	public boolean existeOpinionEnExpertos(ITipoDeOpinion tipoDeOpinion) {
 		return this.obtenerOpinionesDeExpertos()
 				   .stream()
 				   .anyMatch(o -> o.getTipoDeOpinion() == tipoDeOpinion);
 	}
 	
-	public boolean hay2OpinionesQueCoinciden() {
-		return this.getOpiniones().stream()
-				   .collect(Collectors.groupingBy(Opinion::getTipoDeOpinion))
+	public boolean hay2OpinionesDeExpertosQueCoinciden() {
+		return this.obtenerOpinionesDeExpertos().stream()
+				   .collect(Collectors.groupingBy(o -> o.getTipoDeOpinion()))
 				   .values().stream().anyMatch(g->g.size() > 1);
 	}
 	

@@ -62,7 +62,7 @@ class EstadoMuestraOpinadaPorExpertosTest {
 	@Test
 	void testUnEstadoMuestraOpinadaPorExpertosRealizaLaVerificacionParaUnUsuarioExpertoYCambiaSuEstado() {
 		// Setup
-		when(muestra1.hay2OpinionesQueCoinciden()).thenReturn(true);
+		when(muestra1.hay2OpinionesDeExpertosQueCoinciden()).thenReturn(true);
 		
 		// Exercise
 		estadoMuestraOpinadaPorExpertos.realizarVerificacionParaUsuarioExperto(muestra1);
@@ -75,7 +75,7 @@ class EstadoMuestraOpinadaPorExpertosTest {
 	@Test
 	void testUnEstadoMuestraOpinadaPorExpertosRealizaLaVerificacionParaUnUsuarioExpertoYNoCambiaSuEstado() {
 		// Setup
-		when(muestra1.hay2OpinionesQueCoinciden()).thenReturn(false);
+		when(muestra1.hay2OpinionesDeExpertosQueCoinciden()).thenReturn(false);
 		
 		// Exercise
 		estadoMuestraOpinadaPorExpertos.realizarVerificacionParaUsuarioExperto(muestra1);
