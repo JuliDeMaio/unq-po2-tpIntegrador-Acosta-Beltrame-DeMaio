@@ -11,11 +11,15 @@ import ar.edu.unq.po2.usuarioExceptions.*;
 /**
 	 * @author Acosta, Federico
 	 * 		   De Maio, Julian
-	 * @see Usuario, EstadoUsuarioExpertoExterno, EstadoUsuarioExpertoInterno, IEstadoUsuario
-	 * 
+	 * @note Esta clase tiene como objetivo modelar un estado concreto, el de usuario basico.
+	 * @see Usuario, EstadoUsuarioExpertoExterno, EstadoUsuarioExpertoInterno, EstadoUsuario, IEstadoMuestra
+	 * @DesignPattern State <<ConcreteStateA>>
 	 */
 public class EstadoUsuarioBasico extends EstadoUsuario {
 
+	/**
+	 * @note mensaje que realiza las verificaciones para emitir una opinion.
+	 */
 	@Override
 	public void realizarVerificacionesPara(Muestra muestra, Opinion opinion) throws UsuarioException {
 		realizarVerificacionDeQueNoEsElDueñoDeLaMuestra(muestra, opinion);
@@ -53,6 +57,9 @@ public class EstadoUsuarioBasico extends EstadoUsuario {
 		return false;
 	}
 
+	/**
+	 * @note mensaje parte del double-dispatch, realiza la gestion siendo usuario basico.
+	 */
 	@Override
 	public void gestionarEstadoMuestraPara(IEstadoMuestra estadoMuestra, Muestra muestra) throws MuestraEstaVotadaPorExpertosException, MuestraEstaVerificadaException {
 		estadoMuestra.realizarVerificacionParaUsuarioBasico(muestra);

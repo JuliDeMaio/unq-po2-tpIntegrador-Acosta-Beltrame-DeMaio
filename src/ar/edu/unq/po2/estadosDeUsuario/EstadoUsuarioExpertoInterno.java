@@ -2,9 +2,11 @@ package ar.edu.unq.po2.estadosDeUsuario;
 
 import ar.edu.unq.po2.Usuario;
 
-/**
+	/**
 	 * @author Acosta, Federico
-	 * @see Usuario, EstadoUsuarioBasico, EstadoUsuarioExpertoExterno, IEstadoUsuario
+	 * @note Esta clase tiene como objetivo modelar una clase concreta del ConcreteStateB del State.
+	 * 			Mas concretamente, el estado UsuarioExpertoInterno.
+	 * @see Usuario, EstadoUsuarioBasico, EstadoUsuarioExpertoExterno, EstadoUsuario
 	 * 
 	 */
 public class EstadoUsuarioExpertoInterno extends EstadoUsuarioExperto {

@@ -14,13 +14,20 @@ import ar.edu.unq.po2.usuarioExceptions.UsuarioNoEsOpinionUnicaException;
 
 	/**
 	 * @author Acosta, Federico
-	 * @see Usuario, EstadoUsuarioBasico, EstadoUsuarioExpertoInterno, EstadoUsuarioExpertoExterno
+	 * @note Esta clase tiene como objetivo modelar y tipar los distintos States que puede tomar el Usuario.
+	 * @see Usuario, EstadoUsuarioBasico, EstadoUsuarioExpertoInterno, EstadoUsuarioExpertoExterno, IEstadoMuestra
+	 * @DesignPattern State <<State>>
 	 * 
 	 */
 public abstract class EstadoUsuario {
 	
+	/**
+	 * @note mensaje que realiza las verificaciones para emitir una opinion.
+	 * @param muestra
+	 * @param opinion
+	 * @throws UsuarioException
+	 */
 	public abstract void realizarVerificacionesPara(Muestra muestra, Opinion opinion) throws UsuarioException;
-
 
 	protected void realizarVerificacionDeQueNoEsElDueñoDeLaMuestra(Muestra muestra, Opinion opinion) throws UsuarioEsDueñoDeLaMuestraException {
 		if (muestra.esDueñoDeLaMuestra(opinion.getUsuarioDueño())) {
@@ -50,5 +57,12 @@ public abstract class EstadoUsuario {
 	
 	public abstract void actualizarCategoria(Usuario usuario);
 
+	/**
+	 * @note Este mensaje es parte del double-dispatch 
+	 * @param estadoMuestra : estadoMuestra para el que gestiona el double-dispatch
+	 * @param muestra
+	 * @throws MuestraEstaVotadaPorExpertosException
+	 * @throws MuestraEstaVerificadaException
+	 */
 	public abstract void gestionarEstadoMuestraPara(IEstadoMuestra estadoMuestra, Muestra muestra) throws MuestraEstaVotadaPorExpertosException, MuestraEstaVerificadaException;
 }
