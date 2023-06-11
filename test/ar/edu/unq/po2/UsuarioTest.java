@@ -3,6 +3,9 @@ package ar.edu.unq.po2;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -459,5 +462,21 @@ class UsuarioTest {
 		
 		// Verify
 		assertFalse(julianBasico.esUsuarioExperto());
+	}
+	
+	@Test
+	void testUnUsuarioConoceSusOpiniones() {
+		// Setup
+		appWeb.reiniciarSistema();
+		int cantidadDeOpinionesEsperadas = 3;
+		
+		// Exercise
+		List<Opinion> opinionesObtenidas = julianBasico.obtenerOpinones();
+		
+		// Verify
+		assertEquals(cantidadDeOpinionesEsperadas, opinionesObtenidas.size());
+		assertTrue(opinionesObtenidas.contains(opinion1));
+		assertTrue(opinionesObtenidas.contains(opinion2));
+		assertTrue(opinionesObtenidas.contains(opinion3));
 	}
 }
