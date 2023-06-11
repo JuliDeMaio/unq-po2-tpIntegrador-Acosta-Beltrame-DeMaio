@@ -12,7 +12,7 @@ import ar.edu.unq.po2.usuarioExceptions.UsuarioEsMuestraVerificadaException;
 import ar.edu.unq.po2.usuarioExceptions.UsuarioException;
 import ar.edu.unq.po2.usuarioExceptions.UsuarioNoEsOpinionUnicaException;
 
-/**
+	/**
 	 * @author Acosta, Federico
 	 * @see Usuario, EstadoUsuarioBasico, EstadoUsuarioExpertoInterno, EstadoUsuarioExpertoExterno
 	 * 
@@ -51,5 +51,4 @@ public abstract class EstadoUsuario {
 	public abstract void actualizarCategoria(Usuario usuario);
 
 	public abstract void gestionarEstadoMuestraPara(IEstadoMuestra estadoMuestra, Muestra muestra) throws MuestraEstaVotadaPorExpertosException, MuestraEstaVerificadaException;
-
 }

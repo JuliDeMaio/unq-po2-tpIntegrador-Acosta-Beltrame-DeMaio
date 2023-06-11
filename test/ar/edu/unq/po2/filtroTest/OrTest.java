@@ -56,8 +56,8 @@ class OrTest {
 	@Test
 	void testInicializacionDeUnOr() {
 		// Setup
-		 FiltroDeTipoDeInsecto filtroEspecificadoEsperado1 = filtroDeTipoDeInsecto1;
-		 FiltroDeNivelDeVerificacion filtroEspecificadoEsperado2 = filtroDeNivelDeVerificacion1;
+		FiltroDeTipoDeInsecto filtroEspecificadoEsperado1 = filtroDeTipoDeInsecto1;
+		FiltroDeNivelDeVerificacion filtroEspecificadoEsperado2 = filtroDeNivelDeVerificacion1;
 		
 		// Verify
 		assertEquals(filtroEspecificadoEsperado1, or1.getFiltro1());

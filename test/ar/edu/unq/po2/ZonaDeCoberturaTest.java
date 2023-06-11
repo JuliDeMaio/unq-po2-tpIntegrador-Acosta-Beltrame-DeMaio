@@ -8,6 +8,10 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import ar.edu.unq.po2.zonaCoberturaObserver.IZonaDeCoberturaListener;
+import ar.edu.unq.po2.zonaCoberturaObserver.Organizacion;
+import ar.edu.unq.po2.zonaCoberturaObserver.ZonaDeCobertura;
+
 class ZonaDeCoberturaTest {
 	
 	private ZonaDeCobertura zonaDeCobertura1;

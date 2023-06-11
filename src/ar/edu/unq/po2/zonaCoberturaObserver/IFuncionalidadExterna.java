@@ -1,4 +1,6 @@
-package ar.edu.unq.po2;
+package ar.edu.unq.po2.zonaCoberturaObserver;
+
+import ar.edu.unq.po2.Muestra;
 
 public interface IFuncionalidadExterna {
 	

@@ -5,6 +5,14 @@ import java.util.Set;
 
 import ar.edu.unq.po2.Muestra;
 
+	/**
+	 * 
+	 * @author Beltrame, Franco
+	 * @note Esta clase tiene como objetivo modelar el Filtro And como Composite miembro del Patron Composite.
+	 * @see IBusqueda, Or, Filtro
+	 * @DesignPattern Composite <<Composite>> 
+	 *
+	 */
 public class And implements IBusqueda {
 	
 	private IBusqueda filtro1;

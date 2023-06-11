@@ -3,10 +3,14 @@ package ar.edu.unq.po2;
 import java.util.List;
 import java.util.Set;
 
+import ar.edu.unq.po2.zonaCoberturaObserver.ZonaDeCobertura;
+
 /**
 	 * @author Beltrame, Franco
+	 * 		   Acosta, Federico
+	 * 		   De Maio, Julian
 	 * @see ZonaDeCobertura, Muestra
-	 *
+	 * @note Esta clase tiene como objetivo modelar una Ubicacion del sistema.
 	 */
 public class Ubicacion {
 

@@ -3,9 +3,11 @@ package ar.edu.unq.po2.estadoDeUsuarioTests;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import ar.edu.unq.po2.AppWeb;
 import ar.edu.unq.po2.Muestra;
 import ar.edu.unq.po2.Opinion;
 import ar.edu.unq.po2.Usuario;
@@ -26,17 +28,24 @@ class EstadoUsuarioBasicoTest {
 	private Opinion opinion1;
 	private Usuario usuario1;
 	private EstadoMuestraOpinadaPorBasicos estadoMuestraOpinadaPorBasicos;
+	private AppWeb appWeb;
 	
 	@BeforeEach
 	void setUp() throws Exception {
 		// SUT
 		estadoUsuarioBasico = new EstadoUsuarioBasico();
 		
-		// Dummy
+		// DOC
 		muestra1 = mock(Muestra.class);
 		opinion1 = mock(Opinion.class);
 		usuario1 = mock(Usuario.class);
 		estadoMuestraOpinadaPorBasicos = mock(EstadoMuestraOpinadaPorBasicos.class);
+		appWeb = AppWeb.getInstance();
+	}
+	
+	@AfterEach
+	void tearDown() throws Exception {
+		appWeb.reiniciarSistema();
 	}
 
 	@Test

@@ -5,11 +5,13 @@ import static org.mockito.Mockito.*;
 
 import java.util.Set;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import ar.edu.unq.po2.enums.Vinchuca;
 import ar.edu.unq.po2.filtros.FiltroDeTipoDeInsecto;
+import ar.edu.unq.po2.zonaCoberturaObserver.ZonaDeCobertura;
 
 class AppWebTest {
 	
@@ -31,7 +33,7 @@ class AppWebTest {
 	void setUp() throws Exception {
 		
 		// SUT
-		appWeb = new AppWeb();
+		appWeb = AppWeb.getInstance();
 		
 		// DOC
 		muestra1 = mock(Muestra.class);
@@ -47,6 +49,11 @@ class AppWebTest {
 		usuario3 = mock(Usuario.class);
 	}
 	
+	@AfterEach
+	void tearDown() throws Exception {
+		appWeb.reiniciarSistema();
+	}
+	
 	@Test
 	void testInicializacionDeUnaAppWeb() {
 		
@@ -57,7 +64,8 @@ class AppWebTest {
 
 	@Test
 	void testSeSubeUnaMuestraALaAppWebYQuedaRegistrada() {
-		// Setup;
+		
+		// Setup
 		when(muestra1.getResultadoActual()).thenReturn(Vinchuca.VINCHUCASORDIDA);
 		
 		// Exercise
@@ -71,6 +79,7 @@ class AppWebTest {
 	
 	@Test
 	void testSeEliminaUnaMuestraDeLaAppWebYQuedaRegistrada() {
+		
 		// Setup
 		appWeb.guardarMuestra(muestra1);
 		
@@ -84,6 +93,7 @@ class AppWebTest {
 	
 	@Test
 	void testLaAppWebFiltraPorTipoDeInsectoUnaListaDeMuestrasYSeDevuelveUnaListaDeMuestrasFiltrada() {
+		
 		// Setup
 		Set<Muestra> muestrasAFiltrar = Set.of(muestra1, muestra2);
 		Set<Muestra> listaDeMuestrasEsperada = Set.of(muestra1);
@@ -120,6 +130,7 @@ class AppWebTest {
 	
 	@Test
 	void testVerificacionCuandoUnaAppWebAgregaUnUsuario() {
+		
 		// Setup
 		int cantidadDeUsuariosEsperada = 1;
 		
@@ -133,6 +144,7 @@ class AppWebTest {
 	
 	@Test
 	void testVerificacionCuandoUnaAppWebEliminaUnUsuario() {
+		
 		// Setup
 		appWeb.agregarUsuario(usuario1);
 		
@@ -172,5 +184,27 @@ class AppWebTest {
 		verify(usuario1, times(1)).actualizarCategoria();
 		verify(usuario2, times(1)).actualizarCategoria();
 		verify(usuario3, times(1)).actualizarCategoria();
+	}
+	
+	@Test
+	void testUnaAppWebConoceLasMuestrasDeUnUsuarioDado() {
+		
+		// Setup
+		appWeb.guardarMuestra(muestra1);
+		appWeb.guardarMuestra(muestra2);
+		appWeb.guardarMuestra(muestra3);
+		int cantidadDeMuestrasEsperadas = 3;
+		when(muestra1.esDueñoDeLaMuestra(usuario1)).thenReturn(true);
+		when(muestra2.esDueñoDeLaMuestra(usuario1)).thenReturn(true);
+		when(muestra3.esDueñoDeLaMuestra(usuario1)).thenReturn(true);
+		
+		// Exercise
+		Set<Muestra> muestrasObtenidas = appWeb.muestrasDeUsuario(usuario1);
+		
+		// Verify
+		assertTrue(muestrasObtenidas.contains(muestra1));
+		assertTrue(muestrasObtenidas.contains(muestra2));
+		assertTrue(muestrasObtenidas.contains(muestra3));
+		assertEquals(cantidadDeMuestrasEsperadas, muestrasObtenidas.size());
 	}
 }

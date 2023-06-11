@@ -16,11 +16,12 @@ import ar.edu.unq.po2.estadosDeMuestra.EstadoMuestraOpinadaPorBasicos;
 import ar.edu.unq.po2.estadosDeMuestra.IEstadoMuestra;
 import ar.edu.unq.po2.muestraExceptions.MuestraEstaVerificadaException;
 import ar.edu.unq.po2.muestraExceptions.MuestraEstaVotadaPorExpertosException;
+import ar.edu.unq.po2.zonaCoberturaObserver.ZonaDeCobertura;
 
 /**
 	 * @author Acosta, Federico
 	 * @see Usuario, Opinion, TipoDeOpinion, Ubicacion
-	 * 
+	 * @note Esta clase tiene como objetivo modelar una Muestra del sistema.
 	 */
 public class Muestra {
 	
@@ -32,6 +33,15 @@ public class Muestra {
 	private Ubicacion ubicacion;
 	private LocalDate fechaDeEmision;
 	
+	/**
+	 * @note TODO
+	 * @param foto
+	 * @param usuarioDueño
+	 * @param opinionDeInicio
+	 * @param ubicacion
+	 * @throws MuestraEstaVerificadaException
+	 * @throws MuestraEstaVotadaPorExpertosException
+	 */
 	public Muestra(String foto, Usuario usuarioDueño, Opinion opinionDeInicio, Ubicacion ubicacion) throws MuestraEstaVerificadaException, MuestraEstaVotadaPorExpertosException {
 		super();
 		this.setFoto(foto);

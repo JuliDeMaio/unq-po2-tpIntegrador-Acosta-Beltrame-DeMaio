@@ -1,20 +1,29 @@
-package ar.edu.unq.po2;
+package ar.edu.unq.po2.zonaCoberturaObserver;
 
-import java.util.HashSet;
 import java.util.Set;
 
-public class ZonaDeCobertura implements ISubject{
+import ar.edu.unq.po2.Muestra;
+import ar.edu.unq.po2.Ubicacion;
+
+	/**
+	 * 
+	 * @author Acosta, Federico
+	 * 		   De Maio, Julian
+	 * @note Esta clase tiene como objetivo modelar una ZonaDeCobertura, como parte del Patron Observer.
+	 * @see IZonaDeCoberturaListener, Subject
+	 * @DesignPattern Observer <<ConcreteSubject/ConcreteObservable>>
+	 */
+public class ZonaDeCobertura extends Subject {
 	
 	private String nombre;
 	private double radioKm;
-	private Set<IZonaDeCoberturaListener> listeners;
+	
 	private Ubicacion epicentro;
 
 	public ZonaDeCobertura(String nombre, double radioKm, Ubicacion epicentro) {
 		super();
 		this.setNombre(nombre);
 		this.setRadioKm(radioKm);
-		this.setListeners(new HashSet<IZonaDeCoberturaListener>());
 		this.setEpicentro(epicentro);
 	}
 
@@ -24,11 +33,7 @@ public class ZonaDeCobertura implements ISubject{
 
 	public double getRadioKm() {
 		return radioKm;
-	}
-
-	public Set<IZonaDeCoberturaListener> getListeners() {
-		return listeners;
-	}
+	}	
 
 	public Ubicacion getEpicentro() {
 		return epicentro;
@@ -42,32 +47,16 @@ public class ZonaDeCobertura implements ISubject{
 		this.radioKm = radioKm;
 	}
 	
-	private void setListeners(Set<IZonaDeCoberturaListener> listeners) {
-		this.listeners = listeners;
-	}
-	
 	private void setEpicentro(Ubicacion epicentro) {
 		this.epicentro = epicentro;
 	}
-
-	@Override
+	
 	public void notificarMuestraSubida(Muestra muestra) {
 		this.getListeners()
 			.stream()
 			.forEach(l -> l.muestraSubida(this, muestra));
 	}
-
-	@Override
-	public void addObserver(IZonaDeCoberturaListener listener) {
-		this.getListeners().add(listener);
-	}
-
-	@Override
-	public void removeObserver(IZonaDeCoberturaListener listener) {
-		this.getListeners().remove(listener);
-	}
-
-	@Override
+	
 	public void notificarMuestraValidada(Muestra muestra) {
 		this.getListeners()
 			.stream()

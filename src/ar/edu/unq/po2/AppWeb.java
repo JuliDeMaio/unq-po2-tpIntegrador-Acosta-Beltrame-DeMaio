@@ -4,11 +4,21 @@ import java.util.HashSet;
 import java.util.Set;
 
 import ar.edu.unq.po2.filtros.Filtro;
+import ar.edu.unq.po2.zonaCoberturaObserver.ZonaDeCobertura;
 
+	/**
+	 * 
+	 * @author Acosta, Federico
+	 * 		   De Maio, Julian
+	 *
+	 * @note Esta clase tiene como objetivo modelar la AppWeb del sistema, utilizando el patron Singleton. 
+	 * @DesignPattern Singleton
+	 */
 public class AppWeb {
 	
 	private Set<Muestra> muestras;
 	private Set<Usuario> usuariosRegistrados;
+	public static AppWeb instance;
 
 	public AppWeb() {
 	    this.setMuestras(new HashSet<Muestra>());
@@ -22,6 +32,13 @@ public class AppWeb {
 	public Set<Usuario> getUsuariosRegistrados() {
 		return usuariosRegistrados;
 	}
+	
+	public static AppWeb getInstance() {
+        if (instance == null) {
+            instance = new AppWeb();
+        }
+        return instance;
+    }
 
 	private void setUsuariosRegistrados(Set<Usuario> usuariosRegistrados) {
 		this.usuariosRegistrados = usuariosRegistrados;
@@ -69,5 +86,21 @@ public class AppWeb {
 	
 	public void actualizarCategoriaDeUsuario(Usuario usuario) {
 		usuario.actualizarCategoria();
+	}
+
+	public Set<Muestra> muestrasDeUsuario(Usuario usuario) {
+		return Set.copyOf(
+				this.getMuestras()
+				.stream()
+				.filter(m -> m.esDueñoDeLaMuestra(usuario))
+				.toList());
+	}
+	
+	/**
+	 * @note mensaje para reiniciar el sistema a 0, util en los Tests. 
+	 */
+	public void reiniciarSistema() {
+		getMuestras().clear();
+		getUsuariosRegistrados().clear();
 	}
 }

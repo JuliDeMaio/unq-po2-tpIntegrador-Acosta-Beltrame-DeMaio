@@ -3,6 +3,7 @@ package ar.edu.unq.po2;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import ar.edu.unq.po2.enums.ITipoDeOpinion;
 import ar.edu.unq.po2.estadosDeMuestra.IEstadoMuestra;
@@ -16,19 +17,20 @@ import ar.edu.unq.po2.usuarioExceptions.UsuarioException;
 	 * 		   De Maio, Julian
 	 * 		   Beltrame, Franco
 	 * 
-	 * @see EstadoUsuario, UsuarioException
+	 * @note Esta clase tiene como objetivo modelar a un Usuario del sistema.
+	 * 
+	 * @see EstadoUsuario, UsuarioException, AppWeb, Muestra, Opinion. 
+	 * @DesignPattern State <<Context>> (estados de usuario)
 	 **/
 
 public class Usuario {
 
 	private List<Opinion> opinionesRegistradas;
-	private List<Muestra> muestrasRegistradas;
 	private EstadoUsuario estadoActual;
 	
 	public Usuario(EstadoUsuario estadoDeUsuario) {
 		super();
 		this.setOpinionesRegistradas(new ArrayList<Opinion>());
-		this.setMuestrasRegistradas(new ArrayList<Muestra>());
 		this.setState(estadoDeUsuario);
 	}
 
@@ -36,8 +38,8 @@ public class Usuario {
 		return opinionesRegistradas;
 	}
 
-	public List<Muestra> getMuestrasRegistradas() {
-		return muestrasRegistradas;
+	public Set<Muestra> obtenerMuestrasRegistradas() {
+		return AppWeb.getInstance().muestrasDeUsuario(this);
 	}
 
 	public EstadoUsuario getState() {
@@ -48,16 +50,8 @@ public class Usuario {
 		this.opinionesRegistradas = opinionesRegistradas;
 	}
 
-	private void setMuestrasRegistradas(List<Muestra> muestrasRegistradas) {
-		this.muestrasRegistradas = muestrasRegistradas;
-	}
-
 	public void setState(EstadoUsuario estadoDeUsuario) {
 		this.estadoActual = estadoDeUsuario;
-	}
-	
-	public void guardarMuestra(Muestra muestra) {
-		this.getMuestrasRegistradas().add(muestra);
 	}
 	
 	public void guardarOpinion(Opinion opinion) {
@@ -65,13 +59,22 @@ public class Usuario {
 	}
 
 	public int cantidadMuestras() {
-		return this.getMuestrasRegistradas().size();
+		return this.obtenerMuestrasRegistradas().size();
 	}
 
 	public int cantidadOpiniones() {
 		return this.getOpinionesRegistradas().size();
 	}
 
+	/**
+	 * @note mensaje que desencadena la emision de una opinion, puede arrojar excepcion si no cumple los requisitos
+	 * 			gestionados por los EstadoUsuario
+	 * @param muestra
+	 * @param tipoDeOpinion
+	 * @throws UsuarioException
+	 * @throws MuestraEstaVerificadaException
+	 * @throws MuestraEstaVotadaPorExpertosException
+	 */
 	public void emitirOpinionDe(Muestra muestra, ITipoDeOpinion tipoDeOpinion) throws UsuarioException, MuestraEstaVerificadaException, MuestraEstaVotadaPorExpertosException {
 		
 		Opinion opinionAEmitir = new Opinion(tipoDeOpinion, this, LocalDate.now());
@@ -86,7 +89,7 @@ public class Usuario {
 	}
 
 	public int cantidadDeMuestrasEmitidasEnUltimos30Dias() {
-		return this.getMuestrasRegistradas()
+		return this.obtenerMuestrasRegistradas()
 				   .stream()
 				   .filter(o -> o.seEmitioEnLosUltimos30Dias())
 				   .toList()
@@ -103,6 +106,10 @@ public class Usuario {
 
 	public boolean esUsuarioBasico() {
 		return this.getState().esEstadoBasico();
+	}
+	
+	public boolean esUsuarioExperto() {
+		return this.getState().esEstadoExperto();
 	}
 
 	public boolean esUsuarioExpertoInterno() {
@@ -123,11 +130,14 @@ public class Usuario {
 			   (this.cantidadDeOpinionesEmitidasEnUltimos30Dias() > 20));
 	}
 
+	/**
+	 * @note Mensaje intermedio del double-dispatch entre IEstadoMuestra y Usuario
+	 * @param estadoMuestra -> estadoMuestra para el que realiza el dispatch.
+	 * @param muestra -> muestra sobre la que realiza el dispatch.
+	 * @throws MuestraEstaVotadaPorExpertosException
+	 * @throws MuestraEstaVerificadaException
+	 */
 	public void gestionarEstadoMuestraPara(IEstadoMuestra estadoMuestra, Muestra muestra) throws MuestraEstaVotadaPorExpertosException, MuestraEstaVerificadaException {
 		this.getState().gestionarEstadoMuestraPara(estadoMuestra, muestra);
-	}
-
-	public boolean esUsuarioExperto() {
-		return this.getState().esEstadoExperto();
 	}
 }

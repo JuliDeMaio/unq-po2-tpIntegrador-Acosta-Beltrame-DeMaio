@@ -4,13 +4,12 @@ import java.time.LocalDate;
 
 import ar.edu.unq.po2.Muestra;
 
-/**	
+	/**	
 	 * 
 	 * @author Acosta, Federico
-	 * 
-	 * @see
-	 * 
-	 * Rol: <<Leaf>>
+	 * @note Esta clase tiene como objetivo modelar el Filtro por Fecha de Creacion, siendo un Leaf del Patron Composite.
+	 * @see Filtro, IBusqueda, And, Or
+	 * @DesignPattern Composite <<Leaf>>
 	 */
 public class FiltroDeFechaDeCreacion extends Filtro {
 
@@ -29,6 +28,9 @@ public class FiltroDeFechaDeCreacion extends Filtro {
 		this.filtroEspecificado = filtroEspecificado;
 	}
 
+	/**
+	 * @DesignPattern Template Method - Primitive Operation
+	 */
 	@Override
 	public boolean pasaElFiltro(Muestra muestra) {
 		return muestra.getFechaDeEmision().isEqual(filtroEspecificado);

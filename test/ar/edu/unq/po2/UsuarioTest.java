@@ -3,6 +3,7 @@ package ar.edu.unq.po2;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -60,6 +61,8 @@ class UsuarioTest {
 	
 	private EstadoMuestraOpinadaPorBasicos estadoMuestraOpinadaPorBasicos;
 	
+	private AppWeb appWeb;
+	
 	@BeforeEach
 	void setUp() {
 		
@@ -97,15 +100,21 @@ class UsuarioTest {
 		opinion19 = mock(Opinion.class);
 		opinion20 = mock(Opinion.class);
 		opinion21 = mock(Opinion.class);
-		
-		// Mock
+	
 		estadoUsuarioBasico = mock(EstadoUsuarioBasico.class);
 		estadoUsuarioExpertoInterno = mock(EstadoUsuarioExpertoInterno.class);
 		
 		estadoMuestraOpinadaPorBasicos = mock(EstadoMuestraOpinadaPorBasicos.class);
 		
+		appWeb = AppWeb.getInstance();
+		
 		// SUT
 		julianBasico = new Usuario(estadoUsuarioBasico);
+	}
+	
+	@AfterEach
+	void tearDown() throws Exception {
+		appWeb.reiniciarSistema();
 	}
 
 	@Test
@@ -115,7 +124,7 @@ class UsuarioTest {
 		EstadoUsuario estadoUsuarioEsperado = estadoUsuarioBasico;
 		
 		// Exercise - Verify
-		assertTrue(julianBasico.getMuestrasRegistradas().isEmpty());
+		assertTrue(julianBasico.obtenerMuestrasRegistradas().isEmpty());
 		assertTrue(julianBasico.getOpinionesRegistradas().isEmpty());
 		assertTrue(julianBasico.getState().equals(estadoUsuarioEsperado));
 	}
@@ -152,10 +161,10 @@ class UsuarioTest {
 		
 		// Setup
 		int cantidadMuestrasEsperadas = 2;
-				
-		// Exercise
-		julianBasico.guardarMuestra(muestra1);
-		julianBasico.guardarMuestra(muestra2);
+		appWeb.guardarMuestra(muestra1);
+		appWeb.guardarMuestra(muestra2);
+		when(muestra1.esDueñoDeLaMuestra(julianBasico)).thenReturn(true);
+		when(muestra2.esDueñoDeLaMuestra(julianBasico)).thenReturn(true);
 				
 		// Verify
 		assertEquals(cantidadMuestrasEsperadas, julianBasico.cantidadMuestras());
@@ -207,17 +216,23 @@ class UsuarioTest {
 		// Setup
 		int cantidadDeMuestrasEsperadas = 3;
 		
+		appWeb.guardarMuestra(muestra1);
+		appWeb.guardarMuestra(muestra2);
+		appWeb.guardarMuestra(muestra3);
+		appWeb.guardarMuestra(muestra4);
+		appWeb.guardarMuestra(muestra5);
+		
 		when(muestra1.seEmitioEnLosUltimos30Dias()).thenReturn(true);
 		when(muestra2.seEmitioEnLosUltimos30Dias()).thenReturn(false);
 		when(muestra3.seEmitioEnLosUltimos30Dias()).thenReturn(true);
 		when(muestra4.seEmitioEnLosUltimos30Dias()).thenReturn(false);
 		when(muestra5.seEmitioEnLosUltimos30Dias()).thenReturn(true);
 		
-		julianBasico.guardarMuestra(muestra1);
-		julianBasico.guardarMuestra(muestra2);
-		julianBasico.guardarMuestra(muestra3);
-		julianBasico.guardarMuestra(muestra4);
-		julianBasico.guardarMuestra(muestra5);
+		when(muestra1.esDueñoDeLaMuestra(julianBasico)).thenReturn(true);
+		when(muestra2.esDueñoDeLaMuestra(julianBasico)).thenReturn(true);
+		when(muestra3.esDueñoDeLaMuestra(julianBasico)).thenReturn(true);
+		when(muestra4.esDueñoDeLaMuestra(julianBasico)).thenReturn(true);
+		when(muestra5.esDueñoDeLaMuestra(julianBasico)).thenReturn(true);
 		
 		// Verify
 		assertEquals(cantidadDeMuestrasEsperadas, julianBasico.cantidadDeMuestrasEmitidasEnUltimos30Dias());
@@ -261,9 +276,23 @@ class UsuarioTest {
 	}
 	
 	@Test
-	// Este test prueba el caso en el que el usuario cumple todos los requisitos de muestras y opiniones.
+	/**
+	 * @Note: Este test prueba el caso en el que el usuario cumple todos los requisitos de muestras y opiniones. 
+	 */
 	void testUnUsuarioSabeQueCumpleConLosRequisitosParaSerUsuarioExperto() {
 		// Setup
+		appWeb.guardarMuestra(muestra1);
+		appWeb.guardarMuestra(muestra2);
+		appWeb.guardarMuestra(muestra3);
+		appWeb.guardarMuestra(muestra4);
+		appWeb.guardarMuestra(muestra5);
+		appWeb.guardarMuestra(muestra6);
+		appWeb.guardarMuestra(muestra7);
+		appWeb.guardarMuestra(muestra8);
+		appWeb.guardarMuestra(muestra9);
+		appWeb.guardarMuestra(muestra10);
+		appWeb.guardarMuestra(muestra11);
+		
 		when(opinion1.seEmitioEnLosUltimos30Dias()).thenReturn(true);
 		when(opinion2.seEmitioEnLosUltimos30Dias()).thenReturn(true);
 		when(opinion3.seEmitioEnLosUltimos30Dias()).thenReturn(true);
@@ -308,18 +337,6 @@ class UsuarioTest {
 		julianBasico.guardarOpinion(opinion20);
 		julianBasico.guardarOpinion(opinion21);
 		
-		julianBasico.guardarMuestra(muestra1);
-		julianBasico.guardarMuestra(muestra2);
-		julianBasico.guardarMuestra(muestra3);
-		julianBasico.guardarMuestra(muestra4);
-		julianBasico.guardarMuestra(muestra5);
-		julianBasico.guardarMuestra(muestra6);
-		julianBasico.guardarMuestra(muestra7);
-		julianBasico.guardarMuestra(muestra8);
-		julianBasico.guardarMuestra(muestra9);
-		julianBasico.guardarMuestra(muestra10);
-		julianBasico.guardarMuestra(muestra11);
-		
 		when(muestra1.seEmitioEnLosUltimos30Dias()).thenReturn(true);
 		when(muestra2.seEmitioEnLosUltimos30Dias()).thenReturn(true);
 		when(muestra3.seEmitioEnLosUltimos30Dias()).thenReturn(true);
@@ -331,6 +348,18 @@ class UsuarioTest {
 		when(muestra9.seEmitioEnLosUltimos30Dias()).thenReturn(true);
 		when(muestra10.seEmitioEnLosUltimos30Dias()).thenReturn(true);
 		when(muestra11.seEmitioEnLosUltimos30Dias()).thenReturn(true);
+		
+		when(muestra1.esDueñoDeLaMuestra(julianBasico)).thenReturn(true);
+		when(muestra2.esDueñoDeLaMuestra(julianBasico)).thenReturn(true);
+		when(muestra3.esDueñoDeLaMuestra(julianBasico)).thenReturn(true);
+		when(muestra4.esDueñoDeLaMuestra(julianBasico)).thenReturn(true);
+		when(muestra5.esDueñoDeLaMuestra(julianBasico)).thenReturn(true);
+		when(muestra6.esDueñoDeLaMuestra(julianBasico)).thenReturn(true);
+		when(muestra7.esDueñoDeLaMuestra(julianBasico)).thenReturn(true);
+		when(muestra8.esDueñoDeLaMuestra(julianBasico)).thenReturn(true);
+		when(muestra9.esDueñoDeLaMuestra(julianBasico)).thenReturn(true);
+		when(muestra10.esDueñoDeLaMuestra(julianBasico)).thenReturn(true);
+		when(muestra11.esDueñoDeLaMuestra(julianBasico)).thenReturn(true);
 		
 		// Verify
 		assertTrue(julianBasico.cumpleConLosRequisitosDeUsuarioExperto());
@@ -346,17 +375,6 @@ class UsuarioTest {
 	// Este test prueba el caso en el que el usuario cumple el requisito de muestras en los ultimos 30 dias pero no así el de las opiniones.
 	void testUnUsuarioSabeQueNoCumpleConLosRequisitosParaSerUsuarioExperto2() {
 		// Setup
-		julianBasico.guardarMuestra(muestra1);
-		julianBasico.guardarMuestra(muestra2);
-		julianBasico.guardarMuestra(muestra3);
-		julianBasico.guardarMuestra(muestra4);
-		julianBasico.guardarMuestra(muestra5);
-		julianBasico.guardarMuestra(muestra6);
-		julianBasico.guardarMuestra(muestra7);
-		julianBasico.guardarMuestra(muestra8);
-		julianBasico.guardarMuestra(muestra9);
-		julianBasico.guardarMuestra(muestra10);
-		julianBasico.guardarMuestra(muestra11);
 		
 		when(muestra1.seEmitioEnLosUltimos30Dias()).thenReturn(true);
 		when(muestra2.seEmitioEnLosUltimos30Dias()).thenReturn(true);

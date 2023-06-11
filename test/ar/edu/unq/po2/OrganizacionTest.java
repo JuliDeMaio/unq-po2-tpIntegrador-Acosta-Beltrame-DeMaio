@@ -7,13 +7,18 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import ar.edu.unq.po2.enums.TipoDeOrganizacion;
+import ar.edu.unq.po2.zonaCoberturaObserver.IFuncionalidadExterna;
+import ar.edu.unq.po2.zonaCoberturaObserver.Organizacion;
+import ar.edu.unq.po2.zonaCoberturaObserver.ZonaDeCobertura;
 
 class OrganizacionTest {
 	
 	private Organizacion organizacion1;
 	private Ubicacion ubicacion1;
+	
 	private IFuncionalidadExterna funcionalidadExternaSubida;
 	private IFuncionalidadExterna funcionalidadExternaValidada;
+	
 	private ZonaDeCobertura zonaDeCobertura1;
 	private Muestra muestra1;
 	
@@ -29,7 +34,8 @@ class OrganizacionTest {
 		funcionalidadExternaValidada = mock(IFuncionalidadExterna.class);
 		
 		// SUT
-		organizacion1 = new Organizacion(TipoDeOrganizacion.SALUD, 5, ubicacion1, funcionalidadExternaSubida, funcionalidadExternaValidada);
+		organizacion1 = new Organizacion(TipoDeOrganizacion.SALUD, 5, ubicacion1, funcionalidadExternaSubida, 
+				funcionalidadExternaValidada, zonaDeCobertura1);
 	}
 
 	@Test
@@ -41,6 +47,7 @@ class OrganizacionTest {
 		// Exercise - Verify
 		assertEquals(TipoDeOrganizacion.SALUD, organizacion1.getTipoDeOrganizacion());
 		assertEquals(cantidadDeTrabajadoresEsperados, organizacion1.getCantidadDeTrabajadores());
+		assertEquals(zonaDeCobertura1, organizacion1.getZonaDeCobertura());
 		assertTrue(ubicacion1.equals(organizacion1.getUbicacion()));
 	}
 	

@@ -4,11 +4,11 @@ import java.time.LocalDate;
 
 import ar.edu.unq.po2.enums.ITipoDeOpinion;
 
-/**
+	/**
 	 * @author Acosta, Federico
 	 * 		   Beltrame, Franco
-	 * @see Usuario, TipoDeOpinion, Ubicacion
-	 * 
+	 * @see Usuario, TipoDeOpinion, Muestra
+	 * @note Esta clase tiene como objetivo modelar una Opinion del sistema.
 	 */
 public class Opinion {
 	
