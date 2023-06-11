@@ -1,11 +1,12 @@
 package ar.edu.unq.po2;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import ar.edu.unq.po2.enums.IResultadoMuestra;
@@ -29,12 +30,14 @@ public class Muestra {
 	private IEstadoMuestra estadoActual;
 	private IResultadoMuestra resultadoActual;
 	private Usuario usuarioDueño;
-	private Set<Opinion> opiniones;
+	private List<Opinion> opiniones;
 	private Ubicacion ubicacion;
 	private LocalDate fechaDeEmision;
 	
 	/**
-	 * @note TODO
+	 * @note La Muestra se inicializa sin opiniones y con un resultado no definido, en un estado inicial. 
+	 * 			A partir del cual se le indica que reciba una Opinion (la del Usuario dueño), lo cual desencadena 
+	 * 			la asignacion de IEstadoMuestra y ResultadoMuestra.
 	 * @param foto
 	 * @param usuarioDueño
 	 * @param opinionDeInicio
@@ -46,12 +49,12 @@ public class Muestra {
 		super();
 		this.setFoto(foto);
 		this.setState(new EstadoMuestraOpinadaPorBasicos());
-		this.setResultadoActual(ResultadoMuestra.NODEFINIDA);
+		this.setResultadoActual(opinionDeInicio.getTipoDeOpinion());
 		this.setUsuarioDueño(usuarioDueño);
-		this.setOpiniones(new HashSet<Opinion>());
+		this.setOpiniones(new ArrayList<Opinion>());
 		this.setUbicacion(ubicacion);
-		this.recibirOpinion(opinionDeInicio);
 		this.setFechaDeEmision(LocalDate.now());
+		this.recibirOpinion(opinionDeInicio);
 	}
 
 	public String getFoto() {
@@ -70,7 +73,7 @@ public class Muestra {
 		return usuarioDueño;
 	}
 
-	public Set<Opinion> getOpiniones() {
+	public List<Opinion> getOpiniones() {
 		return opiniones;
 	}
 	
@@ -98,7 +101,7 @@ public class Muestra {
 		this.usuarioDueño = usuarioDueño;
 	}
 
-	private void setOpiniones(Set<Opinion> opiniones) {
+	private void setOpiniones(List<Opinion> opiniones) {
 		this.opiniones = opiniones;
 	}
 
@@ -110,10 +113,19 @@ public class Muestra {
 		this.fechaDeEmision = fechaDeEmision;
 	}
 
-	public void recibirOpinion(Opinion opinion) throws MuestraEstaVerificadaException, MuestraEstaVotadaPorExpertosException {
+	public void guardarOpinion(Opinion opinion) {
 		this.getOpiniones().add(opinion);
+	}
+	
+	public void eliminarOpinion(Opinion opinion) {
+		this.getOpiniones().remove(opinion);
+	}
+	
+	public void recibirOpinion(Opinion opinion) throws MuestraEstaVerificadaException, MuestraEstaVotadaPorExpertosException {
+		guardarOpinion(opinion);
 		solicitarVerificacionDeMuestra(opinion);
 	}
+
 	
 	public boolean opinoAlMenosUnExperto() {
 		return this.getOpiniones()
@@ -143,22 +155,40 @@ public class Muestra {
 	}
 	
 	public LocalDate obtenerFechaDeUltimaVotacion() {
-		return (this.getOpiniones()
-				   .stream()
-				   .min((Opinion o1, Opinion o2)->o1.getFechaDeEmision()
-				   .compareTo(o2.getFechaDeEmision()))
-				   .get()).getFechaDeEmision();
+		return getOpiniones().stream()
+			    	.map(o -> o.getFechaDeEmision())
+			    	.max(LocalDate::compareTo)
+			    	.orElse(getOpiniones().isEmpty() ? null : getOpiniones().get(0).getFechaDeEmision());
 	}
 	
 	public IResultadoMuestra obtenerTipoDeOpinionMayoritaria() {
-		List<IResultadoMuestra> listaTiposDeOpiniones = getOpiniones().stream()
+		List<IResultadoMuestra> listaTiposDeOpiniones = getOpiniones().stream() // Convierte las Opiniones a TiposDeOpinion
                 .map(o -> o.getTipoDeOpinion())
                 .collect(Collectors.toList());
 		
-		IResultadoMuestra opinionMasFrecuente = listaTiposDeOpiniones.stream()
-                .max(Comparator.comparingInt(to -> Collections.frequency(listaTiposDeOpiniones, to)))
-                .orElse(ResultadoMuestra.NODEFINIDA);
-		
+		Map<IResultadoMuestra, Long> ocurrenciasTiposDeOpinion = listaTiposDeOpiniones.stream() // Compara las ocurrencias y las introduce a un Map<TipoDeOpinion, Ocurrencia>.
+                .collect(Collectors.groupingBy(to -> to, Collectors.counting()));
+
+        Optional<Map.Entry<IResultadoMuestra, Long>> maxEntry = ocurrenciasTiposDeOpinion.entrySet() // Busca el maximo, en caso de que este vacia la lista es Optional.
+                .stream()
+                .max(Map.Entry.comparingByValue());
+
+        IResultadoMuestra opinionMasFrecuente = getOpiniones().get(0).getTipoDeOpinion(); // Por defecto, la primera es la maxima.
+         
+        Map.Entry<IResultadoMuestra, Long> entry = maxEntry.get();
+        long maxCount = entry.getValue();
+
+        List<Map.Entry<IResultadoMuestra, Long>> empates = ocurrenciasTiposDeOpinion.entrySet() // Busca si hay empate con el resto de TiposDeOpinion.
+        				.stream()
+        				.filter(e -> e.getValue() == maxCount)
+        				.collect(Collectors.toList());
+
+        if (empates.size() > 1) { // Si hay Empate, asigna NODEFINIDA. Si no, asigna el maximo.
+        	opinionMasFrecuente = ResultadoMuestra.NODEFINIDA; // En caso de Empate, retornar NoDefinida.
+        } else {
+        	opinionMasFrecuente = entry.getKey(); // En caso de haber maximo, retornarlo.
+        }
+
 		return opinionMasFrecuente;
 	}
 	
