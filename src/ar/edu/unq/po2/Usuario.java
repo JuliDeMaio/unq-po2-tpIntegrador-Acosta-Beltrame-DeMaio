@@ -140,4 +140,8 @@ public class Usuario {
 	public void gestionarEstadoMuestraPara(IEstadoMuestra estadoMuestra, Muestra muestra) throws MuestraEstaVotadaPorExpertosException, MuestraEstaVerificadaException {
 		this.getState().gestionarEstadoMuestraPara(estadoMuestra, muestra);
 	}
+	
+	public List<Opinion> obtenerOpinones() {
+		return AppWeb.getInstance().opinionesDeUsuario(this);
+	}
 }

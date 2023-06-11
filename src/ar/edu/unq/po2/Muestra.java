@@ -2,8 +2,6 @@ package ar.edu.unq.po2;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -13,7 +11,6 @@ import ar.edu.unq.po2.enums.IResultadoMuestra;
 import ar.edu.unq.po2.enums.ITipoDeOpinion;
 import ar.edu.unq.po2.enums.NivelDeVerificacion;
 import ar.edu.unq.po2.enums.ResultadoMuestra;
-import ar.edu.unq.po2.enums.TipoDeOpinion;
 import ar.edu.unq.po2.estadosDeMuestra.EstadoMuestraOpinadaPorBasicos;
 import ar.edu.unq.po2.estadosDeMuestra.IEstadoMuestra;
 import ar.edu.unq.po2.muestraExceptions.MuestraEstaVerificadaException;
@@ -22,6 +19,8 @@ import ar.edu.unq.po2.zonaCoberturaObserver.ZonaDeCobertura;
 
 /**
 	 * @author Acosta, Federico
+	 * 		   Beltrame, Franco
+	 * 		   De Maio, Julian Daniel
 	 * @see Usuario, Opinion, TipoDeOpinion, Ubicacion
 	 * @note Esta clase tiene como objetivo modelar una Muestra del sistema.
 	 */
@@ -237,5 +236,9 @@ public class Muestra {
 
 	public NivelDeVerificacion obtenerNivelDeVerificacion() {
 		return this.getState().obtenerNivelDeVerificacion();
+	}
+	
+	public List<Opinion> obtenerOpinionesDeUsuario(Usuario usuario) {
+		return getOpiniones().stream().filter(o -> o.fueEmitidaPorUsuario(usuario)).toList();
 	}
 } 

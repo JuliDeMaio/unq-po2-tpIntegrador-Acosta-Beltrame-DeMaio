@@ -1,7 +1,9 @@
 package ar.edu.unq.po2;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import ar.edu.unq.po2.filtros.Filtro;
 import ar.edu.unq.po2.zonaCoberturaObserver.ZonaDeCobertura;
@@ -102,5 +104,11 @@ public class AppWeb {
 	public void reiniciarSistema() {
 		getMuestras().clear();
 		getUsuariosRegistrados().clear();
+	}
+
+	public List<Opinion> opinionesDeUsuario(Usuario usuario) {
+		return muestrasDeUsuario(usuario).stream()
+		.flatMap(muestra -> muestra.obtenerOpinionesDeUsuario(usuario).stream())
+		.collect(Collectors.toList());
 	}
 }

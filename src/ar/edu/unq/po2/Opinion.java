@@ -57,4 +57,8 @@ public class Opinion {
 	public boolean fueEmitidaPorUnExperto() {
 		return this.getUsuarioDueño().esUsuarioExperto();
 	}
+
+	public boolean fueEmitidaPorUsuario(Usuario usuario) {
+		return this.getUsuarioDueño().equals(usuario);
+	}
 }

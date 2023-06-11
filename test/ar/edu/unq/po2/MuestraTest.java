@@ -16,6 +16,7 @@ import ar.edu.unq.po2.enums.ResultadoMuestra;
 import ar.edu.unq.po2.enums.TipoDeOpinion;
 import ar.edu.unq.po2.enums.Vinchuca;
 import ar.edu.unq.po2.estadosDeMuestra.EstadoMuestraOpinadaPorBasicos;
+import ar.edu.unq.po2.estadosDeMuestra.EstadoMuestraOpinadaPorExpertos;
 import ar.edu.unq.po2.muestraExceptions.MuestraEstaVerificadaException;
 import ar.edu.unq.po2.muestraExceptions.MuestraEstaVotadaPorExpertosException;
 import ar.edu.unq.po2.zonaCoberturaObserver.ZonaDeCobertura;
@@ -40,6 +41,8 @@ class MuestraTest {
 	
 	private ZonaDeCobertura zonaDeCobertura;
 	
+	private EstadoMuestraOpinadaPorBasicos estadoMuestraOpinadaPorBasicos;
+	
 	@BeforeEach
 	void setUp() throws Exception {
 		
@@ -57,6 +60,8 @@ class MuestraTest {
 		opinion3 = mock(Opinion.class);
 		opinion4 = mock(Opinion.class);
 		opinion5 = mock(Opinion.class);
+		
+		estadoMuestraOpinadaPorBasicos = mock(EstadoMuestraOpinadaPorBasicos.class);
 		
 		// Setup
 		when(opinion1.getUsuarioDueño()).thenReturn(usuario1);
@@ -331,7 +336,6 @@ class MuestraTest {
 	@Test
 	void testUnaMuestraConoceSiHay2OpinionesDeExpertosQueCoinciden() {
 		// Setup
-		
 		when(opinion2.fueEmitidaPorUnExperto()).thenReturn(true);
 		when(opinion3.fueEmitidaPorUnExperto()).thenReturn(true);
 		when(opinion2.getTipoDeOpinion()).thenReturn(Vinchuca.VINCHUCAGUASAYANA);
@@ -347,7 +351,6 @@ class MuestraTest {
 	@Test
 	void testUnaMuestraConoceQueNoHay2OpinionesDeExpertosQueCoinciden() {
 		// Setup
-		
 		when(opinion2.fueEmitidaPorUnExperto()).thenReturn(false);
 		when(opinion3.fueEmitidaPorUnExperto()).thenReturn(false);
 		when(opinion2.getTipoDeOpinion()).thenReturn(Vinchuca.VINCHUCAGUASAYANA);
@@ -375,6 +378,43 @@ class MuestraTest {
 		// Verify
 		assertFalse(muestra.hay2OpinionesDeExpertosQueCoinciden());
 	}
+	
+	@Test
+	void testUnaMuestraDelegaASuEstadoLaVerificacionDeSuResultadoActual() {
+		// Setup
+		muestra.setState(estadoMuestraOpinadaPorBasicos);
+		
+		// Exercise
+		muestra.solicitarVerificacionDeResultadoActual();
+		
+		// Verify
+		verify(estadoMuestraOpinadaPorBasicos, only()).verificarResultadoActualDeMuestra(muestra);
+	}
+	
+	@Test
+	void testUnaMuestraActualizaSuEstadoActual() {
+		// Setup
+		Chinche resultadoMuestraEsperado = Chinche.CHINCHEFOLIADA;
+		
+		// Exercise
+		muestra.actualizarResultadoActual(Chinche.CHINCHEFOLIADA);
+		
+		// Verify
+		assertEquals(resultadoMuestraEsperado, muestra.getResultadoActual());
+	}
+	
+	@Test
+	void testUnaMuestraDelegaASuEstadoLaObtencionDeSuNivelDeVerificacion() {
+		// Setup
+		muestra.setState(estadoMuestraOpinadaPorBasicos);
+		
+		// Exercise
+		muestra.obtenerNivelDeVerificacion();
+		
+		// Verify
+		verify(estadoMuestraOpinadaPorBasicos, only()).obtenerNivelDeVerificacion();
+	}
+	
 	
 }
 
