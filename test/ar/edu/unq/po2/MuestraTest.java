@@ -79,13 +79,14 @@ class MuestraTest {
 		when(opinion5.getTipoDeOpinion()).thenReturn(TipoDeOpinion.NINGUNA);
 				
 		// SUT
-		muestra = new Muestra("Vinchuca.jpg", usuario1, opinion1, ubicacion);
+		muestra = new Muestra("Vinchuca.jpg", Vinchuca.VINCHUCAGUASAYANA, usuario1, opinion1, ubicacion);
 	}
 
 	@Test
 	void testInicializacionDeUnaMuestraSubidaPorUnUsuario() throws MuestraEstaVotadaPorExpertosException, MuestraEstaVerificadaException {
 		// Setup
 		String fotoEsperada = "Vinchuca.jpg";
+		Vinchuca tipoDeVinchucaEsperado = Vinchuca.VINCHUCAGUASAYANA;
 		IResultadoMuestra resultadoEsperado = Vinchuca.VINCHUCAINFESTANS;
 		Usuario usuarioEsperado = usuario1;
 		int cantidadDeMuestrasEsperadas = 1;
@@ -94,6 +95,7 @@ class MuestraTest {
 		
 		// Verify
 		assertEquals(fotoEsperada, muestra.getFoto());
+		assertEquals(tipoDeVinchucaEsperado, muestra.getTipoDeVinchucaFotografiada());
 		assertEquals(EstadoMuestraOpinadaPorBasicos.class, muestra.getState().getClass());
 		assertEquals(resultadoEsperado, muestra.getResultadoActual());
 		assertEquals(usuarioEsperado, muestra.getUsuarioDueño());
@@ -433,7 +435,6 @@ class MuestraTest {
 		assertTrue(opinionesObtenidas.contains(opinion1));
 		assertTrue(opinionesObtenidas.contains(opinion2));
 	}
-	
 }
 
 

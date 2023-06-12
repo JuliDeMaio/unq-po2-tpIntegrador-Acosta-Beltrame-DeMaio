@@ -11,6 +11,7 @@ import ar.edu.unq.po2.enums.IResultadoMuestra;
 import ar.edu.unq.po2.enums.ITipoDeOpinion;
 import ar.edu.unq.po2.enums.NivelDeVerificacion;
 import ar.edu.unq.po2.enums.ResultadoMuestra;
+import ar.edu.unq.po2.enums.Vinchuca;
 import ar.edu.unq.po2.estadosDeMuestra.EstadoMuestraOpinadaPorBasicos;
 import ar.edu.unq.po2.estadosDeMuestra.IEstadoMuestra;
 import ar.edu.unq.po2.muestraExceptions.MuestraEstaVerificadaException;
@@ -27,6 +28,7 @@ import ar.edu.unq.po2.zonaCoberturaObserver.ZonaDeCobertura;
 public class Muestra {
 	
 	private String foto;
+	private Vinchuca tipoDeVinchucaFotografiada;
 	private IEstadoMuestra estadoActual;
 	private IResultadoMuestra resultadoActual;
 	private Usuario usuarioDueño;
@@ -45,9 +47,10 @@ public class Muestra {
 	 * @throws MuestraEstaVerificadaException
 	 * @throws MuestraEstaVotadaPorExpertosException
 	 */
-	public Muestra(String foto, Usuario usuarioDueño, Opinion opinionDeInicio, Ubicacion ubicacion) throws MuestraEstaVerificadaException, MuestraEstaVotadaPorExpertosException {
+	public Muestra(String foto, Vinchuca tipoDeVinchucaFotografiada, Usuario usuarioDueño, Opinion opinionDeInicio, Ubicacion ubicacion) throws MuestraEstaVerificadaException, MuestraEstaVotadaPorExpertosException {
 		super();
 		this.setFoto(foto);
+		this.setTipoDeVinchucaFotografiada(tipoDeVinchucaFotografiada);
 		this.setState(new EstadoMuestraOpinadaPorBasicos());
 		this.setResultadoActual(opinionDeInicio.getTipoDeOpinion());
 		this.setUsuarioDueño(usuarioDueño);
@@ -57,8 +60,13 @@ public class Muestra {
 		this.recibirOpinion(opinionDeInicio);
 	}
 
+
 	public String getFoto() {
 		return foto;
+	}
+	
+	public Vinchuca getTipoDeVinchucaFotografiada() {
+		return tipoDeVinchucaFotografiada;
 	}
 
 	public IEstadoMuestra getState() {
@@ -89,6 +97,10 @@ public class Muestra {
 		this.foto = foto;
 	}
 
+	private void setTipoDeVinchucaFotografiada(Vinchuca tipoDeVinchucaFotografiada) {
+		this.tipoDeVinchucaFotografiada = tipoDeVinchucaFotografiada;
+	}
+	
 	public void setState(IEstadoMuestra estadoActual) {
 		this.estadoActual = estadoActual;
 	}
