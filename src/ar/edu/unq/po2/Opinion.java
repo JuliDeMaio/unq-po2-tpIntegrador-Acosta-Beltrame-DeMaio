@@ -3,10 +3,12 @@ package ar.edu.unq.po2;
 import java.time.LocalDate;
 
 import ar.edu.unq.po2.enums.ITipoDeOpinion;
+import ar.edu.unq.po2.estadosDeUsuario.EstadoUsuario;
 
 	/**
 	 * @author Acosta, Federico
 	 * 		   Beltrame, Franco
+	 * 		   De Maio, Julian
 	 * @see Usuario, TipoDeOpinion, Muestra
 	 * @note Esta clase tiene como objetivo modelar una Opinion del sistema.
 	 */
@@ -15,12 +17,14 @@ public class Opinion {
 	private ITipoDeOpinion tipoDeOpinion;
 	private Usuario usuarioDueño;
 	private LocalDate fechaDeEmision;
+	private EstadoUsuario categoriaDeEmision;
 
 	public Opinion(ITipoDeOpinion tipoDeOpinion, Usuario usuarioDueño) {
 		super();
 		this.setTipoDeOpinion(tipoDeOpinion);
 		this.setUsuarioDueño(usuarioDueño);
 		this.setFechaDeEmision(LocalDate.now());
+		this.setCategoriaDeEmision(usuarioDueño.getState());
 	}
 
 	public ITipoDeOpinion getTipoDeOpinion() {
@@ -34,7 +38,11 @@ public class Opinion {
 	public LocalDate getFechaDeEmision() {
 		return fechaDeEmision;
 	}
-
+	
+	public EstadoUsuario getCategoriaDeEmision() {
+		return categoriaDeEmision;
+	}
+	
 	private void setTipoDeOpinion(ITipoDeOpinion tipoDeOpinion) {
 		this.tipoDeOpinion = tipoDeOpinion;
 	}
@@ -43,8 +51,12 @@ public class Opinion {
 		this.usuarioDueño = usuarioDueño;
 	}
 
-	public void setFechaDeEmision(LocalDate fechaDeEmision) {
+	private void setFechaDeEmision(LocalDate fechaDeEmision) {
 		this.fechaDeEmision = fechaDeEmision;
+	}
+
+	private void setCategoriaDeEmision(EstadoUsuario categoriaDeEmision) {
+		this.categoriaDeEmision = categoriaDeEmision;
 	}
 
 	public boolean seEmitioEnLosUltimos30Dias() {
@@ -55,7 +67,7 @@ public class Opinion {
 	}
 
 	public boolean fueEmitidaPorUnExperto() {
-		return this.getUsuarioDueño().esUsuarioExperto();
+		return this.getCategoriaDeEmision().esEstadoExperto();
 	}
 
 	public boolean fueEmitidaPorUsuario(Usuario usuario) {
