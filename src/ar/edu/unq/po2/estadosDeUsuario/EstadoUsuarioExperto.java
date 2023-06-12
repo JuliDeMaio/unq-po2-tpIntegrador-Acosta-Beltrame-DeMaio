@@ -27,6 +27,11 @@ public abstract class EstadoUsuarioExperto extends EstadoUsuario {
 		return false;
 	}
 	
+	@Override
+	public boolean esEstadoExperto() {
+		return true;
+	}
+	
 	/**
 	 * @note mensaje parte del double-dispatch, realiza la gestion siendo usuario experto.
 	 */
@@ -35,8 +40,4 @@ public abstract class EstadoUsuarioExperto extends EstadoUsuario {
 		estadoMuestra.realizarVerificacionParaUsuarioExperto(muestra);
 	}
 	
-	@Override
-	public boolean esEstadoExperto() {
-		return true;
-	}
 }

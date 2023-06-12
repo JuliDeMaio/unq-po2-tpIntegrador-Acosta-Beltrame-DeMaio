@@ -48,6 +48,11 @@ public class EstadoUsuarioBasico extends EstadoUsuario {
 	}
 
 	@Override
+	public boolean esEstadoExperto() {
+		return false;
+	}
+	
+	@Override
 	public boolean esEstadoExpertoInterno() {
 		return false;
 	}
@@ -65,8 +70,4 @@ public class EstadoUsuarioBasico extends EstadoUsuario {
 		estadoMuestra.realizarVerificacionParaUsuarioBasico(muestra);
 	}
 
-	@Override
-	public boolean esEstadoExperto() {
-		return false;
-	}
 }
