@@ -107,7 +107,7 @@ public class AppWeb {
 	}
 
 	public List<Opinion> opinionesDeUsuario(Usuario usuario) {
-		return muestrasDeUsuario(usuario).stream()
+		return this.getMuestras().stream()
 		.flatMap(muestra -> muestra.obtenerOpinionesDeUsuario(usuario).stream())
 		.collect(Collectors.toList());
 	}

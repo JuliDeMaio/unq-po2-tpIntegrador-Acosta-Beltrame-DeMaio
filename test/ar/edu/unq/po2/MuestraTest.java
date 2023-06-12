@@ -16,7 +16,6 @@ import ar.edu.unq.po2.enums.ResultadoMuestra;
 import ar.edu.unq.po2.enums.TipoDeOpinion;
 import ar.edu.unq.po2.enums.Vinchuca;
 import ar.edu.unq.po2.estadosDeMuestra.EstadoMuestraOpinadaPorBasicos;
-import ar.edu.unq.po2.estadosDeMuestra.EstadoMuestraOpinadaPorExpertos;
 import ar.edu.unq.po2.muestraExceptions.MuestraEstaVerificadaException;
 import ar.edu.unq.po2.muestraExceptions.MuestraEstaVotadaPorExpertosException;
 import ar.edu.unq.po2.zonaCoberturaObserver.ZonaDeCobertura;
@@ -415,6 +414,25 @@ class MuestraTest {
 		verify(estadoMuestraOpinadaPorBasicos, only()).obtenerNivelDeVerificacion();
 	}
 	
+	@Test
+	void testUnaMuestraConoceLasOpinionesDeUnUsuario() {
+		// Setup
+		when(opinion1.fueEmitidaPorUsuario(usuario1)).thenReturn(true);
+		when(opinion2.fueEmitidaPorUsuario(usuario1)).thenReturn(true);
+		when(opinion3.fueEmitidaPorUsuario(usuario1)).thenReturn(false);
+		
+		muestra.guardarOpinion(opinion2);
+		
+		int cantidadDeOpinionesEsperadas = 2;
+		
+		// Exercise
+		List<Opinion> opinionesObtenidas = muestra.obtenerOpinionesDeUsuario(usuario1);
+		
+		// Verify
+		assertEquals(cantidadDeOpinionesEsperadas, opinionesObtenidas.size());
+		assertTrue(opinionesObtenidas.contains(opinion1));
+		assertTrue(opinionesObtenidas.contains(opinion2));
+	}
 	
 }
 

@@ -72,4 +72,11 @@ class OpinionTest {
 		// Verify
 		assertTrue(opinion1.fueEmitidaPorUnExperto());
 	}
+	
+	@Test
+	void testUnaOpinionSabeSiFueEmitidaPorUnUsuarioEspecifico() {
+		// Verify
+		assertTrue(opinion1.fueEmitidaPorUsuario(usuario1));
+	}
+	
 }

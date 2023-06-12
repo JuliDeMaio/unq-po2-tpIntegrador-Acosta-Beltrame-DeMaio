@@ -3,6 +3,8 @@ package ar.edu.unq.po2;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 
 import org.junit.jupiter.api.AfterEach;
@@ -24,6 +26,10 @@ class AppWebTest {
 	private Usuario usuario1;
 	private Usuario usuario2;
 	private Usuario usuario3;
+	
+	private Opinion opinion1;
+	private Opinion opinion2;
+	private Opinion opinion3;
 	
 	private FiltroDeTipoDeInsecto filtroPorInsecto1;
 	
@@ -47,6 +53,10 @@ class AppWebTest {
 		usuario1 = mock(Usuario.class);
 		usuario2 = mock(Usuario.class);
 		usuario3 = mock(Usuario.class);
+		
+		opinion1 = mock(Opinion.class);
+		opinion2 = mock(Opinion.class);
+		opinion3 = mock(Opinion.class);
 	}
 	
 	@AfterEach
@@ -206,6 +216,27 @@ class AppWebTest {
 		assertTrue(muestrasObtenidas.contains(muestra2));
 		assertTrue(muestrasObtenidas.contains(muestra3));
 		assertEquals(cantidadDeMuestrasEsperadas, muestrasObtenidas.size());
+	}
+	
+	@Test
+	void testUnaAppWebConoceLasOpinionesDeUnUsuario() {
+		// Setup
+		int cantidadDeOpinionesEsperadas = 3;
+		
+		appWeb.guardarMuestra(muestra1);
+		appWeb.guardarMuestra(muestra2);
+		
+		when(muestra1.obtenerOpinionesDeUsuario(usuario1)).thenReturn(Arrays.asList(opinion1, opinion2));
+		when(muestra2.obtenerOpinionesDeUsuario(usuario1)).thenReturn(Arrays.asList(opinion3));
+		when(muestra1.esDueñoDeLaMuestra(usuario1)).thenReturn(true);
+		when(muestra2.esDueñoDeLaMuestra(usuario1)).thenReturn(true);
+
+		// Exercise
+		List<Opinion> opinionesObtenidas = appWeb.opinionesDeUsuario(usuario1);
+		
+		// Verify
+		assertEquals(cantidadDeOpinionesEsperadas, opinionesObtenidas.size());
+
 	}
 	
 }

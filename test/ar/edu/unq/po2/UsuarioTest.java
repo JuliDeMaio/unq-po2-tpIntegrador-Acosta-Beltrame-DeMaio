@@ -468,7 +468,14 @@ class UsuarioTest {
 	void testUnUsuarioConoceSusOpiniones() {
 		// Setup
 		appWeb.reiniciarSistema();
+		
 		int cantidadDeOpinionesEsperadas = 3;
+		
+		appWeb.guardarMuestra(muestra1);
+		appWeb.guardarMuestra(muestra2);
+		
+		when(muestra1.obtenerOpinionesDeUsuario(julianBasico)).thenReturn(Arrays.asList(opinion1, opinion2));
+		when(muestra2.obtenerOpinionesDeUsuario(julianBasico)).thenReturn(Arrays.asList(opinion3));
 		
 		// Exercise
 		List<Opinion> opinionesObtenidas = julianBasico.obtenerOpinones();
