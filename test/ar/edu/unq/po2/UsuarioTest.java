@@ -128,7 +128,7 @@ class UsuarioTest {
 		
 		// Exercise - Verify
 		assertTrue(julianBasico.obtenerMuestrasRegistradas().isEmpty());
-		assertTrue(julianBasico.getOpinionesRegistradas().isEmpty());
+		assertTrue(julianBasico.obtenerOpiniones().isEmpty());
 		assertTrue(julianBasico.getState().equals(estadoUsuarioEsperado));
 	}
 	
@@ -151,9 +151,9 @@ class UsuarioTest {
 		// Setup
 		int cantidadOpinionesEsperadas = 2;
 		
-		// Exercise
-		julianBasico.guardarOpinion(opinion1);
-		julianBasico.guardarOpinion(opinion2);
+		appWeb.guardarMuestra(muestra1);
+		
+		when(muestra1.obtenerOpinionesDeUsuario(julianBasico)).thenReturn(Arrays.asList(opinion1, opinion2));
 		
 		// Verify
 		assertEquals(cantidadOpinionesEsperadas, julianBasico.cantidadOpiniones());
@@ -204,11 +204,9 @@ class UsuarioTest {
 		when(opinion4.seEmitioEnLosUltimos30Dias()).thenReturn(false);
 		when(opinion5.seEmitioEnLosUltimos30Dias()).thenReturn(true);
 		
-		julianBasico.guardarOpinion(opinion1);
-		julianBasico.guardarOpinion(opinion2);
-		julianBasico.guardarOpinion(opinion3);
-		julianBasico.guardarOpinion(opinion4);
-		julianBasico.guardarOpinion(opinion5);
+		appWeb.guardarMuestra(muestra1);
+		
+		when(muestra1.obtenerOpinionesDeUsuario(julianBasico)).thenReturn(Arrays.asList(opinion1, opinion2, opinion3, opinion4, opinion5));
 		
 		// Verify
 		assertEquals(cantidadDeOpinionesEsperadas, julianBasico.cantidadDeOpinionesEmitidasEnUltimos30Dias());		
@@ -318,27 +316,10 @@ class UsuarioTest {
 		when(opinion20.seEmitioEnLosUltimos30Dias()).thenReturn(true);
 		when(opinion21.seEmitioEnLosUltimos30Dias()).thenReturn(true);
 		
-		julianBasico.guardarOpinion(opinion1);
-		julianBasico.guardarOpinion(opinion2);
-		julianBasico.guardarOpinion(opinion3);
-		julianBasico.guardarOpinion(opinion4);
-		julianBasico.guardarOpinion(opinion5);
-		julianBasico.guardarOpinion(opinion6);
-		julianBasico.guardarOpinion(opinion7);
-		julianBasico.guardarOpinion(opinion8);
-		julianBasico.guardarOpinion(opinion9);
-		julianBasico.guardarOpinion(opinion10);
-		julianBasico.guardarOpinion(opinion11);
-		julianBasico.guardarOpinion(opinion12);
-		julianBasico.guardarOpinion(opinion13);
-		julianBasico.guardarOpinion(opinion14);
-		julianBasico.guardarOpinion(opinion15);
-		julianBasico.guardarOpinion(opinion16);
-		julianBasico.guardarOpinion(opinion17);
-		julianBasico.guardarOpinion(opinion18);
-		julianBasico.guardarOpinion(opinion19);
-		julianBasico.guardarOpinion(opinion20);
-		julianBasico.guardarOpinion(opinion21);
+		when(muestra1.obtenerOpinionesDeUsuario(julianBasico)).thenReturn(Arrays.asList(opinion1, opinion2, opinion3, opinion4, opinion5, 
+																						opinion6, opinion7, opinion8, opinion9, opinion10, 
+																						opinion11, opinion12, opinion13, opinion14, opinion15,
+																						opinion16, opinion17, opinion18, opinion19, opinion20, opinion21));
 		
 		when(muestra1.seEmitioEnLosUltimos30Dias()).thenReturn(true);
 		when(muestra2.seEmitioEnLosUltimos30Dias()).thenReturn(true);
@@ -421,27 +402,10 @@ class UsuarioTest {
 		when(opinion20.seEmitioEnLosUltimos30Dias()).thenReturn(true);
 		when(opinion21.seEmitioEnLosUltimos30Dias()).thenReturn(true);
 		
-		julianBasico.guardarOpinion(opinion1);
-		julianBasico.guardarOpinion(opinion2);
-		julianBasico.guardarOpinion(opinion3);
-		julianBasico.guardarOpinion(opinion4);
-		julianBasico.guardarOpinion(opinion5);
-		julianBasico.guardarOpinion(opinion6);
-		julianBasico.guardarOpinion(opinion7);
-		julianBasico.guardarOpinion(opinion8);
-		julianBasico.guardarOpinion(opinion9);
-		julianBasico.guardarOpinion(opinion10);
-		julianBasico.guardarOpinion(opinion11);
-		julianBasico.guardarOpinion(opinion12);
-		julianBasico.guardarOpinion(opinion13);
-		julianBasico.guardarOpinion(opinion14);
-		julianBasico.guardarOpinion(opinion15);
-		julianBasico.guardarOpinion(opinion16);
-		julianBasico.guardarOpinion(opinion17);
-		julianBasico.guardarOpinion(opinion18);
-		julianBasico.guardarOpinion(opinion19);
-		julianBasico.guardarOpinion(opinion20);
-		julianBasico.guardarOpinion(opinion21);
+		when(muestra1.obtenerOpinionesDeUsuario(julianBasico)).thenReturn(Arrays.asList(opinion1, opinion2, opinion3, opinion4, opinion5, 
+																						opinion6, opinion7, opinion8, opinion9, opinion10, 
+																						opinion11, opinion12, opinion13, opinion14, opinion15,
+																						opinion16, opinion17, opinion18, opinion19, opinion20, opinion21));
 		
 		// Verify
 		assertFalse(julianBasico.cumpleConLosRequisitosDeUsuarioExperto());
@@ -478,7 +442,7 @@ class UsuarioTest {
 		when(muestra2.obtenerOpinionesDeUsuario(julianBasico)).thenReturn(Arrays.asList(opinion3));
 		
 		// Exercise
-		List<Opinion> opinionesObtenidas = julianBasico.obtenerOpinones();
+		List<Opinion> opinionesObtenidas = julianBasico.obtenerOpiniones();
 		
 		// Verify
 		assertEquals(cantidadDeOpinionesEsperadas, opinionesObtenidas.size());

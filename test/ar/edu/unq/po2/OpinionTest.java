@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import java.time.LocalDate;
-import java.time.Month;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,19 +20,17 @@ class OpinionTest {
 	private Usuario usuario1;
 	
 	private LocalDate fecha1;
-	private LocalDate fecha2;
 
 	@BeforeEach
 	void setUp() throws Exception {
 				
 		// DOC
 		usuario1 = mock(Usuario.class);
-		fecha1 = LocalDate.of(2015, Month.DECEMBER, 22);
-		fecha2 = LocalDate.now();
+		fecha1 = LocalDate.now();
 		
 		// SUT
-		opinion1 = new Opinion(Chinche.CHINCHEFOLIADA, usuario1, fecha1);
-		opinion2 = new Opinion(TipoDeOpinion.IMAGENPOCOCLARA, usuario1, fecha2);
+		opinion1 = new Opinion(Chinche.CHINCHEFOLIADA, usuario1);
+		opinion2 = new Opinion(TipoDeOpinion.IMAGENPOCOCLARA, usuario1);
 	}
 
 	@Test
@@ -55,13 +52,6 @@ class OpinionTest {
 		
 		// Verify
 		assertTrue(opinion2.seEmitioEnLosUltimos30Dias());
-	}
-
-	@Test
-	void testUnaOpinionSabeQueNoSeEmitioEnLosUltimos30Dias() {
-		
-		// Verify
-		assertFalse(opinion1.seEmitioEnLosUltimos30Dias());
 	}
 	
 	@Test

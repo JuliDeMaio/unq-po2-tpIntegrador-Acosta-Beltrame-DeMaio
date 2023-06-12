@@ -126,7 +126,6 @@ public class Muestra {
 		solicitarVerificacionDeMuestra(opinion);
 	}
 
-	
 	public boolean opinoAlMenosUnExperto() {
 		return this.getOpiniones()
 				   .stream()

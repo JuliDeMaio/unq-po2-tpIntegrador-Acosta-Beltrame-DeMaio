@@ -1,7 +1,5 @@
 package ar.edu.unq.po2;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -25,17 +23,11 @@ import ar.edu.unq.po2.usuarioExceptions.UsuarioException;
 
 public class Usuario {
 
-	private List<Opinion> opinionesRegistradas;
 	private EstadoUsuario estadoActual;
 	
 	public Usuario(EstadoUsuario estadoDeUsuario) {
 		super();
-		this.setOpinionesRegistradas(new ArrayList<Opinion>());
 		this.setState(estadoDeUsuario);
-	}
-
-	public List<Opinion> getOpinionesRegistradas() {
-		return opinionesRegistradas;
 	}
 
 	public Set<Muestra> obtenerMuestrasRegistradas() {
@@ -46,16 +38,8 @@ public class Usuario {
 		return estadoActual;
 	}
 
-	private void setOpinionesRegistradas(List<Opinion> opinionesRegistradas) {
-		this.opinionesRegistradas = opinionesRegistradas;
-	}
-
 	public void setState(EstadoUsuario estadoDeUsuario) {
 		this.estadoActual = estadoDeUsuario;
-	}
-	
-	public void guardarOpinion(Opinion opinion) {
-		this.getOpinionesRegistradas().add(opinion);
 	}
 
 	public int cantidadMuestras() {
@@ -63,7 +47,7 @@ public class Usuario {
 	}
 
 	public int cantidadOpiniones() {
-		return this.getOpinionesRegistradas().size();
+		return this.obtenerOpiniones().size();
 	}
 
 	/**
@@ -77,14 +61,13 @@ public class Usuario {
 	 */
 	public void emitirOpinionDe(Muestra muestra, ITipoDeOpinion tipoDeOpinion) throws UsuarioException, MuestraEstaVerificadaException, MuestraEstaVotadaPorExpertosException {
 		
-		Opinion opinionAEmitir = new Opinion(tipoDeOpinion, this, LocalDate.now());
+		Opinion opinionAEmitir = new Opinion(tipoDeOpinion, this);
 		
 		this.getState().realizarVerificacionesPara(muestra, opinionAEmitir);
 		this.emitirOpinionVerificadaDe(muestra, opinionAEmitir);
 	}
 	
 	public void emitirOpinionVerificadaDe(Muestra muestra, Opinion opinion) throws MuestraEstaVerificadaException, MuestraEstaVotadaPorExpertosException {
-		this.guardarOpinion(opinion);
 		muestra.recibirOpinion(opinion);
 	}
 
@@ -97,7 +80,7 @@ public class Usuario {
 	}
 
 	public int cantidadDeOpinionesEmitidasEnUltimos30Dias() {
-		return this.getOpinionesRegistradas()
+		return this.obtenerOpiniones()
 				   .stream()
 				   .filter(m -> m.seEmitioEnLosUltimos30Dias())
 				   .toList()
@@ -141,7 +124,7 @@ public class Usuario {
 		this.getState().gestionarEstadoMuestraPara(estadoMuestra, muestra);
 	}
 	
-	public List<Opinion> obtenerOpinones() {
+	public List<Opinion> obtenerOpiniones() {
 		return AppWeb.getInstance().opinionesDeUsuario(this);
 	}
 }

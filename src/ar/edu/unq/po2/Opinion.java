@@ -16,11 +16,11 @@ public class Opinion {
 	private Usuario usuarioDueño;
 	private LocalDate fechaDeEmision;
 
-	public Opinion(ITipoDeOpinion tipoDeOpinion, Usuario usuarioDueño, LocalDate fechaDeEmision) {
+	public Opinion(ITipoDeOpinion tipoDeOpinion, Usuario usuarioDueño) {
 		super();
 		this.setTipoDeOpinion(tipoDeOpinion);
 		this.setUsuarioDueño(usuarioDueño);
-		this.setFechaDeEmision(fechaDeEmision);
+		this.setFechaDeEmision(LocalDate.now());
 	}
 
 	public ITipoDeOpinion getTipoDeOpinion() {
