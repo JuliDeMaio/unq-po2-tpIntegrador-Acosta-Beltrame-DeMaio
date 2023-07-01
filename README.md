@@ -8,7 +8,7 @@ Autores:
   - De Maio, Julian
 
 **Proyecto:**
-  El proyecto trata del diseño e implementación con **Java** de un sistema que engloba la subida/opinion y gestion de muestras cientificas relacionadas a la enfermedad de Chagas por parte de usuarios.
+  El proyecto trata del diseño e implementación con **Java** de las reglas de negocio de una aplicación que engloba la subida/opinion y gestion de muestras cientificas relacionadas a la enfermedad de Chagas por parte de usuarios.
 
 Conceptos aplicados al proyecto:
 - Principios SOLID
@@ -18,6 +18,7 @@ Conceptos aplicados al proyecto:
 - Diseño UML
 - Patrones de Diseño:
   * Composite
+  * Singleton
   * Observer
   * State
   * Template Method
