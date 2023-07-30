@@ -10,6 +10,10 @@ Autores:
 **Proyecto:**
   El proyecto trata del diseño e implementación con **Java** de las reglas de negocio de una aplicación que engloba la subida/opinion y gestion de muestras cientificas relacionadas a la enfermedad de Chagas por parte de usuarios.
 
+Diagrama de clases:
+
+![UML Trabajo Final POO2 - De Maio, Acosta, Beltrame](https://github.com/JuliDeMaio/unq-po2-tpIntegrador-Acosta-Beltrame-DeMaio/assets/122990177/465591b0-8f54-4524-ab55-4680812577aa)
+
 Conceptos aplicados al proyecto:
 - Principios SOLID
 - TDD (Test-Driven Development)
